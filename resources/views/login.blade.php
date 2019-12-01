@@ -19,6 +19,20 @@
                             {{Form::text('username', '', ['id'=>'username','autocomplete'=>'off','placeholder'=>'Enter Mobile No','class' => 'form-control','maxlength'=>'10','pattern'=>'[0-9]*', 'inputmode'=>'numeric', 'onkeypress'=>'return isNumberKey(event)']) }}
                         </div>
                     </div>
+                    <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="form-group col-md-7">
+                        <div class="captcha">
+                            <span>{!! captcha_img() !!}</span>
+                            <button type="button" class="btn btn-success"><i class="fa fa-refresh" id="refresh"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="form-group col-md-9">
+                        <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha"></div>
+                </div>
                     <div class="form-group row">
                         <div class="col-sm-3">&nbsp;</div>
                         <div class="col-sm-9">
@@ -36,6 +50,21 @@
 @section('script')             
 <script>
     $(document).ready(function () {
+
+        $('#refresh').click(function () {
+            $('#error').hide();
+            $.ajax({
+                type: 'GET',
+                url: 'refreshcaptcha',
+                dataType: 'json',
+                success: function (data) {
+                    $(".captcha span").html(data.captcha);
+                    $("#username").val('');
+                    $("#captcha").val('');
+                }
+            });
+        });
+
         $('body').bind('copy paste', function (e) {
             e.preventDefault();
             return false;
@@ -49,6 +78,14 @@
                             message: 'Mobile No is required for Login'
                         }
                     }
+                },
+                captcha: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Captcha is Required'
+                        }
+
+                    }
                 }
             }
         }).on('success.form.bv', function (e) {
@@ -59,6 +96,7 @@
             $('#error').hide();
 
             var username = $('#username').val();
+            var captcha = $('#captcha').val();
             var fd = new FormData();
             fd.append('username', username);
             fd.append('_token', '{{ csrf_token() }}');

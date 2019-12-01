@@ -22,9 +22,12 @@ class LoginController extends Controller {
 
         $this->validate($request, [
             'username' => "required|digits:10",
+            'captcha' => 'required|captcha'
                 ], [
             'username.required' => 'Mobile Number is Required',
-            'username.digits' => 'Mobile Number Should be 10 Digits',        
+            'username.digits' => 'Mobile Number Should be 10 Digits',
+            'captcha.required' => 'Captcha is Required', 
+            'captcha.captcha' => 'Captcha Missmatch',       
         ]);
 
 
