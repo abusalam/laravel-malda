@@ -20,6 +20,7 @@ class LoginController extends Controller {
     public function loginAction(Request $request) {
 //        dd($request->all());
 
+  if(env("CAPTCHA")==1){ 
         $this->validate($request, [
             'username' => "required|digits:10",
             'captcha' => 'required|captcha'
@@ -29,6 +30,18 @@ class LoginController extends Controller {
             'captcha.required' => 'Captcha is Required', 
             'captcha.captcha' => 'Captcha Missmatch',       
         ]);
+    }else{
+
+        $this->validate($request, [
+            'username' => "required|digits:10",
+            
+                ], [
+            'username.required' => 'Mobile Number is Required',
+            'username.digits' => 'Mobile Number Should be 10 Digits',
+                   
+        ]);
+
+    }
 
 
 

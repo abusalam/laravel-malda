@@ -19,6 +19,10 @@
                             {{Form::text('username', '', ['id'=>'username','autocomplete'=>'off','placeholder'=>'Enter Mobile No','class' => 'form-control','maxlength'=>'10','pattern'=>'[0-9]*', 'inputmode'=>'numeric', 'onkeypress'=>'return isNumberKey(event)']) }}
                         </div>
                     </div>
+
+
+                   <?php if(env("CAPTCHA")==1){  ?>
+                   
                     <div class="row">
                     <div class="col-md-3"></div>
                     <div class="form-group col-md-7">
@@ -33,6 +37,11 @@
                     <div class="form-group col-md-9">
                         <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha"></div>
                 </div>
+
+                <?php } ?>
+
+                
+
                     <div class="form-group row">
                         <div class="col-sm-3">&nbsp;</div>
                         <div class="col-sm-9">

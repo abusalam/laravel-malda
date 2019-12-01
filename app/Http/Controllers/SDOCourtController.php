@@ -273,7 +273,7 @@ class SDOCourtController extends Controller
             $response = array('error' => 'Error occured in form submit.');
             return response()->json($response, $statusCode);
         }
-
+           if(env("CAPTCHA")==1){  
         $this->validate($request, [
             'case_number' => 'required',
              'capcha' => 'required|captcha',
@@ -283,6 +283,15 @@ class SDOCourtController extends Controller
             'capcha.required' => 'Captcha is required',
             'capcha.captcha' => 'Captcha Missmatch',
         ]);
+    }else{
+         $this->validate($request, [
+            'case_number' => 'required',             
+                ], [
+            'case_number.required' => 'Case Number is required',
+            
+        ]);
+
+    }
 
 
         try {

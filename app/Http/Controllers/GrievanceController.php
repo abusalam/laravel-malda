@@ -23,6 +23,7 @@ class GrievanceController extends Controller
             $response = array('error' => 'Error occer in ajax call');
             return response()->json($response, $statuscode);
         }
+        if(env("CAPTCHA")==1){ 
         $this->validate($request, [
                 'grivense_name' => "required|regex:/^[\pL\s]+$/u",
                 'mobile_no' => "required|digits:10",
@@ -41,6 +42,28 @@ class GrievanceController extends Controller
                 'captcha.captcha' => 'Captcha Missmatch',  
                         
             ]);
+    }else{
+
+         $this->validate($request, [
+                'grivense_name' => "required|regex:/^[\pL\s]+$/u",
+                'mobile_no' => "required|digits:10",
+                'grivense_email' => 'required|email',
+                'grivense_complain' => 'required|regex:/^[A-Za-z0-9\/.,\s()-]+$/i',
+                
+                    ], [
+                'grivense_name.required' => 'Name is Required',
+                'grivense_name.regex' => 'Name consist of alphabatical characters and spaces only',
+                'mobile_no.required' => 'Moibile No is Required',
+                'mobile_no.digits' => 'Moibile No should be 10 digits',
+                'grivense_email.required' => 'Email Id Is Required',
+                'grivense_email.email' => 'Enter correct email Format',
+                'grivense_complain.required' => 'Please enter complain',
+                'grivense_complain.regex' => 'Alphanumric and some special characters like ()./- allow',  
+                 
+                        
+            ]);
+
+    }
         try {
             
 
