@@ -179,10 +179,10 @@
                             <li><a href="{{route('search_case')}}">Case Search</a></li>
                             <li><a href="{{route('todays_hearing')}}">Today's Hearing</a></li>
                             <?php if (session()->has('user_code') == false) { ?>
-                            <li><a id="loginn" href="{{route('login')}}">Login</a></li>
+                            <li class="pull-right"><a id="loginn" href="{{route('login')}}">Login</a></li>
                             <?php }else{?>
 
-                            <li>
+                            <li class="pull-right">
                                 <a href="#">Admin</a>
                                 <ul>
                                      <?php if (session()->get('user_type') == 0) { ?>
