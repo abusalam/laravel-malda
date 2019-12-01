@@ -116,6 +116,14 @@ Route::get('/todays_hearing', 'SDOCourtController@todays_hearing')->name('todays
 
 Route::post('/caselist_datatable_for_todays_hearing', 'SDOCourtController@caselist_datatable_for_todays_hearing')->name('caselist_datatable_for_todays_hearing');
 
+//grievance Status 
+
+Route::get('/grievance_status', 'GrievanceStatusController@grievance_status')->name('grievance_status');
+Route::get('refreshcaptcha', 'SDOCourtController@refreshCaptcha');
+Route::post('grievance_statuss', 'GrievanceStatusController@grievance_statuss');
+
+
+
 
 
 

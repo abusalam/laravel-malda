@@ -23,6 +23,9 @@ class GrievanceController extends Controller
             $response = array('error' => 'Error occer in ajax call');
             return response()->json($response, $statuscode);
         }
+
+       
+
         if(env("CAPTCHA")==1){ 
         $this->validate($request, [
                 'grivense_name' => "required|regex:/^[\pL\s]+$/u",
@@ -65,6 +68,17 @@ class GrievanceController extends Controller
 
     }
         try {
+
+             $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    $griv_id = array(); //remember to declare $pass as an array
+    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+    for ($i = 0; $i < 8; $i++) {
+        $n = rand(0, $alphaLength);
+        $griv_id[] = $alphabet[$n];
+    }
+      $griv_idd= implode($griv_id); 
+
+      //echo $griv_idd; die;
             
 
             $tbl_grivense = new tbl_grievance();
@@ -72,7 +86,10 @@ class GrievanceController extends Controller
             $tbl_grivense->mobile_no = $request->mobile_no;
             $tbl_grivense->email = $request->grivense_email;
             $tbl_grivense->complain = $request->grivense_complain;
+            $tbl_grivense->griev_auto_id = $griv_idd;
             $tbl_grivense->save();
+
+
 
 
             $response = array(

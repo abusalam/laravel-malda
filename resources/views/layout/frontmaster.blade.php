@@ -138,6 +138,7 @@
                         <ul>
                             <li><a href="{{route('home')}}">Home</a></li>
                             <li><a href="{{route('grievance')}}">Grievance</a></li>
+                             <li><a href="{{route('grievance_status')}}">Grievance Status</a></li>  
                             <li><a href="{{route('search_case')}}">Case Search</a></li>
                             <li><a href="{{route('todays_hearing')}}">Today's Hearing</a></li>
                             <?php if (session()->has('user_code') == false) { ?>
