@@ -16,11 +16,11 @@
                                 <th style="width: 15%;">Mobile Number</th> 
                                 <th style="width: 15%;">Email</th> 
                                 <th style="width: 40%;">Complain</th>
-                                <?php if (session()->get('user_type') == 0) { ?>
+                                <?php //if (session()->get('user_type') == 0) { ?>
 
                                     <th style="width: 10%;">Action</th>
                                 </tr>
-                            <?php } ?>
+                            <?php //} ?>
                         </thead>
                         <tbody></tbody>
                         <!-- Table Footer -->
@@ -47,31 +47,61 @@
                     data:{'grievance_code':grievance_code, _token:token},
                     success:function(data){
                         var str = "";
-                        str += '<table  class="table table-sm table-bordered">';
+                        str += '<table  class="table table-sm table-bordered" id="forwardTable">';
                         str += '<tbody>';
                         str += '<tr><td><label> Name : </label></td><td>' + data.options.name + '</td></tr>';
                         str += '<tr><td><label> Mobile Number : </label></td><td>' + data.options.mobile_no + '</td></tr>';
                         str += '<tr><td><label> Email : </label></td><td>' + data.options.email + '</td></tr>';
                         str += '<tr><td><label> Complain : </label></td><td>' + data.options.complain + '</td></tr>';
+												str += '<tr><td><label> Forwarded : </label></td><td>';
+											  str += '<table class="table">';
+												str += '<tr><th width="20%">User</th><th width="30%">Date</th><th width="50%">Remark</th></tr>';
+												
+//												$.each(data.remarkData, function(key, value){
+//													str += '<tr><td>' + value['name'] + '</td>';
+//													str += '<td>' + value.date + '</td>';
+//													str += '<td>' + value.remark + '</td></tr>';
+//												});
+
+											for(i=0; i<data.remarkData.length; i++){
+													str += '<tr><td>' + data.remarkData[i].name + '</td>';
+													str += '<td>' + data.remarkData[i].date + '</td>';
+													str += '<td>' + data.remarkData[i].remark + '</td></tr>';
+												}
+												str += '</table>';
+												str += '</td></tr>';									
                         str += '<tr><td><label> User : </label></td><td>{!!Form::select('user',[''=>'Select All'],null,['id'=>'user','class'=>'form - control','placeholder'=>'Select All'])!!}</td></tr>';
+												str += '<tr><td><label> Remark : </label></td><td>{!! Form::textarea('remark', null, ['class'=>'form-control', 'rows'=>'2','id'=>'remark']) !!}</td></tr>';
                         str += '</tbody>';
                         str += '</table>';
                         get_user();
                         $.confirm({
                             title: 'Grievance Forward',
                             content: str,
-                            boxWidth: '60%',
+                            boxWidth: '80%',
                             useBootstrap: false,
                             buttons: {
                                 forwoad: function(){
                                     var token = $("input[name='_token']").val();
                                     var to_forword = $("#user").val();
-                                    if (to_forword == ''){
+																		var remark = $("#remark").val();
+																		var msg="";
+																		var f = 0;
+																		if(to_forword == ''){
+																			msg+= '<li>Please Select User.</li>';
+																			f=1;
+																		}
+//																		if(remark == ''){
+//																			msg+= '<li>Please Enter Remark.</li>';
+//																			f=1;
+//																		}
+//																		
+                                    if (f==1){
                                         $.confirm({
                                             title: 'Warning!',
                                             type: 'orange',
                                             icon: 'fa fa-times',
-                                            content: "Please Select User",
+                                            content: "<ul>"+msg+"</ul>",
                                             buttons: {
                                                 ok: function () {
                                                 }
@@ -82,7 +112,7 @@
                                             url: "save_forword",
                                             method:'post',
                                             type: 'json',
-                                            data: {'grievance_code':grievance_code, 'to_forword':to_forword, _token:token},
+                                            data: {'grievance_code':grievance_code, 'to_forword':to_forword, _token:token, remark:remark},
                                             success:function(data){
                                                 if (data.status == 1){
                                                     $.confirm({
@@ -199,7 +229,7 @@
     "targets": 4,
             "data": "complain",
     },
-<?php if (session()->get('user_type') == 0) { ?>
+<?php //if (session()->get('user_type') == 0) { ?>
 
         {
         "targets": - 1,
@@ -212,7 +242,7 @@
                 return str_btns;
                 }
         }
-<?php } ?>
+<?php //} ?>
     ],
             "order": [[1, 'asc']]
     });
