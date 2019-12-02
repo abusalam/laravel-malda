@@ -8,6 +8,7 @@
             <div class="card-body">
                 <h3 class="card-title">Grievance Status</h3>
                 <div id="search_data">
+									<div class="alert message" style="display: none"></div>
                     {{Form::open(['name'=>'grievance_status','id'=>'grievance_status','url' => '', 'method' => 'post'])}}
                     <div class="form-group row">
                         <div class="col-sm-2">&nbsp;</div>
@@ -17,8 +18,16 @@
                         </div>
                         <div class="col-sm-1">&nbsp;</div>
                     </div>
-                    <?php if(env("CAPTCHA")==1){  ?>
-                    <div class="row">
+										 <div class="form-group row">
+                        <div class="col-sm-2">&nbsp;</div>
+                        <div class="col-sm-2 mg-t-10">{{Form::label('mobileNo', 'Mobile No:', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
+                        <div class="col-sm-4">
+                            {{Form::text('mobileNo', '', ['id'=>'mobileNo','placeholder'=>'Enter Registered Mobile No','autocomplete'=>'off', 'class' => 'form-control']) }}
+                        </div>
+                        <div class="col-sm-1">&nbsp;</div>
+                    </div>
+                   
+<!--                    <div class="row">
                         <div class="col-md-4"></div>
                         <div class="form-group col-md-4">
                             <div class="captcha">
@@ -31,8 +40,8 @@
                         <div class="col-md-4"></div>
                         <div class="form-group col-md-4">
                             <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha"></div>
-                    </div>
-                    <?php }?>
+                    </div>-->
+                   
                     <div>
                         <div class="row form-group">
                             <div class="col-sm-4">
@@ -77,55 +86,66 @@
     $("#Search").click(function () {
 
         var grievance_id = $("#grievance_id").val();
+				var mobileNo = $("#mobileNo").val();
         var capcha = $("#captcha").val();
         $.ajax({
             type: 'POST',
             url: 'grievance_statuss',
-            data: {'_token': $('input[name="_token"]').val(), 'grievance_id': grievance_id, 'capcha': capcha},
+            data: {'_token': $('input[name="_token"]').val(), 'grievance_id': grievance_id, 'capcha': capcha,'mobileNo':mobileNo},
             success: function (data) {
 
-                $("#search_data").hide();
+              if(data.flag == 1){
+								$('.message').html("");
+								$('.message').append("Grievance ID and Mobile No Not Found");
+								$('.message').removeClass('alert-success');
+								$('.message').addClass('alert-danger');
+								$('.message').show();
+							}else{
+								$('.message').hide();
+								$('#search_data').hide();
+								
+								var msg = "";
+								var i;
+								msg += '<table class="table table-striped table-bordered table-hover">';
+								msg += '<tr><th width="20%">Grievance  ID</th><td width="80%">'+data.gData.code+'</td></tr>';
+								msg += '<tr><th>Name</th><td>'+data.gData.name+'</td></tr>';
+								msg += '<tr><th>Mobile No</th><td>'+data.gData.mobile_no+'</td></tr>';
+								msg += '<tr><th>Email</th><td>'+data.gData.email+'</td></tr>';
+								msg += '<tr>';
+								msg += '<th>Remark</th>';
+								msg += '<td>';
+								msg += '<table class="table table-striped table-bordered table-hover">';
+								msg += '<tr><th>Name</th><th>Date</th><th>Remark</th></tr>';
+								for(i=0; i<data.remarkData.length; i++){
+													msg += '<tr><td>' + data.remarkData[i].name + '</td>';
+													msg += '<td>' + data.remarkData[i].date + '</td>';
+													msg += '<td>' + data.remarkData[i].remark + '</td></tr>';
+												}
+								msg += '</table>';
+								msg += '</td>';
+								msg += '</tr>';
+								if(data.gData.close_status == 1){
+									
+								msg += '<tr><th>Close Status</th><td>Closed</td></tr>';
+									if(data.gData.remark == null){
+										msg += '<tr><th>Close Remark</th><td>N/A</td></tr>';
+									}else{
+										msg += '<tr><th>Close Remark</th><td>'+data.gData.remark+'</td></tr>';
+									}
+									
+								}
+								msg += '</table>';
+								
+								
+							
+								
+								$('#tbl_t').html("");
+								$('#tbl_t').append(msg);
+							}
 
-                var i = 0;
+									
 
-                var tbl = '<table id="user_details" class="table table-striped table-hover dataTable"  >';
-                tbl += '<thead >';
-                tbl += '<tr>';
-                tbl += '<th style="width: 3%;">SL#</th>';
-                tbl += '<th style="width: 15%;">Name</th>';
-                tbl += '<th style="width: 15%;">Mobile Number</th>';
-                tbl += '<th style="width: 15%;">Email</th>';
-                tbl += '<th style="width: 50%;">Complain</th>';
-
-                tbl += '</tr>';
-                tbl += '</thead>';
-
-                //tbl+='</table>';
-
-
-
-                $.each(data.options, function (key, value) {
-                    i = i + 1;
-                    tbl += '<tbody>';
-                    tbl += '<tr>';
-                    tbl += '<td>' + i + '</td>';
-                    tbl += '<td>' + value.name + '</td>';
-                    tbl += '<td>' + value.mobile_no + '</td>';
-                    tbl += '<td>' + value.email + '</td>';
-                    tbl += '<td>' + value.complain + '</td>';
-
-
-
-                    tbl += '</tr>';
-                    tbl += '</tbody>';
-
-
-
-                });
-                tbl += '</table>';
-                //link.addClass("link");
-
-                $("#tbl_t").append(tbl);
+               
 
 
 
