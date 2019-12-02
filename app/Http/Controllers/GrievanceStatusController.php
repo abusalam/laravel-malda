@@ -46,7 +46,7 @@ class GrievanceStatusController extends Controller
 
         try {
 
-            $result=tbl_grievance::where('griev_auto_id',$request->grievance_id)->select('*')->get();
+            $result=tbl_grievance::where('code',$request->code)->select('*')->get();
 
             $response = array(
                 'options' => $result

@@ -176,6 +176,7 @@
                         <ul>
                             <li><a href="{{route('home')}}">Home</a></li>
                             <li><a href="{{route('grievance')}}">Grievance</a></li>
+                            <li><a href="{{route('grievance_status')}}">Grievance Status</a></li> 
                             <li><a href="{{route('search_case')}}">Case Search</a></li>
                             <li><a href="{{route('todays_hearing')}}">Today's Hearing</a></li>
                             <?php if (session()->has('user_code') == false) { ?>
@@ -205,9 +206,11 @@
                                     <li><a href="#">Grievance</a>
                                         <ul>
                                         <li><a href="{{route('grievance_list')}}">Grievance List</a></li>
-                                        <?php if (session()->get('user_type') == 0) { ?>
+                                        
                                         <li><a href="{{route('forworded_grievance_list')}}">Forwarded Grievance List</a></li>
-                                        <?php } ?>
+                                <?php if (session()->get('user_type') == 0) { ?>
+                                        <li><a href="{{route('close_grievance_list')}}">Closed Grievance List</a></li>
+                                       <?php } ?> 
                                         </ul>
 
                                     </li>

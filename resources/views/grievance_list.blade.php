@@ -13,14 +13,12 @@
                             <tr>
                                 <th style="width: 5%;">#</th>
                                 <th style="width: 10%;">Name</th>              
-                                <th style="width: 15%;">Mobile Number</th> 
+                                <th style="width: 15%;">Mobile No</th> 
                                 <th style="width: 15%;">Email</th> 
-                                <th style="width: 40%;">Complain</th>
-                                <?php //if (session()->get('user_type') == 0) { ?>
-
-                                    <th style="width: 10%;">Action</th>
+                                <th style="width: 40%;">Complain</th>                                
+                                <th style="width: 10%;">Action</th>
                                 </tr>
-                            <?php //} ?>
+                            
                         </thead>
                         <tbody></tbody>
                         <!-- Table Footer -->
@@ -71,10 +69,10 @@
 												str += '</table>';
 												str += '</td></tr>';									
                         str += '<tr><td><label> User : </label></td><td>{!!Form::select('user',[''=>'Select All'],null,['id'=>'user','class'=>'form - control','placeholder'=>'Select All'])!!}</td></tr>';
-												str += '<tr><td><label> Remark : </label></td><td>{!! Form::textarea('remark', null, ['class'=>'form-control', 'rows'=>'2','id'=>'remark']) !!}</td></tr>';
+                        str += '<tr><td><label> Remarks : </label></td><td>{{Form::textarea('remark', '', ['id'=>'remark','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300']) }}</td></tr>';
                         str += '</tbody>';
                         str += '</table>';
-                        get_user();
+                        get_user(grievance_code);
                         $.confirm({
                             title: 'Grievance Forward',
                             content: str,
@@ -84,19 +82,9 @@
                                 forwoad: function(){
                                     var token = $("input[name='_token']").val();
                                     var to_forword = $("#user").val();
-																		var remark = $("#remark").val();
-																		var msg="";
-																		var f = 0;
-																		if(to_forword == ''){
-																			msg+= '<li>Please Select User.</li>';
-																			f=1;
-																		}
-//																		if(remark == ''){
-//																			msg+= '<li>Please Enter Remark.</li>';
-//																			f=1;
-//																		}
-//																		
-                                    if (f==1){
+                                    var remark = $("#remark").val();
+
+                                    if (to_forword == ''){
                                         $.confirm({
                                             title: 'Warning!',
                                             type: 'orange',
@@ -107,12 +95,24 @@
                                                 }
                                             }
                                         });
-                                    } else{
+                                    }
+                                    else if (remark == ''){
+                                        $.confirm({
+                                            title: 'Warning!',
+                                            type: 'orange',
+                                            icon: 'fa fa-times',
+                                            content: "Please Enter Remarks",
+                                            buttons: {
+                                                ok: function () {
+                                                }
+                                            }
+                                        });
+                                    }  else{
                                         $.ajax({
                                             url: "save_forword",
                                             method:'post',
                                             type: 'json',
-                                            data: {'grievance_code':grievance_code, 'to_forword':to_forword, _token:token, remark:remark},
+                                            data: {'grievance_code':grievance_code, 'to_forword':to_forword,'remark':remark, _token:token},
                                             success:function(data){
                                                 if (data.status == 1){
                                                     $.confirm({
@@ -127,7 +127,30 @@
                                                         }
                                                     });
                                                 }
-                                            }
+                                            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#loadingDiv").hide();
+                var msg = "";
+                if (jqXHR.status !== 422 && jqXHR.status !== 400) {
+                    msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
+                } else {
+                    if (jqXHR.responseJSON.hasOwnProperty('exception')) {
+                        msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                    } else {
+                        msg += "Error(s):<strong><ul>";
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            msg += "<li>" + value + "</li>";
+                        });
+                        msg += "</ul></strong>";
+                    }
+                }
+                $.alert({
+                    title: 'Error!!',
+                    type: 'red',
+                    icon: 'fa fa-exclamation-triangle',
+                    content: msg
+                });
+            }
                                         });
                                     }
                                 },
@@ -139,13 +162,14 @@
             });
         });    
     });
-    function get_user(){
+    function get_user(grievance_code){
+
     var token = $("input[name='_token']").val();
         $.ajax({
             url:"user_list",
             method:'post',
             type: 'json',
-            data: { _token:token},
+            data: {grievance_code:grievance_code, _token:token},
             success:function(data){      
                 $('#user').html('<option value="">Select All</option>');
                 $.each(data.options, function(key, value){
@@ -229,20 +253,19 @@
     "targets": 4,
             "data": "complain",
     },
-<?php //if (session()->get('user_type') == 0) { ?>
 
-        {
-        "targets": - 1,
-                "data": 'action',
-                "searchable": false,
-                "sortable": false,
-                "render": function (data, type, full, meta) {
-                var str_btns = "";
-                str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="View"><i class="fa fa-eye"></i></button>&nbsp;';
-                return str_btns;
-                }
-        }
-<?php //} ?>
+    {
+    "targets": - 1,
+            "data": 'action',
+            "searchable": false,
+            "sortable": false,
+            "render": function (data, type, full, meta) {
+            var str_btns = "";
+            str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="View"><i class="fa fa-eye"></i></button>&nbsp;';
+            return str_btns;
+            }
+    }
+
     ],
             "order": [[1, 'asc']]
     });

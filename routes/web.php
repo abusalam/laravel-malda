@@ -107,6 +107,17 @@ Route::post('save_forword', 'GrievanceController@save_forword');
 
 Route::post('forwored_grievance_datatable', 'GrievanceController@forwored_grievance_datatable');
 
+Route::post('view_user_for_forward', 'GrievanceController@view_user_for_forward');
+Route::post('close_grievance', 'GrievanceController@close_grievance');
+
+Route::get('/close_grievance_list', 'GrievanceController@close_grievance_list')->name('close_grievance_list');
+Route::post('closed_grievance_datatable', 'GrievanceController@closed_grievance_datatable');
+
+
+
+
+
+
 Route::get('session', function () {
    return view('layout.session');
 });

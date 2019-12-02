@@ -265,14 +265,39 @@ class registrationController extends Controller {
         ];
 
         try {
-         
+         $cenvertedTime=0;
+         $date_time=0;
          $mobile_no = $request->mobile_no;
             $mobile_no_checking = tbl_user::select('*')->where('mobile_no', '=', $mobile_no)->get();
 
-            if (count($mobile_no_checking) > 0) {
+            $mobile_no_verify = tbl_mobile_verify::select('*')->where('mobile_no', '=', $mobile_no)->get();
+
+
+            if(count($mobile_no_verify) >0){
+
+            $maxValue = tbl_mobile_verify::select('otp_creation_time','otp')->where('code', DB::raw("(select max(code) from tbl_mobile_verify where mobile_no=$mobile_no)"))->first();
+           // echo $maxValue->created_at;die;
+
+            $cenvertedTime = date('Y-m-d H:i:s',strtotime('+12 hour',strtotime($maxValue->otp_creation_time)));
+
+           // echo $cenvertedTime;die;
+             
+
+            date_default_timezone_set('Asia/Kolkata');
+            $date_time=date('Y-m-d H:i:s');
+            //echo $date_time;die;
+        }
+
+          if(count($mobile_no_verify)==0 || $cenvertedTime < $date_time ){
+
+            if (count($mobile_no_checking) > 0 ) {
+                date_default_timezone_set('Asia/Kolkata');
+                
                 $mobile_verification = new tbl_mobile_verify();
                 $mobile_verification->mobile_no = $mobile_no;
                 $mobile_verification->otp = rand(1000, 9999);
+                $mobile_verification->otp_creation_time = date('Y-m-d H:i:s');
+
                 $mobile_verification->save();
                 if ($mobile_no != '') {
                     $Destination = $mobile_no;
@@ -284,7 +309,7 @@ class registrationController extends Controller {
                 }
 
                 $response = array(
-                    'status' => 1
+                    'status' => 1, 'otp'=>1
                 );
                 
             }
@@ -293,6 +318,12 @@ class registrationController extends Controller {
                     'status' => 2
                 );
             }
+        }else{
+            $response = array(
+                    'status' => 1, 'otp'=>$maxValue->otp
+                );
+
+        }
                 
            
         } catch (\Exception $e) {
