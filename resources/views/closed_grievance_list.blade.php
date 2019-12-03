@@ -19,6 +19,7 @@
                                 <th style="width: 50%;">Complain</th>
                                 <th style="width: 15%;">To Forward</th>
                                 <th style="width: 15%;">Closed Date</th>
+                                 <th style="width: 15%;">Action</th>
                                 
 
 
@@ -39,6 +40,81 @@
 <script>
     $(document).ready(function () {
         create_table();
+
+         var table = $('#tbl_grievance_list').DataTable();
+        table.on('draw.dt', function () {
+            $('.view-button').click(function () {
+
+                var grievance_code = this.id;
+
+                var token = $ ('input[name="_token"]').val();
+                $.ajax({
+                    url: "view_user_for_forward",
+                    method:'post',
+                    type:'json',
+                    data:{'grievance_code':grievance_code, _token:token},
+                    success:function(data){
+
+                         var str = "";
+                        str += '<table  class="table table-sm table-bordered" id="forwardTable">';
+                        str += '<tbody>';
+                        str += '<tr><td><label>Grievance ID : </label></td><td>' + data.options.code + '</td></tr>';
+                        str += '<tr><td><label> Name : </label></td><td>' + data.options.name + '</td></tr>';
+                        str += '<tr><td><label> Mobile Number : </label></td><td>' + data.options.mobile_no + '</td></tr>';
+                        str += '<tr><td><label> Email : </label></td><td>' + data.options.email + '</td></tr>';
+                        str += '<tr><td><label> Complain : </label></td><td>' + data.options.complain + '</td></tr>';
+                                                str += '<tr><td><label> Forwarded : </label></td><td>';
+                                              str += '<table class="table">';
+                                                str += '<tr><th width="20%">User</th><th width="30%">Date</th><th width="50%">Remark</th></tr>';
+
+
+//                                              $.each(data.remarkData, function(key, value){
+//                                                  str += '<tr><td>' + value['name'] + '</td>';
+//                                                  str += '<td>' + value.date + '</td>';
+//                                                  str += '<td>' + value.remark + '</td></tr>';
+//                                              });
+
+                                            for(i=0; i<data.remarkData.length; i++){
+                                                    str += '<tr><td>' + data.remarkData[i].name + '</td>';
+                                                    str += '<td>' + data.remarkData[i].date + '</td>';
+                                                    str += '<td>' + data.remarkData[i].remark + '</td></tr>';
+                                                }
+                                                  str += '</table>';
+                                                str += '</td></tr>';
+if(data.options.close_status == 1){
+    str += '<tr><td>Close Status</label></td><td> Closed </td></tr>';
+
+    if(data.options.remark == null){
+        str += '<tr><td>Close Remark</label></td><td>N/A</td></tr>';
+    }else{
+        str += '<tr><td>Close Remark</label></td><td>' + data.options.remark + '</td></tr>';
+    }
+}
+
+                                                
+                                                                                  
+                        
+                         
+                        str += '</tbody>';
+                        str += '</table>';
+
+                        $.confirm({
+                            title: 'Closed Grievance ',
+                            content: str,
+                            boxWidth: '80%',
+                            useBootstrap: false,
+                            buttons: {
+                               
+                                cancel: function (){}
+                            }
+                        });
+
+                    }
+                });
+
+
+            });
+        });
 
         
 
@@ -132,7 +208,19 @@
                             "targets": 7,
                             "data": "updated_at",
 
-                        }
+                        },
+                        {
+                   "targets": - 1,
+                "data": 'action',
+                "searchable": false,
+                "sortable": false,
+                "render": function (data, type, full, meta) {
+                var str_btns = "";
+                str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="View"><i class="fa fa-eye"></i></button>&nbsp;';
+                return str_btns;
+                }
+        }
+
                         
                         
                        

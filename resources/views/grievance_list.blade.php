@@ -126,6 +126,20 @@
                                                             }
                                                         }
                                                     });
+                                                }else if(data.status == 2){
+                                                    $.confirm({
+                                                        title: 'Unsuccess!',
+                                                        type: 'green',
+                                                        icon: 'fa fa-check',
+                                                        content: "Already Forwarded this User",
+                                                        buttons: {
+                                                            ok: function () {
+                                                                
+                                                            }
+                                                        }
+                                                    });
+
+
                                                 }
                                             },
             error: function (jqXHR, textStatus, errorThrown) {

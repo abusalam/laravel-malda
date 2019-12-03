@@ -415,6 +415,11 @@ class GrievanceController extends Controller {
 		]);
 		
 		try {
+
+			$result=tbl_grievence_forwored::where('griv_code',$request->grievance_code)->where('to_forword',$request->to_forword)->get();
+			if($result->count()>0){
+				$response = array('status' => 2);
+			}else{
 			$tbl_grivense_frd = new tbl_grievence_forwored();
 			$tbl_grivense_frd->griv_code = $request->grievance_code;
 			$tbl_grivense_frd->to_forword = $request->to_forword;
@@ -423,6 +428,7 @@ class GrievanceController extends Controller {
 			$tbl_grivense_frd->save();
 
 			$response = array('status' => 1);
+		}
 		}
 		catch (\Exception $e) {
 
