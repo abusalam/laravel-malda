@@ -409,14 +409,14 @@ class GrievanceController extends Controller {
 			'grievance_code' => "required|integer",
 			'to_forword' => "required|integer",
 			'remark' => "required",
-			'attatchment' => 'nullable|mimes:pdf| max:1024',
+			'attatchment' => 'nullable|max:1024',
 			], [
 			'grievance_code.required' => 'Grievance Code is Required',
 			'grievance_code.integer' => 'Grievance Code Should be Integer',
 			'to_forword.required' => 'To Forword is required',
 			'to_forword.integer' => 'To Forword Should be Integer',
 			'remark.required' => 'Remark is Required',
-			'attatchment.mimes' => 'Attatchment file must be a pdf format.',
+			
             'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',  
 		]);
 		

@@ -208,6 +208,8 @@
                                         <li><a href="{{route('grievance_list')}}">Grievance List</a></li>
                                         
                                         <li><a href="{{route('forworded_grievance_list')}}">Forwarded Grievance List</a></li>
+
+                                        <li><a href="{{route('resolve_grievance_list')}}">Resolve Grievance List</a></li>
                                 
                                         <li><a href="{{route('close_grievance_list')}}">Closed Grievance List</a></li>
                                       

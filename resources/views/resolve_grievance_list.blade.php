@@ -4,25 +4,7 @@
     <div class="col-12">                        
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title"> Forwarded Grievance List</h3>
-
-                {{Form::open(['name'=>'to_form_search','id'=>'case_search','url' => '', 'method' => 'post'])}}
-                <div class="form-group row ">
-                    
-                    <div class="col-sm-2 mg-t-10 text-sm-right text-left">{{Form::label('case_number', 'From Date', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
-                    <div class="col-sm-3 mg-t-10">
-                        {{Form::text('from_date', '', ['id'=>'from_date','placeholder'=>'Enter From Date','autocomplete'=>'off', 'class' => 'form-control']) }}
-                    </div>
-                     <div class="col-sm-2 mg-t-10 text-sm-right text-left">{{Form::label('case_number', 'To Date', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
-                    <div class="col-sm-3 mg-t-10">
-                        {{Form::text('to_date', '', ['id'=>'to_date','placeholder'=>'Enter To Date','autocomplete'=>'off', 'class' => 'form-control']) }}
-                    </div>
-                    <div class="col-sm-2 mg-t-10">
-                        {{Form::button( 'Search', ['type'=>'button','id'=>'Search','class' => 'btn btn-primary btn-block']) }}
-                    </div>
-                   
-                </div>
-                {!! Form::close() !!}
+                <h3 class="card-title"> Resolve Grievance List</h3>
                 {{csrf_field()}}
                 <div class="datatbl  " style="width: 96%;margin-left: 20px;">
                     <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_grievance_list" style="width: 100%">
@@ -32,12 +14,14 @@
                                 <th style="width: 5%;"> ID</th>
                                 <th style="width: 15%;">Grievance Date</th>
                                 <th style="width: 10%;">Name</th>              
-                                <th style="width: 10%;">Mobile No</th>                                  
-                                <th style="width: 50%;">Complain</th>
-                                <th style="width: 15%;">To Forward</th>
+                                <th style="width: 10%;">Mobile No</th> 
+                                 
+                                <th style="width: 50%;">Complain</th>                               
+                                 <th style="width: 15%;">Action</th>
                                 
 
-                           
+
+                                
 
                             </tr>
 
@@ -52,71 +36,12 @@
 @endsection
 @section('script')
 <script>
+
+    var close;
     $(document).ready(function () {
-
-
-
-         $("#to_date").datepicker({
-            autoclose: true,
-            format: 'dd/mm/yyyy',
-            todayHighlight: true
-        }).on('change', function (e) {
-            $('#to_form_search').bootstrapValidator('revalidateField', 'to_date');
-        });
-        $("#from_date").datepicker({
-            autoclose: true,
-            format: 'dd/mm/yyyy',
-            todayHighlight: true
-        }).on('change', function (e) {
-            $('#to_form_search').bootstrapValidator('revalidateField', 'from_date');
-
-        });
-
-        $("#to_date").change(function () {
-            //alert('hi');
-            var startDate = document.getElementById("from_date").value;
-            var endDate = document.getElementById("to_date").value;
-
-            var arrStartDate = startDate.split("/");
-            var date1 = new Date(arrStartDate[2], arrStartDate[1], arrStartDate[0]);
-            var arrEndDate = endDate.split("/");
-            var date2 = new Date(arrEndDate[2], arrEndDate[1], arrEndDate[0]);
-
-            if ((Date.parse(date2) < Date.parse(date1))) {
-                alert("To date should be greater than from date");
-                document.getElementById("to_date").value = "";
-                $('.has-error').addClass('has-error');
-                $('#transit_pass_search').data('bootstrapValidator').updateStatus('to_date', 'INVALID', null)
-                //$('.help-block').css('display', 'block');
-            }
-        });
-        $("#from_date").change(function () {
-            //alert('hi');
-            var startDate = document.getElementById("from_date").value;
-            var endDate = document.getElementById("to_date").value;
-
-            var arrStartDate = startDate.split("/");
-            var date1 = new Date(arrStartDate[2], arrStartDate[1], arrStartDate[0]);
-            //alert(date1);
-            var arrEndDate = endDate.split("/");
-            var date2 = new Date(arrEndDate[2], arrEndDate[1], arrEndDate[0]);
-            //alert(date2);
-            if ((Date.parse(date2) < Date.parse(date1))) {
-
-                alert("From date should be lesser than to date");
-                document.getElementById("from_date").value = "";
-                $('.has-error').addClass('has-error');
-                $('#transit_pass_search').data('bootstrapValidator').updateStatus('from_date', 'INVALID', null)
-                //$('.help-block').css('display', 'block');
-            }
-        });
         create_table();
 
-        $("#Search").click(function () {
-            create_table();
-        });
-
-        var table = $('#tbl_grievance_list').DataTable();
+          var table = $('#tbl_grievance_list').DataTable();
         table.on('draw.dt', function () {
 
 
@@ -193,16 +118,18 @@
                         str += '</table>';
                         
 
-                        $.confirm({
-                            title: 'Grievance Forward',
+                      close=  $.confirm({
+                            title: 'Close Grievance',
                             content: str,
                             boxWidth: '80%',
                             useBootstrap: false,
                             buttons: {
                                 
                                 cancel: function (){}
-                            }
+                            },
+
                         });
+                      close.open();
 
                     }
                 });
@@ -211,10 +138,12 @@
             });
         });
 
+        
+
 
     });
 
-function close_grievance(grievance_code){
+    function close_grievance(grievance_code){
     if($("#check").prop('checked') == true){
 
         var token = $("input[name='_token']").val();
@@ -262,14 +191,13 @@ $.confirm({
 
 
 }
+close.close();
 
     
 }
     function create_table() {
         var table = "";
         var token = $('input[name="_token"]').val();
-        var from_date = $('#from_date').val();
-        var to_date = $('#to_date').val();
         $("#tbl_grievance_list").dataTable().fnDestroy();
         table = $('#tbl_grievance_list').DataTable({
             "responsive": true,
@@ -278,9 +206,9 @@ $.confirm({
             bjQueryUI: true,
             "bInfo": false,
             "ajax": {
-                url: "forwored_grievance_datatable",
+                url: "resolve_grievance_datatable",
                 type: "post",
-                data: {'_token': $('input[name="_token"]').val(),from_date: from_date, to_date: to_date},
+                data: {'_token': $('input[name="_token"]').val()},
                 dataSrc: "record_details",
                 error: function (jqXHR, textStatus, errorThrown) {
                     var msg = "";
@@ -346,27 +274,23 @@ $.confirm({
                             "data": "complain",
 
                         },
-                        {
-                            "targets": 6,
-                            "data": "to_forword",
-
-                        },
-
-        //           
+                       
                         
-        //                 {
-        //            "targets": - 1,
-        //         "data": 'action',
-        //         "searchable": false,
-        //         "sortable": false,
-        //         "render": function (data, type, full, meta) {
-        //         var str_btns = "";
-        //         str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="Click to Close Grievance"><i class="fa fa-eye"></i></button>&nbsp;';
-        //         return str_btns;
-        //         }
-        // }
-        //     
+                        {
+                   "targets": - 1,
+                "data": 'action',
+                "searchable": false,
+                "sortable": false,
+                "render": function (data, type, full, meta) {
+                var str_btns = "";
+                str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="Click to close Grievance"><i class="fa fa-eye"></i></button>&nbsp;';
+                return str_btns;
+                }
+        }
 
+                        
+                        
+                       
                     ],
 
             "order": [[1, 'asc']]

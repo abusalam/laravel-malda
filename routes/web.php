@@ -134,6 +134,17 @@ Route::get('refreshcaptcha', 'SDOCourtController@refreshCaptcha');
 Route::post('grievance_statuss', 'GrievanceStatusController@grievance_statuss');
 
 
+////////Resolve
+
+Route::get('/resolve_grievance_list', 'GrievanceStatusController@resolve_grievance_list')->name('resolve_grievance_list');
+Route::post('resolve_grievance_datatable', 'GrievanceStatusController@resolve_grievance_datatable');
+
+
+
+
+
+
+
 
 
 

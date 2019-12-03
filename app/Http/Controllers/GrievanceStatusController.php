@@ -86,4 +86,95 @@ class GrievanceStatusController extends Controller {
 		}
 	}
 
+	public function resolve_grievance_list(){
+
+		return view("resolve_grievance_list");
+
+	}
+
+	public function resolve_grievance_datatable(Request $request){
+
+
+		$draw = $request->draw;
+		$offset = $request->start;
+		$length = $request->length;
+		$search = $request->search ["value"];
+		$order = $request->order;
+
+		$this->validate($request, [
+			'search.*' => 'nullable|regex:/^[A-Za-z\s]+$/i',
+			], [
+			'search.*.regex' => 'Search value accept only Alphabatic character',
+		]);
+
+		$data = array();
+
+		 if(session()->get('user_type')==0){
+
+			$record=tbl_grievance::where('close_status',2)->select('name','mobile_no','email','complain','code','created_at')->orderby('code', 'desc')
+			->where(function($q) use ($search) {
+			$q->orwhere('name', 'like', '%' . $search . '%');
+			$q->orwhere('mobile_no', 'like', '%' . $search . '%');
+			$q->orwhere('email', 'like', '%' . $search . '%');
+			$q->orwhere('complain', 'like', '%' . $search . '%');
+			
+		});
+
+		}else{
+
+			$record = tbl_grievance::leftjoin('tbl_grievence_forwored', 'tbl_grievence_forwored.griv_code', 'tbl_grivense.code')
+			->join('tbl_user', 'tbl_user.code', 'tbl_grievence_forwored.to_forword')
+			->where('tbl_grievence_forwored.to_forword','=', session()->get('user_code'))->where('tbl_grivense.close_status',2)->wherenull('tbl_grievence_forwored.to_forword')
+			//->wherenotnull('tbl_grievence_forwored.griv_code')
+			->select('tbl_grivense.name ', 'tbl_grivense.mobile_no', 'tbl_grivense.email', 'tbl_grivense.complain', 'tbl_grivense.code','tbl_grivense.created_at','tbl_grivense.updated_at')
+			->orderby('code', 'desc')
+			->where(function($q) use ($search) {
+			$q->orwhere('tbl_grivense.name', 'like', '%' . $search . '%');
+			$q->orwhere('tbl_grivense.mobile_no', 'like', '%' . $search . '%');
+			$q->orwhere('tbl_grivense.email', 'like', '%' . $search . '%');
+			$q->orwhere('tbl_grivense.complain', 'like', '%' . $search . '%');
+			
+		});
+
+		}
+		
+
+		// if ($case_data!= '') {
+		//            $record = $record->where('case_no', '=', $case_data);
+		//          }
+
+
+		$filtered_count = $record->count();
+		$page_displayed = $record->offset($offset)->limit($length)->get();
+		$count = $offset + 1;
+		foreach ($page_displayed as $row) {
+			$nestedData['id'] = $count;
+			$nestedData['code'] = $row->code;
+			$nestedData['name'] = $row->name;
+			$nestedData['mobile_no'] = $row->mobile_no;
+			$nestedData['email'] = $row->email;
+			$nestedData['complain'] = $row->complain;
+			
+			$nestedData['created_at'] = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $row->created_at)->format('d/m/Y');
+			// $nestedData['updated_at'] = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $row->updated_at)->format('d/m/Y');
+
+			$view_button = $row->code;
+			$nestedData['action'] = array('v' => $view_button);
+			$count++;
+			$data[] = $nestedData;
+		}
+		//print_r($data);die;
+		  $response = array(
+			"draw" => $draw,
+			"recordsTotal" => $filtered_count,
+			"recordsFiltered" => $filtered_count,
+			'record_details' => $data
+		);
+
+		  return response()->json($response);
+
+
+
+	}
+
 }
