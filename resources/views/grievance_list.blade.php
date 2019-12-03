@@ -5,13 +5,14 @@
         <div class="card">
             
             <div class="card-body">
-                <h3 class="card-title">Grievance</h3>
+                <h3 class="card-title">New Grievance List</h3>
                 {!! csrf_field() !!}
                 <div class="datatbl  " style="width: 96%;margin-left: 20px;">
                     <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_grievance_list" style="width: 100%">
                         <thead>
                             <tr>
                                 <th style="width: 5%;">#</th>
+                                <th style="width: 5%;">ID</th>
                                 <th style="width: 10%;">Name</th>              
                                 <th style="width: 15%;">Mobile No</th> 
                                 <th style="width: 15%;">Email</th> 
@@ -47,10 +48,17 @@
                         var str = "";
                         str += '<table  class="table table-sm table-bordered" id="forwardTable">';
                         str += '<tbody>';
+                        str += '<tr><td><label>Grievance ID : </label></td><td>' + data.options.code + '</td></tr>';
                         str += '<tr><td><label> Name : </label></td><td>' + data.options.name + '</td></tr>';
                         str += '<tr><td><label> Mobile Number : </label></td><td>' + data.options.mobile_no + '</td></tr>';
                         str += '<tr><td><label> Email : </label></td><td>' + data.options.email + '</td></tr>';
                         str += '<tr><td><label> Complain : </label></td><td>' + data.options.complain + '</td></tr>';
+                        if(data.options.attatchment != null){
+                            str += '<tr><td><label> Attatchment: </label></td><td><a href ="upload/grievance_attatchment/'+ data.options.attatchment + '" target="_blank"> View Attatchment </a></td></tr>';
+
+                        }
+
+                         
 												str += '<tr><td><label> Forwarded : </label></td><td>';
 											  str += '<table class="table">';
 												str += '<tr><th width="20%">User</th><th width="30%">Date</th><th width="50%">Remark</th></tr>';
@@ -70,6 +78,7 @@
 												str += '</td></tr>';									
                         str += '<tr><td><label> User : </label></td><td>{!!Form::select('user',[''=>'Select All'],null,['id'=>'user','class'=>'form - control','placeholder'=>'Select All'])!!}</td></tr>';
                         str += '<tr><td><label> Remarks : </label></td><td>{{Form::textarea('remark', '', ['id'=>'remark','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300']) }}</td></tr>';
+                        str += '<tr><td><label> Attatchment :</br> (Only PDF) </label></td><td>{!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}</td></tr>';
                         str += '</tbody>';
                         str += '</table>';
                         get_user(grievance_code);
@@ -82,37 +91,51 @@
                                 forwoad: function(){
                                     var token = $("input[name='_token']").val();
                                     var to_forword = $("#user").val();
-                                    var remark = $("#remark").val();
+                                    var remark = $("#remark").val();                                    
+                                    var attatchment = $('#attatchment')[0].files;
 
-                                    if (to_forword == ''){
-                                        $.confirm({
-                                            title: 'Warning!',
-                                            type: 'orange',
-                                            icon: 'fa fa-times',
-                                            content: "<ul>"+msg+"</ul>",
-                                            buttons: {
-                                                ok: function () {
-                                                }
-                                            }
-                                        });
+                                    var fd = new FormData();
+                                    fd.append('to_forword', to_forword);
+                                    fd.append('grievance_code', grievance_code);
+                                    fd.append('remark', remark);
+                                    
+                                    fd.append('attatchment', attatchment[0]);
+                                    fd.append('_token', '{{ csrf_token() }}');
+
+
+
+                                    
+                                    var msg="";
+                                    var f = 0;
+                                    if(to_forword == ''){
+                                    msg+= '<li>Please Select User.</li>';
+                                    f=1;
                                     }
-                                    else if (remark == ''){
-                                        $.confirm({
-                                            title: 'Warning!',
-                                            type: 'orange',
-                                            icon: 'fa fa-times',
-                                            content: "Please Enter Remarks",
-                                            buttons: {
-                                                ok: function () {
-                                                }
-                                            }
-                                        });
-                                    }  else{
+                                    if(remark == ''){
+                                    msg+= '<li>Please Enter Remark.</li>';
+                                    f=1;
+                                    }
+
+                                   if (f==1){
+                                       $.confirm({
+                                           title: 'Warning!',
+                                           type: 'orange',
+                                           icon: 'fa fa-times',
+                                           content: "<ul>"+msg+"</ul>",
+                                           buttons: {
+                                               ok: function () {
+                                               }
+                                           }
+                                       });
+                                   }
+                                    else{
                                         $.ajax({
                                             url: "save_forword",
                                             method:'post',
                                             type: 'json',
-                                            data: {'grievance_code':grievance_code, 'to_forword':to_forword,'remark':remark, _token:token},
+                                            processData: false,
+                                            contentType: false,
+                                            data: fd,
                                             success:function(data){
                                                 if (data.status == 1){
                                                     $.confirm({
@@ -129,7 +152,7 @@
                                                 }else if(data.status == 2){
                                                     $.confirm({
                                                         title: 'Unsuccess!',
-                                                        type: 'green',
+                                                        type: 'red',
                                                         icon: 'fa fa-check',
                                                         content: "Already Forwarded this User",
                                                         buttons: {
@@ -253,18 +276,22 @@
     },
     {
     "targets": 1,
-            "data": "name",
+            "data": "code",
     },
     {
     "targets": 2,
-            "data": "mobile_no",
+            "data": "name",
     },
     {
     "targets": 3,
-            "data": "email",
+            "data": "mobile_no",
     },
     {
     "targets": 4,
+            "data": "email",
+    },
+    {
+    "targets": 5,
             "data": "complain",
     },
 
@@ -275,7 +302,7 @@
             "sortable": false,
             "render": function (data, type, full, meta) {
             var str_btns = "";
-            str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="View"><i class="fa fa-eye"></i></button>&nbsp;';
+            str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="Click To Forward Grievance"><i class="fa fa-eye"></i></button>&nbsp;';
             return str_btns;
             }
     }

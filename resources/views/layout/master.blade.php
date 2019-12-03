@@ -208,9 +208,9 @@
                                         <li><a href="{{route('grievance_list')}}">Grievance List</a></li>
                                         
                                         <li><a href="{{route('forworded_grievance_list')}}">Forwarded Grievance List</a></li>
-                                <?php if (session()->get('user_type') == 0) { ?>
+                                
                                         <li><a href="{{route('close_grievance_list')}}">Closed Grievance List</a></li>
-                                       <?php } ?> 
+                                      
                                         </ul>
 
                                     </li>

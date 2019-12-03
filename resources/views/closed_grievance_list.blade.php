@@ -4,7 +4,7 @@
     <div class="col-12">                        
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title"> Closed Grievance</h3>
+                <h3 class="card-title"> Closed Grievance List</h3>
                 {{csrf_field()}}
                 <div class="datatbl  " style="width: 96%;margin-left: 20px;">
                     <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_grievance_list" style="width: 100%">
@@ -17,7 +17,7 @@
                                 <th style="width: 10%;">Mobile No</th> 
                                  
                                 <th style="width: 50%;">Complain</th>
-                                <th style="width: 15%;">To Forward</th>
+                                
                                 <th style="width: 15%;">Closed Date</th>
                                  <th style="width: 15%;">Action</th>
                                 
@@ -63,6 +63,7 @@
                         str += '<tr><td><label> Mobile Number : </label></td><td>' + data.options.mobile_no + '</td></tr>';
                         str += '<tr><td><label> Email : </label></td><td>' + data.options.email + '</td></tr>';
                         str += '<tr><td><label> Complain : </label></td><td>' + data.options.complain + '</td></tr>';
+                        str += '<tr><td><label> Attatchment : </label></td><td> <a href ="upload/grievance_attatchment/'+ data.options.attatchment + '" target="_blank"> View Attatchment </a></td></tr>';
                                                 str += '<tr><td><label> Forwarded : </label></td><td>';
                                               str += '<table class="table">';
                                                 str += '<tr><th width="20%">User</th><th width="30%">Date</th><th width="50%">Remark</th></tr>';
@@ -199,13 +200,9 @@ if(data.options.close_status == 1){
                             "data": "complain",
 
                         },
+                       
                         {
                             "targets": 6,
-                            "data": "to_forword",
-
-                        },
-                        {
-                            "targets": 7,
                             "data": "updated_at",
 
                         },
@@ -216,7 +213,7 @@ if(data.options.close_status == 1){
                 "sortable": false,
                 "render": function (data, type, full, meta) {
                 var str_btns = "";
-                str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="View"><i class="fa fa-eye"></i></button>&nbsp;';
+                str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="View Closed Grievance"><i class="fa fa-eye"></i></button>&nbsp;';
                 return str_btns;
                 }
         }

@@ -4,7 +4,7 @@
     <div class="col-12">                        
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title"> Forwarded Grievance</h3>
+                <h3 class="card-title"> Forwarded Grievance List</h3>
 
                 {{Form::open(['name'=>'to_form_search','id'=>'case_search','url' => '', 'method' => 'post'])}}
                 <div class="form-group row ">
@@ -55,6 +55,8 @@
 @section('script')
 <script>
     $(document).ready(function () {
+
+
 
          $("#to_date").datepicker({
             autoclose: true,
@@ -118,6 +120,8 @@
 
         var table = $('#tbl_grievance_list').DataTable();
         table.on('draw.dt', function () {
+
+
             $('.view-button').click(function () {
 
                 var grievance_code = this.id;
@@ -128,6 +132,16 @@
                     method:'post',
                     type:'json',
                     data:{'grievance_code':grievance_code, _token:token},
+                    complete : function(data){
+                        $(".grievance_close").click(function(){
+                        alert();
+
+                       close_grievance();
+
+
+                         });
+
+                    },
                     success:function(data){
 
                          var str = "";
@@ -138,9 +152,10 @@
                         str += '<tr><td><label> Mobile Number : </label></td><td>' + data.options.mobile_no + '</td></tr>';
                         str += '<tr><td><label> Email : </label></td><td>' + data.options.email + '</td></tr>';
                         str += '<tr><td><label> Complain : </label></td><td>' + data.options.complain + '</td></tr>';
+                        str += '<tr><td><label> Attatchment : </label></td><td> <a href ="upload/grievance_attatchment/'+ data.options.attatchment + '" target="_blank"> View Attatchment </a></td></tr>';
                                                 str += '<tr><td><label> Forwarded : </label></td><td>';
                                               str += '<table class="table">';
-                                                str += '<tr><th width="20%">User</th><th width="30%">Date</th><th width="50%">Remark</th></tr>';
+                                                str += '<tr><th width="20%">User</th><th width="20%">Date</th><th width="50%">Remark</th><th width="10%">Attachment</th></tr>';
 
 
 //                                              $.each(data.remarkData, function(key, value){
@@ -152,17 +167,42 @@
                                             for(i=0; i<data.remarkData.length; i++){
                                                     str += '<tr><td>' + data.remarkData[i].name + '</td>';
                                                     str += '<td>' + data.remarkData[i].date + '</td>';
-                                                    str += '<td>' + data.remarkData[i].remark + '</td></tr>';
+                                                    str += '<td>' + data.remarkData[i].remark + '</td>';
+                                                    if(data.remarkData[i].attatchment == null){
+                                                     str += '<td> N/A </td></tr>';
+                                                    }else{
+                                                    str += '<td> <a href ="upload/forward_attatchment/'+ data.remarkData[i].attatchment + '" target="_blank"> View </a></td></tr>';
                                                 }
+                                            }
 
 
                                                 
                                                 str += '</table>';
                                                 str += '</td></tr>';                                    
                         
+                         str += '<tr><td colspan="2">';
+                         str += '<table class="table table-bordered table-striped">'
+                        
+                        
+                        str+= '<div class="text-center alert-danger"><h2>Grievance Close</h2></div>';
+                          
+                          
+                        
+                          
                          str += '<tr><td><label> Remarks : </label></td><td>{{Form::textarea('remark', '', ['id'=>'remark','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300']) }}</td></tr>';
+                         str+= ' <tr><td colspan="2"><input type="checkbox" class="form-check-input" style="width: 20px;height: 20px;" id="check">&emsp;&emsp;<label class="form-check-label" for="check">I Agree to Close The Grievance</label><div class="pull-right"><button onclick="close_grievance('+grievance_code+')" id="'+grievance_code+'" class="btn btn-danger grievance_close"><span style="font-size: 20px">Close<span></button></div></td></tr>';
+
+                         str += '</table>'
+                         str += '</td></tr>';
+
+                         
+                         
+                           
+
                         str += '</tbody>';
+
                         str += '</table>';
+                        
 
                         $.confirm({
                             title: 'Grievance Forward',
@@ -170,9 +210,26 @@
                             boxWidth: '80%',
                             useBootstrap: false,
                             buttons: {
-                                Close: function(){
-                                    var token = $("input[name='_token']").val();
+                                
+                                cancel: function (){}
+                            }
+                        });
+
+                    }
+                });
+
+
+            });
+        });
+
+
+    });
+
+function close_grievance(grievance_code){
+
+    var token = $("input[name='_token']").val();
                                     var remark=$("#remark").val();
+                                    
                                    
                                         $.ajax({
                                             url: "close_grievance",
@@ -197,21 +254,7 @@
                                                 }
                                             }
                                         });
-                                    
-                                },
-                                cancel: function (){}
-                            }
-                        });
-
-                    }
-                });
-
-
-            });
-        });
-
-
-    });
+}
     function create_table() {
         var table = "";
         var token = $('input[name="_token"]').val();
@@ -308,7 +351,7 @@
                 "sortable": false,
                 "render": function (data, type, full, meta) {
                 var str_btns = "";
-                str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="View"><i class="fa fa-eye"></i></button>&nbsp;';
+                str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="Click to Close Grievance"><i class="fa fa-eye"></i></button>&nbsp;';
                 return str_btns;
                 }
         }

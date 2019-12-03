@@ -52,6 +52,19 @@
                     </div>
                     <div class="col-sm-1">&nbsp;</div>
                 </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-sm-2 mg-t-10">
+                        {!! Form::label('attatchment', 'Attatchment:', ['class'=>' mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) !!}
+                    </div>
+                    <div class="col-sm-4">
+                        {!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}
+                    </div>
+                    <div class="col-sm-1">&nbsp;</div>
+                </div>
+
+
                 <?php if(env("CAPTCHA")==1){  ?>
 
                 <div class="row">
@@ -152,6 +165,17 @@
                         }
                     }
                 },
+                attatchment: {
+                    validators: {                        
+                        file: {
+                            extension: 'pdf',
+                            type: 'application/pdf',
+                            maxSize: 1024 * 1024, // 5 MB
+                            message: 'The selected file is not valid, it should be (pdf) and 1 MB at maximum.'
+                        }
+                    }
+                },
+
                 captcha: {
                     validators: {
                         notEmpty: {
@@ -172,6 +196,7 @@
             var grivense_email = $('#grivense_email').val();
             var mobile_no = $('#mobile_no').val();
             var captcha = $('#captcha').val();
+            var attatchment = $('#attatchment')[0].files;
 
             var fd = new FormData();
             fd.append('grivense_name', grivense_name);
@@ -179,6 +204,7 @@
             fd.append('grivense_email', grivense_email);
             fd.append('grivense_complain', grivense_complain);
             fd.append('captcha', captcha);
+            fd.append('attatchment', attatchment[0]);
             fd.append('_token', '{{ csrf_token() }}');
 
             $.ajax({

@@ -110,7 +110,7 @@
 								msg += '<tr><th width="20%">Grievance  ID</th><td width="80%">'+data.gData.code+'</td></tr>';
 								msg += '<tr><th>Name</th><td>'+data.gData.name+'</td></tr>';
 								msg += '<tr><th>Mobile No</th><td>'+data.gData.mobile_no+'</td></tr>';
-								msg += '<tr><th>Email</th><td>'+data.gData.email+'</td></tr>';
+								msg += '<tr><th>Complain</th><td>'+data.gData.complain+'</td></tr>';
 								msg += '<tr>';
 								msg += '<th>Remark</th>';
 								msg += '<td>';
