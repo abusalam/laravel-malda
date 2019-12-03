@@ -122,11 +122,11 @@ class GrievanceStatusController extends Controller {
 
 		}else{
 
-			$record = tbl_grievance::leftjoin('tbl_grievence_forwored', 'tbl_grievence_forwored.griv_code', 'tbl_grivense.code')
-			->join('tbl_user', 'tbl_user.code', 'tbl_grievence_forwored.to_forword')
-			->where('tbl_grievence_forwored.to_forword','=', session()->get('user_code'))->where('tbl_grivense.close_status',2)->wherenull('tbl_grievence_forwored.to_forword')
+			$record = tbl_grievance::join('tbl_grievence_forwored', 'tbl_grievence_forwored.griv_code', 'tbl_grivense.code')
+			
+			->where('tbl_grievence_forwored.from_forword','=', session()->get('user_code'))->where('tbl_grivense.close_status',2)->wherenull('tbl_grievence_forwored.to_forword')
 			//->wherenotnull('tbl_grievence_forwored.griv_code')
-			->select('tbl_grivense.name ', 'tbl_grivense.mobile_no', 'tbl_grivense.email', 'tbl_grivense.complain', 'tbl_grivense.code','tbl_grivense.created_at','tbl_grivense.updated_at')
+			->select('tbl_grivense.name', 'tbl_grivense.mobile_no', 'tbl_grivense.email', 'tbl_grivense.complain', 'tbl_grivense.code','tbl_grivense.created_at','tbl_grivense.updated_at')
 			->orderby('code', 'desc')
 			->where(function($q) use ($search) {
 			$q->orwhere('tbl_grivense.name', 'like', '%' . $search . '%');

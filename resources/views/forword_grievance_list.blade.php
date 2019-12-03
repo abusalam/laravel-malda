@@ -35,6 +35,8 @@
                                 <th style="width: 10%;">Mobile No</th>                                  
                                 <th style="width: 50%;">Complain</th>
                                 <th style="width: 15%;">To Forward</th>
+                                <th style="width: 15%;">Action</th>
+                                
                                 
 
                            
@@ -124,6 +126,7 @@
 
                 var grievance_code = this.id;
 
+
                 var token = $ ('input[name="_token"]').val();
                 $.ajax({
                     url: "view_user_for_forward",
@@ -169,25 +172,6 @@
                                                 str += '</table>';
                                                 str += '</td></tr>';                                    
                         
-                         str += '<tr><td colspan="2">';
-                         str += '<table class="table table-bordered table-striped">'
-                        
-                        
-                        str+= '<div class="text-center alert-danger"><h2>Grievance Close</h2></div>';
-                          
-                          
-                        
-                          
-                         str += '<tr><td><label> Remarks : </label></td><td>{{Form::textarea('remark', '', ['id'=>'remark','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300']) }}</td></tr>';
-                         str+= ' <tr><td colspan="2"><input type="checkbox" class="form-check-input" style="width: 20px;height: 20px;" id="check">&emsp;&emsp;<label class="form-check-label" for="check">I Agree to Close The Grievance</label><div class="pull-right"><button onclick="close_grievance('+grievance_code+')" id="'+grievance_code+'" class="btn btn-danger grievance_close"><span style="font-size: 20px">Close<span></button></div></td></tr>';
-
-                         str += '</table>'
-                         str += '</td></tr>';
-
-                         
-                         
-                           
-
                         str += '</tbody>';
 
                         str += '</table>';
@@ -214,57 +198,7 @@
 
     });
 
-function close_grievance(grievance_code){
-    if($("#check").prop('checked') == true){
 
-        var token = $("input[name='_token']").val();
-                                    var remark=$("#remark").val();
-                                    
-                                   
-                                        $.ajax({
-                                            url: "close_grievance",
-                                            method:'post',
-                                            type: 'json',
-                                            data: {'grievance_code':grievance_code,'remark':remark, _token:token},
-                                            success:function(data){
-                                                if (data.status == 1){
-                                                    $.confirm({
-                                                        title: 'Success!',
-                                                        type: 'green',
-                                                        icon: 'fa fa-check',
-                                                        content: "Grievance Close Successfully",
-                                                        buttons: {
-                                                            ok: function () {
-
-                                                                create_table();
-                                                               
-                                                            }
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        });
-
-    
-}else{
-
-$.confirm({
-        title: 'Unsuccess !!',
-        content: "Please Cleck confirmation for Close the Grievance",
-        boxWidth: '20%',
-        useBootstrap: false,
-        buttons: {
-            
-            cancel: function (){}
-        }
-    });
-
-
-
-}
-
-    
-}
     function create_table() {
         var table = "";
         var token = $('input[name="_token"]').val();
@@ -354,17 +288,18 @@ $.confirm({
 
         //           
                         
-        //                 {
-        //            "targets": - 1,
-        //         "data": 'action',
-        //         "searchable": false,
-        //         "sortable": false,
-        //         "render": function (data, type, full, meta) {
-        //         var str_btns = "";
-        //         str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="Click to Close Grievance"><i class="fa fa-eye"></i></button>&nbsp;';
-        //         return str_btns;
-        //         }
-        // }
+                        {
+                   "targets": - 1,
+                "data": 'action',
+                "searchable": false,
+                "sortable": false,
+                "render": function (data, type, full, meta) {
+
+                var str_btns = "";
+                str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="Forwarded Grievance"><i class="fa fa-eye"></i></button>&nbsp;';
+                return str_btns;
+                }
+        }
         //     
 
                     ],

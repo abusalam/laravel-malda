@@ -32,7 +32,9 @@
 @endsection
 @section('script')
 <script>
+	var forward ;
     $(document).ready(function () {
+			 
         create_table();
         var table = $('#tbl_grievance_list').DataTable();
         table.on('draw.dt', function () {
@@ -44,6 +46,9 @@
                     method:'post',
                     type:'json',
                     data:{'grievance_code':grievance_code, _token:token},
+										complete:function(data){
+											
+										},
                     success:function(data){
                         var str = "";
                         str += '<table  class="table table-sm table-bordered" id="forwardTable">';
@@ -75,125 +80,135 @@
 													str += '<td>' + data.remarkData[i].remark + '</td></tr>';
 												}
 												str += '</table>';
-												str += '</td></tr>';									
-                        str += '<tr><td><label> User : </label></td><td>{!!Form::select('user',[''=>'Select All'],null,['id'=>'user','class'=>'form - control','placeholder'=>'Select All'])!!}</td></tr>';
-                        str += '<tr><td><label> Remarks : </label></td><td>{{Form::textarea('remark', '', ['id'=>'remark','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300']) }}</td></tr>';
-                        str += '<tr><td><label> Attatchment :</br> (Only PDF) </label></td><td>{!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}</td></tr>';
+												str += '</td></tr>';		
+												str += '<tr><td colspan="2"><center><input type="radio" style="width:20px; height:20px;" id="1" onclick="forwardresolved(1)" value="1" name="forwardresolved" /> <label for="resolved"  style="font-size: 20px;">Resolved</label>&emsp;&emsp;<input type="radio" onclick="forwardresolved(0)" value="0" style="width:20px; height:20px;"  id="0" name="forwardresolved"/> <label for="forward" style="font-size: 20px;">Forward</label></center></td></tr>';
+                        
+												str += '<tr id="truser" style="display:none"><td><label> User : </label></td><td>{!!Form::select('user',[''=>'Select User'],null,['id'=>'user','class'=>'form - control','placeholder'=>'Select All'])!!}</td></tr>';
+
+												str += '<tr><td><label> Remarks : </label></td><td>{{Form::textarea('remark', '', ['id'=>'remark','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300']) }}</td></tr>';
+												str += '<tr><td><label> Attatchment :</br> (Only PDF) </label></td><td>{!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}</td></tr>';
                         str += '</tbody>';
+												str += '<tfoot><tr><td colspan=2>';
+												str += '<div class="text-center"><button onclick="submitForward('+grievance_code+')" class="btn btn-primary btn-lg">Submit</button></div>';
+												str += '</td></tr></tbody>';
                         str += '</table>';
+												
                         get_user(grievance_code);
-                        $.confirm({
+                        forward =$.confirm({
                             title: 'Grievance Forward',
                             content: str,
                             boxWidth: '80%',
                             useBootstrap: false,
                             buttons: {
-                                forwoad: function(){
-                                    var token = $("input[name='_token']").val();
-                                    var to_forword = $("#user").val();
-                                    var remark = $("#remark").val();                                    
-                                    var attatchment = $('#attatchment')[0].files;
-
-                                    var fd = new FormData();
-                                    fd.append('to_forword', to_forword);
-                                    fd.append('grievance_code', grievance_code);
-                                    fd.append('remark', remark);
-                                    
-                                    fd.append('attatchment', attatchment[0]);
-                                    fd.append('_token', '{{ csrf_token() }}');
-
-
-
-                                    
-                                    var msg="";
-                                    var f = 0;
-                                    if(to_forword == ''){
-                                    msg+= '<li>Please Select User.</li>';
-                                    f=1;
-                                    }
-                                    if(remark == ''){
-                                    msg+= '<li>Please Enter Remark.</li>';
-                                    f=1;
-                                    }
-
-                                   if (f==1){
-                                       $.confirm({
-                                           title: 'Warning!',
-                                           type: 'orange',
-                                           icon: 'fa fa-times',
-                                           content: "<ul>"+msg+"</ul>",
-                                           buttons: {
-                                               ok: function () {
-                                               }
-                                           }
-                                       });
-                                   }
-                                    else{
-                                        $.ajax({
-                                            url: "save_forword",
-                                            method:'post',
-                                            type: 'json',
-                                            processData: false,
-                                            contentType: false,
-                                            data: fd,
-                                            success:function(data){
-                                                if (data.status == 1){
-                                                    $.confirm({
-                                                        title: 'Success!',
-                                                        type: 'green',
-                                                        icon: 'fa fa-check',
-                                                        content: "Forworded Successfully",
-                                                        buttons: {
-                                                            ok: function () {
-                                                                create_table();
-                                                            }
-                                                        }
-                                                    });
-                                                }else if(data.status == 2){
-                                                    $.confirm({
-                                                        title: 'Unsuccess!',
-                                                        type: 'red',
-                                                        icon: 'fa fa-check',
-                                                        content: "Already Forwarded this User",
-                                                        buttons: {
-                                                            ok: function () {
-                                                                
-                                                            }
-                                                        }
-                                                    });
-
-
-                                                }
-                                            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $("#loadingDiv").hide();
-                var msg = "";
-                if (jqXHR.status !== 422 && jqXHR.status !== 400) {
-                    msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
-                } else {
-                    if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                        msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
-                    } else {
-                        msg += "Error(s):<strong><ul>";
-                        $.each(jqXHR.responseJSON, function (key, value) {
-                            msg += "<li>" + value + "</li>";
-                        });
-                        msg += "</ul></strong>";
-                    }
-                }
-                $.alert({
-                    title: 'Error!!',
-                    type: 'red',
-                    icon: 'fa fa-exclamation-triangle',
-                    content: msg
-                });
-            }
-                                        });
-                                    }
-                                },
+//                                forwoad: function(){
+//																	
+//                                    var token = $("input[name='_token']").val();
+//                                    var to_forword = $("#user").val();
+//                                    var remark = $("#remark").val();                                    
+//                                    var attatchment = $('#attatchment')[0].files;
+//
+//                                    var fd = new FormData();
+//                                    fd.append('to_forword', to_forword);
+//                                    fd.append('grievance_code', grievance_code);
+//                                    fd.append('remark', remark);
+//                                    
+//                                    fd.append('attatchment', attatchment[0]);
+//                                    fd.append('_token', '{{ csrf_token() }}');
+//
+//
+//
+//                                    
+//                                    var msg="";
+//                                    var f = 0;
+//                                    if(to_forword == ''){
+//                                    msg+= '<li>Please Select User.</li>';
+//                                    f=1;
+//                                    }
+//                                    if(remark == ''){
+//                                    msg+= '<li>Please Enter Remark.</li>';
+//                                    f=1;
+//                                    }
+//
+//                                   if (f==1){
+//                                       $.confirm({
+//                                           title: 'Warning!',
+//                                           type: 'orange',
+//                                           icon: 'fa fa-times',
+//                                           content: "<ul>"+msg+"</ul>",
+//                                           buttons: {
+//                                               ok: function () {
+//                                               }
+//                                           }
+//                                       });
+//                                   }
+//                                    else{
+//                                        $.ajax({
+//                                            url: "save_forword",
+//                                            method:'post',
+//                                            type: 'json',
+//                                            processData: false,
+//                                            contentType: false,
+//                                            data: fd,
+//                                            success:function(data){
+//                                                if (data.status == 1){
+//                                                    $.confirm({
+//                                                        title: 'Success!',
+//                                                        type: 'green',
+//                                                        icon: 'fa fa-check',
+//                                                        content: "Forworded Successfully",
+//                                                        buttons: {
+//                                                            ok: function () {
+//                                                                create_table();
+//                                                            }
+//                                                        }
+//                                                    });
+//                                                }else if(data.status == 2){
+//                                                    $.confirm({
+//                                                        title: 'Unsuccess!',
+//                                                        type: 'red',
+//                                                        icon: 'fa fa-check',
+//                                                        content: "Already Forwarded this User",
+//                                                        buttons: {
+//                                                            ok: function () {
+//                                                                
+//                                                            }
+//                                                        }
+//                                                    });
+//
+//
+//                                                }
+//                                            },
+//            error: function (jqXHR, textStatus, errorThrown) {
+//                $("#loadingDiv").hide();
+//                var msg = "";
+//                if (jqXHR.status !== 422 && jqXHR.status !== 400) {
+//                    msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
+//                } else {
+//                    if (jqXHR.responseJSON.hasOwnProperty('exception')) {
+//                        msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+//                    } else {
+//                        msg += "Error(s):<strong><ul>";
+//                        $.each(jqXHR.responseJSON, function (key, value) {
+//                            msg += "<li>" + value + "</li>";
+//                        });
+//                        msg += "</ul></strong>";
+//                    }
+//                }
+//                $.alert({
+//                    title: 'Error!!',
+//                    type: 'red',
+//                    icon: 'fa fa-exclamation-triangle',
+//                    content: msg
+//                });
+//            }
+//                                        });
+//                                    }
+//                                },
                                 cancel: function (){}
                             }
                         });
+												
+												forward.open();
                     }                
                 });
             });
@@ -328,6 +343,152 @@
     $("body").append($form);
     $form.submit();
     }
+		
+		function forwardresolved(code){
+			if(code == 0){
+				$('#truser').show();
+			}else if (code == 1){
+				$('#truser').hide();
+			}
+		}
+		
+		function submitForward(grievance_code){
+			var forwardresolved = $("input[name='forwardresolved']:checked").val();
+			var token = $("input[name='_token']").val();
+			var to_forword = $("#user").val();
+			var remark = $("#remark").val();                                    
+			var attatchment = $('#attatchment')[0].files;
+            alert(attatchment);
+
+			var fd = new FormData();
+			fd.append('to_forword', to_forword);		
+			fd.append('forwardresolved', forwardresolved);
+
+			fd.append('grievance_code', grievance_code);
+			fd.append('remark', remark);
+
+			fd.append('attatchment', attatchment[0]);
+			fd.append('_token', '{{ csrf_token() }}');
+
+
+			var msg="";
+			var f = 0;
+			
+			if(forwardresolved==1){
+					f=0;
+			}else if(forwardresolved==0){
+						if(to_forword == ''){
+						msg+= '<li>Please Select User.</li>';
+						f=1;
+					}
+					
+			}else{
+				msg+= '<li>Please Choose Resolved or Forward</li>';
+				f=1;
+			}
+			
+			
+
+		 if (f==1){
+				 $.confirm({
+						 title: 'Warning!',
+						 type: 'orange',
+						 icon: 'fa fa-times',
+						 content: "<ul>"+msg+"</ul>",
+						 buttons: {
+								 ok: function () {
+									 
+								 }
+						 }
+				 });
+		 }
+			else{
+							$.ajax({
+							url: "save_forword",
+							method:'post',
+							type: 'json',
+							processData: false,
+							contentType: false,
+							data: fd,
+							success:function(data){
+									if (data.status == 1){
+											$.confirm({
+													title: 'Success!',
+													type: 'green',
+													icon: 'fa fa-check',
+													content: "Forworded Successfully",
+													buttons: {
+															ok: function () {
+																	create_table();
+                                                                    forward.close();
+																	
+															}
+													}
+											});
+									}else if(data.status == 2){
+											$.confirm({
+													title: 'Unsuccess!',
+													type: 'red',
+													icon: 'fa fa-check',
+													content: "Already Forwarded this User",
+													buttons: {
+															ok: function () {
+
+																
+																
+
+															}
+													}
+											});
+
+
+									}
+									else if(data.status == 3){
+											$.confirm({
+													title: 'Success!',
+													type: 'green',
+													icon: 'fa fa-check',
+													content: "Resolved Successfully",
+													buttons: {
+															ok: function () {
+																forward.close();
+															}
+													}
+											});
+
+
+									}
+							},
+					error: function (jqXHR, textStatus, errorThrown) {
+							$("#loadingDiv").hide();
+							var msg = "";
+							if (jqXHR.status !== 422 && jqXHR.status !== 400) {
+									msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
+							} else {
+									if (jqXHR.responseJSON.hasOwnProperty('exception')) {
+											msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+									} else {
+											msg += "Error(s):<strong><ul>";
+											$.each(jqXHR.responseJSON['errors'], function (key, value) {
+													msg += "<li>" + value + "</li>";
+											});
+											msg += "</ul></strong>";
+									}
+							}
+							$.alert({
+									title: 'Error!!',
+									type: 'red',
+									icon: 'fa fa-exclamation-triangle',
+									content: msg
+							});
+					}
+				});
+				
+					}
+					create_table();
+					
+      }
+		
 </script>
 
 @endsection

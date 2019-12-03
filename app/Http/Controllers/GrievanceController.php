@@ -22,9 +22,7 @@ class GrievanceController extends Controller {
             $statuscode = 400;
             $response = array('error' => 'Error occer in ajax call');
             return response()->json($response, $statuscode);
-        }
-
-       
+        }      
 
         if(env("CAPTCHA")==1){ 
         $this->validate($request, [
@@ -56,7 +54,7 @@ class GrievanceController extends Controller {
                 'mobile_no' => "required|digits:10",
                 'grivense_email' => 'required|email',
                 'grivense_complain' => 'required|regex:/^[A-Za-z0-9\/.,\s()-]+$/i',
-                'attatchment' => 'nullable|mimes:pdf| max:1024',
+                'attatchment' => 'mimes:pdf| max:1024',
                 
                     ], [
                 'grivense_name.required' => 'Name is Required',
@@ -398,64 +396,96 @@ class GrievanceController extends Controller {
 	public function save_forword(Request $request) {
 
 
-		$statusCode = 200;
-		if (!$request->ajax()) {
+				$statusCode = 200;
+				if (!$request->ajax()) {
 
-			$statusCode = 400;
-			$response = array('error' => 'Error occered in Json call.');
-			return response()->json($response, $statusCode);
-		}
-		$this->validate($request, [
-			'grievance_code' => "required|integer",
-			'to_forword' => "required|integer",
-			'remark' => "required",
-			'attatchment' => 'nullable|max:1024',
-			], [
-			'grievance_code.required' => 'Grievance Code is Required',
-			'grievance_code.integer' => 'Grievance Code Should be Integer',
-			'to_forword.required' => 'To Forword is required',
-			'to_forword.integer' => 'To Forword Should be Integer',
-			'remark.required' => 'Remark is Required',
-			
-            'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',  
-		]);
-		
-		try {
+				$statusCode = 400;
+				$response = array('error' => 'Error occered in Json call.');
+				return response()->json($response, $statusCode);
+				}
+				$this->validate($request, [
+				'grievance_code' => "required|integer",
+				'to_forword' => "nullable|integer",
+				'remark' => "nullable",
+				'attatchment' => 'nullable|mimes:pdf|max:1024',
+				'forwardresolved' => 'required|integer',
+				], [
+				'grievance_code.required' => 'Grievance Code is Required',
+				'grievance_code.integer' => 'Grievance Code Should be Integer',
+				'forwardresolved.required' => 'Please Choose Resolved or Forward',
+				'forwardresolved.integer' => 'Please Choose Resolved or Forward',
+				'to_forword.required' => 'To Forword is required',
+				'to_forword.integer' => 'To Forword Should be Integer',
+				'remark.required' => 'Remark is Required',
+				'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',
+				]);
 
-			$result=tbl_grievence_forwored::where('griv_code',$request->grievance_code)->where('to_forword',$request->to_forword)->get();
-			if($result->count()>0){
+				try {
+
+				$result = tbl_grievence_forwored::where('griv_code', $request->grievance_code)->where('to_forword', $request->to_forword)->get();
+
+				if ($result->count() > 0) {
 				$response = array('status' => 2);
-			}else{
-                 if (!empty($request->file('attatchment'))) {
-                $file_attatchment = $request->file('attatchment');
-                $file_ext = $file_attatchment->getClientOriginalExtension();
-                $filename_upload = date("dmYhms") . rand(101, 99999) . "." . $file_ext;
-                $destination_path_attatchment = "upload/forward_attatchment";
-                $file_attatchment->move($destination_path_attatchment, $filename_upload);
-            }
+				}
 
-			$tbl_grivense_frd = new tbl_grievence_forwored();
-			$tbl_grivense_frd->griv_code = $request->grievance_code;
-			$tbl_grivense_frd->to_forword = $request->to_forword;
-			$tbl_grivense_frd->from_forword = session()->get('user_code');
-			$tbl_grivense_frd->remark = $request->remark;
-			$tbl_grivense_frd->attatchment = $filename_upload;
-			$tbl_grivense_frd->save();
+				else {
+				if (!empty($request->file('attatchment'))) {
+				$file_attatchment = $request->file('attatchment');
+				$file_ext = $file_attatchment->getClientOriginalExtension();
+				$filename_upload = date("dmYhms") . rand(101, 99999) . "." . $file_ext;
+				$destination_path_attatchment = "upload/forward_attatchment";
+				$file_attatchment->move($destination_path_attatchment, $filename_upload);
+				}
+				//1 - Resolved
+				//0 - forward
+				// echo $request->forwardresolved;die;
+				$tbl_grivense_frd = new tbl_grievence_forwored();
+				$tbl_grivense_frd->griv_code = $request->grievance_code;
 
-			$response = array('status' => 1);
-		}
-		}
-		catch (\Exception $e) {
+				$tbl_grivense_frd->from_forword = session()->get('user_code');
+				$tbl_grivense_frd->remark = $request->remark;
+				$tbl_grivense_frd->attatchment = $filename_upload;
 
-			$response = array(
+				if($request->forwardresolved==1){
+				$tbl_grivense_frd->to_forword = null;
+
+				// $tbl_grievance = tbl_grievance::firstOrCreate(['code' =>$request->grievance_code]);
+				// $tbl_grievance->close_status = 2;
+				// $tbl_grievance->save();
+				// $tbl_grievance = new tbl_grievance();
+				// $tbl_grievance->exists = true;
+				// $tbl_grievance->remark = $request->remark;
+				// $tbl_grievance->code = $request->grievance_code;
+				// $tbl_grievance->close_status = 2;
+				// $tbl_grievance->save();
+
+				$tbl_grievance = tbl_grievance::where('code', $request->grievance_code)
+				->update(['remark' => $request->remark, 'close_status' => 2]);
+
+				$tbl_grivense_frd->save();
+
+				$response = array('status' => 3);
+
+				}else{
+				$tbl_grivense_frd->to_forword = $request->to_forword;
+				$tbl_grivense_frd->save();
+				$response = array('status' => 1);
+				}
+
+
+				}
+				}
+				catch (\Exception $e) {
+
+				$response = array(
 				'exception' => true,
 				'exception_message' => $e->getMessage(),
-			);
-			$statusCode = 400;
-		} finally {
-			return response()->json($response, $statusCode);
-		}
-	}
+				);
+				$statusCode = 400;
+				} finally {
+				return response()->json($response, $statusCode);
+				}
+    }
 
 	public function forworded_grievance_list() {
 		return view("forword_grievance_list");
@@ -487,7 +517,7 @@ class GrievanceController extends Controller {
 		$data = array();
 		$record = tbl_grievance::leftjoin('tbl_grievence_forwored', 'tbl_grievence_forwored.griv_code', 'tbl_grivense.code')
 			->join('tbl_user', 'tbl_user.code', 'tbl_grievence_forwored.to_forword')
-			->where('tbl_grievence_forwored.from_forword','=', session()->get('user_code'))->where('tbl_grivense.close_status',0)
+			->where('tbl_grievence_forwored.from_forword','=', session()->get('user_code'))->where('tbl_grivense.close_status','<>',1)
 			//->wherenotnull('tbl_grievence_forwored.griv_code')
 			->select('tbl_grivense.name as gname', 'tbl_grivense.mobile_no', 'tbl_grivense.email', 'tbl_grivense.complain', 'tbl_grivense.code', 'tbl_user.name','tbl_grivense.created_at')
 			->orderby('code', 'desc')
@@ -518,6 +548,7 @@ class GrievanceController extends Controller {
 			$nestedData['complain'] = $row->complain;
 			$nestedData['to_forword'] = $row->name;
 			$nestedData['created_at'] = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $row->created_at)->format('d/m/Y');
+			
 
 			$view_button = $row->code;
 			$nestedData['action'] = array('v' => $view_button);
@@ -679,7 +710,7 @@ class GrievanceController extends Controller {
 			->join('tbl_user', 'tbl_user.code', 'tbl_grievence_forwored.to_forword')
 			->where('tbl_grievence_forwored.to_forword','=', session()->get('user_code'))->where('tbl_grivense.close_status',1)
 			//->wherenotnull('tbl_grievence_forwored.griv_code')
-			->select('tbl_grivense.name ', 'tbl_grivense.mobile_no', 'tbl_grivense.email', 'tbl_grivense.complain', 'tbl_grivense.code','tbl_grivense.created_at','tbl_grivense.updated_at')
+			->select('tbl_grivense.name', 'tbl_grivense.mobile_no', 'tbl_grivense.email', 'tbl_grivense.complain', 'tbl_grivense.code','tbl_grivense.created_at','tbl_grivense.updated_at')
 			->orderby('code', 'desc')
 			->where(function($q) use ($search) {
 			$q->orwhere('tbl_grivense.name', 'like', '%' . $search . '%');
