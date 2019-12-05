@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\tbl_grievance;
 use App\tbl_grievence_forwored;
+use App\tbl_mobile_verify;
+use DB;
 
 
 class GrievanceStatusController extends Controller {
@@ -25,16 +27,30 @@ class GrievanceStatusController extends Controller {
 			$response = array('error' => 'Error occured in form submit.');
 			return response()->json($response, $statusCode);
 		}
-
+         if(env("CAPTCHA")==1){
 		$this->validate($request, [
 			'grievance_id' => 'required',
 			'mobileNo' => 'required',
-			//'capcha' => 'required|captcha',
+			'capcha' => 'required|captcha',
 			], [
 			'grievance_id.required' => 'Grievance ID is required',
 			'capcha.required' => 'Captcha is required',
 			'capcha.captcha' => 'Captcha Missmatch',
 		]);
+	}else{
+
+		$this->validate($request, [
+			'grievance_id' => 'required',
+			'mobileNo' => 'required',
+			
+			], [
+			'grievance_id.required' => 'Grievance ID is required',
+			'capcha.required' => 'Captcha is required',
+			
+		]);
+
+
+	}
 
 
 
@@ -178,6 +194,100 @@ class GrievanceStatusController extends Controller {
 
 
 
+	}
+
+	public function save_otp_for_grievancestatus(Request $request) {
+		$statusCode = 200;
+		$mobile_verification = null;
+		if (!$request->ajax()) {
+			$statusCode = 400;
+			$response = array('error' => 'Error occured in form submit.');
+			return response()->json($response, $statusCode);
+		}
+		$response = [
+			'mobile_verification' => [] //Should be changed #9
+		];
+
+		try {
+			$mobile_no = $request->mobile_no;
+
+			$mobile_verification = new tbl_mobile_verify();
+			$mobile_verification->mobile_no = $mobile_no;
+			$mobile_verification->otp = rand(1000, 9999);
+			$mobile_verification->save();
+			if ($mobile_no != '') {
+				$Destination = $mobile_no;
+				$Message = 'Your OTP  is:' . $mobile_verification->otp;
+				$SEND_SMS = 'TRUE';
+				$mobile_no = $Destination;
+
+				//include_once("sms/test_sms.php");
+			}
+
+			$response = array(
+				'status' => 1
+			);
+		}
+		catch (\Exception $e) {
+			$response = array(
+				'exception' => true,
+				'exception_message' => $e->getMessage(),
+			);
+			$statusCode = 400;
+		} finally {
+			return response()->json($response, $statusCode);
+		}
+	}
+
+	public function check_otp_for_grievancestatus(Request $request) {
+		$statusCode = 200;
+		$mobile_verification = null;
+		if (!$request->ajax()) {
+			$statusCode = 400;
+			$response = array('error' => 'Error occured in form submit.');
+			return response()->json($response, $statusCode);
+		}
+		$response = [
+			'mobile_verification' => [] //Should be changed #9
+		];
+//$dt = new Carbon\Carbon();
+//$before = $dt->subYears(13)->format('Y-m-d');
+		$this->validate($request, [
+			'otp' => 'required|integer',
+			'mob' => 'required|digits:10',
+			], [
+			'otp.required' => 'OTP is required',
+			'otp.integer' => ' OTP must be an integer',
+			'mob.required' => 'Mobile No is required',
+			'mob.digits' => ' Mobile no. must be 10 digit',
+		]);
+
+		try {
+			$mobile_no = $request->mob;
+			//echo $mobile_no;die;
+			$maxValue = tbl_mobile_verify::select('otp')->where('code', DB::raw("(select max(code) from tbl_mobile_verify where mobile_no=$mobile_no)"))->get();
+			//echo $maxValue[0]->otp; die;
+			if ($request->otp == $maxValue[0]->otp) {
+
+				$response = array(
+					'status' => 1
+				);
+			}
+			else {
+				$response = array(
+					'status' => 2
+				);
+			}
+		}
+		catch (\Exception $e) {
+			$response = array(
+				'exception' => true,
+				'exception_message' => $e->getMessage(),
+			);
+			$statusCode = 400;
+		} finally {
+			return response()->json($response, $statusCode);
+		 }
 	}
 
 }

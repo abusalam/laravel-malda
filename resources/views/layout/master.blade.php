@@ -219,13 +219,15 @@
                                         </ul>
 
                                     </li>
+                                    <?php if (session()->get('user_type') == 0) { ?>
                                     <li><a href="#">Report</a>
                                         <ul>
-                                        <li><a href="{{route('grievance_list')}}">New List</a></li>
+                                        <li><a href="{{route('pending_report')}}">Pending Grievance</a></li>
                                                                              
                                         </ul>
 
                                     </li>
+                                    <?php }?>
                                     <li><a href="{{route('logout')}}">Logout</a></li>
                                 </ul>
                             </li>

@@ -85,6 +85,126 @@ $grievance_report=tbl_grievance::join('tbl_grievence_forwored','tbl_grievence_fo
 
     }
 
+    public function pending_report(){
+
+    	return view("pending_report");
+
+    }
+
+    public function pending_grievance_datatable(Request $request){
+    	$draw = $request->draw;
+		$offset = $request->start;
+		$length = $request->length;
+		$search = $request->search ["value"];
+		$order = $request->order;
+
+		$this->validate($request, [
+			'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
+			], [
+			'search.*.regex' => 'Search value accept only Alphanumeric character',
+		]);
+
+		$data = array();
+
+		
+
+			$record=tbl_grievance::join('tbl_grievence_forwored','tbl_grievence_forwored.griv_code','tbl_grivense.code')->join('tbl_user','tbl_user.code','tbl_grievence_forwored.to_forword')->where('tbl_grievence_forwored.status',0)->where('tbl_grivense.close_status',3)->groupby('tbl_user.name','tbl_user.code')->select('tbl_user.code','tbl_user.name',DB::raw('COUNT(tbl_grievence_forwored.griv_code) as griv_code'))
+
+
+			->where(function($q) use ($search) {
+			$q->orwhere('tbl_user.name', 'like', '%' . $search . '%');
+			
+			
+			
+		});
+
+		
+		
+
+		
+       $all_record = $record;
+		$filtered_count = $record->count();
+
+
+		for ($i = 0; $i < count($order); $i ++) {
+               $record = $record->orderBy($request->columns [$order [$i] ['column']] ['data'], strtoupper($order [$i] ['dir']));
+           }
+
+
+		$page_displayed = $all_record->offset($offset)->limit($length)->get();
+		$count = $offset + 1;
+		foreach ($page_displayed as $row) {
+			$nestedData['id'] = $count;
+			$nestedData['code'] = $row->code;
+			$nestedData['name'] = $row->name;
+			$nestedData['griv_code'] = $row->griv_code;
+			
+			
+
+			$view_button = $row->code;
+			$nestedData['action'] = array('v' => $view_button);
+			$count++;
+			$data[] = $nestedData;
+		}
+		//print_r($data);die;
+		  $response = array(
+			"draw" => $draw,
+			"recordsTotal" => $filtered_count,
+			"recordsFiltered" => $filtered_count,
+			'record_details' => $data
+		);
+
+		  return response()->json($response);
+
+
+    }
+
+    public function show_pending_grievance(Request $request){
+
+    	$statusCode = 200;
+		if (!$request->ajax()) {
+
+			$statusCode = 400;
+			$response = array('error' => 'Error occered in Json call.');
+			return response()->json($response, $statusCode);
+		}
+		$this->validate($request, [
+			'user_code' => "required|integer",
+						], [
+			'user_code.required' => 'User Code is Required',
+			'user_code.integer' => 'User Code Should be Integer',		
+			
+		]);
+		
+		try {
+
+			$record=tbl_grievance::join('tbl_grievence_forwored','tbl_grievence_forwored.griv_code','tbl_grivense.code')->join('tbl_user','tbl_user.code','tbl_grievence_forwored.to_forword')->where('tbl_grievence_forwored.status',0)->where('tbl_grivense.close_status',3)->where('tbl_user.code',$request->user_code)->select('tbl_grivense.name','tbl_grivense.complain','tbl_grivense.code')->get();
+
+			$response = array(
+			"record" => $record,
+			
+		);
+
+
+
+
+			
+		}
+		catch (\Exception $e) {
+
+			$response = array(
+				'exception' => true,
+				'exception_message' => $e->getMessage(),
+			);
+			$statusCode = 400;
+		} finally {
+			return response()->json($response, $statusCode);
+		}
+
+
+
+    }
+
 
     
 

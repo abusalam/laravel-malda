@@ -133,11 +133,21 @@ Route::get('/grievance_status', 'GrievanceStatusController@grievance_status')->n
 Route::get('refreshcaptcha', 'SDOCourtController@refreshCaptcha');
 Route::post('grievance_statuss', 'GrievanceStatusController@grievance_statuss');
 
+Route::post('/save_otp_for_grievancestatus','GrievanceStatusController@save_otp_for_grievancestatus')->name('save_otp_for_grievancestatus');
+Route::post('/check_otp_for_grievancestatus','GrievanceStatusController@check_otp_for_grievancestatus')->name('check_otp_for_grievancestatus');
+
 
 ////////Resolve
 
 Route::get('/resolve_grievance_list', 'GrievanceStatusController@resolve_grievance_list')->name('resolve_grievance_list');
 Route::post('resolve_grievance_datatable', 'GrievanceStatusController@resolve_grievance_datatable');
+
+/////Report
+
+Route::get('/pending_report', 'ReportController@pending_report')->name('pending_report');
+Route::post('pending_grievance_datatable', 'ReportController@pending_grievance_datatable');
+Route::post('show_pending_grievance', 'ReportController@show_pending_grievance');
+
 
 
 
