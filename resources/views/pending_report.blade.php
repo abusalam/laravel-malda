@@ -12,9 +12,9 @@
                             <tr>
                                 <th style="width: 5%;">#</th>
                                 
-                                <th style="width: 15%;">User</th>
-                                <th style="width: 10%;">No of Grievance</th>
-                                 <th style="width: 10%;">Action</th>
+                                <th style="width: 40%;">User</th>
+                                <th style="width: 40%;">No of Grievance</th>
+                                 <th style="width: 15%;">Action</th>
                             </tr>
 
                         </thead>
@@ -165,7 +165,7 @@
                             "targets": 0,
                             "data": "id",
                             "searchable": false,
-                            "sortable": false,
+                            "sortable": true,
                             "defaultContent": ""
                         },
                         {
@@ -177,6 +177,7 @@
                         {
                             "targets": 2,
                             "data": "griv_code",
+                             "sortable": true,
                            
 
                         },

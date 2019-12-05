@@ -251,6 +251,8 @@
             bServerSide: true,
             bjQueryUI: true,
             "bInfo": false,
+
+            
             "ajax": {
             url: "grievance_datatable",
                     type: "post",
@@ -297,10 +299,12 @@
     {
     "targets": 1,
             "data": "code",
+             "sortable": true
     },
     {
     "targets": 2,
             "data": "name",
+            "sortable": true
     },
     {
     "targets": 3,
@@ -325,15 +329,18 @@
     }
 
     ],
-            "order": [[1, 'asc']]
+    "order": [[1, 'asc']]
+
+           
     });
+
     table.on('order.dt search.dt draw.dt', function () {
     $('[data-toggle="tooltip"]').tooltip();
     table.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
     cell.innerHTML = table.page() * table.page.len() + (i + 1);
     });
     });
-    $(".loader").hide();
+   
     }
 
     function redirectPost(url, data1) {

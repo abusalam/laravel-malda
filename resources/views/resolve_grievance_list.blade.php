@@ -17,9 +17,9 @@
                                 <th style="width: 20%;">Mobile No</th> 
                                
 
-                                <?php  if(session()->get('user_type')==0){ ?>                                
+                                                                
                                  <th style="width: 15%;">Action</th>
-                                 <?php } ?>
+                                 
                                 
 
 
@@ -95,7 +95,7 @@
                                                 
                                                 str += '</table>';
                                                 str += '</td></tr>';                                    
-                        
+                        <?php  if(session()->get('user_type')==0){ ?>
                          str += '<tr><td colspan="2">';
                          str += '<table class="table table-bordered table-striped">'
                         
@@ -110,6 +110,8 @@
 
                          str += '</table>'
                          str += '</td></tr>';
+
+                         <?php  } ?>
 
                          
                          
@@ -200,6 +202,7 @@ close.close();
     function create_table() {
         var table = "";
         var token = $('input[name="_token"]').val();
+
         $("#tbl_grievance_list").dataTable().fnDestroy();
         table = $('#tbl_grievance_list').DataTable({
             "responsive": true,
@@ -272,7 +275,7 @@ close.close();
                         },
                         
                        
-                       <?php  if(session()->get('user_type')==0){ ?> 
+                        
                         {
                    "targets": - 1,
                 "data": 'action',
@@ -280,12 +283,12 @@ close.close();
                 "sortable": false,
                 "render": function (data, type, full, meta) {
                 var str_btns = "";
-                str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="Click to close Grievance"><i class="fa fa-eye"></i></button>&nbsp;';
+                str_btns += '<button type="button"  class="btn btn-primary  view-button btn_new1" id="' + data.v + '" title="View"><i class="fa fa-eye"></i></button>&nbsp;';
                 return str_btns;
                 }
         }
 
-        <?php } ?>
+       
 
                         
                         

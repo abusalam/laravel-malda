@@ -257,6 +257,7 @@
                         {
                             "targets": 1,
                             "data": "code",
+                            "sortable": true,
 
                         },
                         {

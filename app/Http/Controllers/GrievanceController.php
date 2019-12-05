@@ -17,6 +17,8 @@ class GrievanceController extends Controller {
 	}
 
     public function grivanceSave(Request $request) {
+
+    	$filename_upload = "";
         $statuscode = 200;
         if (!$request->ajax()) {
             $statuscode = 400;
@@ -56,7 +58,7 @@ class GrievanceController extends Controller {
                 'mobile_no' => "required|digits:10",
                 'grivense_email' => 'required|email',
                 'grivense_complain' => 'required|regex:/^[A-Za-z0-9\/.,\s()-]+$/i',
-                'attatchment' => 'nullable|mimes:pdf| max:1024',
+                //'attatchment' => 'nullable|mimes:pdf| max:1024',
                 
                     ], [
                 'grivense_name.required' => 'Name is Required',
@@ -67,11 +69,20 @@ class GrievanceController extends Controller {
                 'grivense_email.email' => 'Enter correct email Format',
                 'grivense_complain.required' => 'Please enter complain',
                 'grivense_complain.regex' => 'Alphanumric and some special characters like ()./- allow',
-                'attatchment.mimes' => 'Attatchment file must be a pdf format.',
-                'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',  
+                // 'attatchment.mimes' => 'Attatchment file must be a pdf format.',
+                // 'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',  
                  
                         
             ]);
+         if($request->attatchment!="undefined"){
+        $this->validate($request, [
+    	'attatchment' => 'nullable|mimes:pdf|max:1024',
+
+       ], [
+       	'attatchment.mimes' => 'Attachment file Should be pdf format',
+       	'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',
+        ]);
+        }
 
     }
         try {
@@ -182,8 +193,16 @@ class GrievanceController extends Controller {
 		//            $record = $record->where('case_no', '=', $case_data);
 		//          }
 
+        $all_record = $record;
 		$filtered_count = $record->count();
-		$page_displayed = $record->offset($offset)->limit($length)->get();
+
+
+		for ($i = 0; $i < count($order); $i ++) {
+               $record = $record->orderBy($request->columns [$order [$i] ['column']] ['data'], strtoupper($order [$i] ['dir']));
+           }
+
+
+		$page_displayed = $all_record->offset($offset)->limit($length)->get();
 		$count = $offset + 1;
 		$newarray = array();
 		foreach ($page_displayed as $row) {
@@ -397,6 +416,8 @@ class GrievanceController extends Controller {
 
 	public function save_forword(Request $request) {
 
+		//echo $request->attatchment;die;
+ $filename_upload = "";
 
 $statusCode = 200;
 if (!$request->ajax()) {
@@ -409,7 +430,7 @@ $this->validate($request, [
 'grievance_code' => "required|integer",
 'to_forword' => "nullable|integer",
 'remark' => "nullable",
-'attatchment' => 'nullable|mimes:pdf|max:1024',
+//'attatchment' => 'nullable|mimes:pdf|max:1024',
 'forwardresolved' => 'required|integer',
 ], [
 'grievance_code.required' => 'Grievance Code is Required',
@@ -419,8 +440,17 @@ $this->validate($request, [
 'to_forword.required' => 'To Forword is required',
 'to_forword.integer' => 'To Forword Should be Integer',
 'remark.required' => 'Remark is Required',
-'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',
+//'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',
 ]);
+if($request->attatchment!="undefined"){
+    $this->validate($request, [
+    	'attatchment' => 'nullable|mimes:pdf|max:1024',
+
+       ], [
+       	'attatchment.mimes' => 'Attachment file Should be pdf format',
+       	'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',
+        ]);
+}
 
 try {
 
@@ -544,8 +574,16 @@ return response()->json($response, $statusCode);
             $record = $record->where(DB::raw("DATE(tbl_grievence_forwored.created_at)"), '<=', $to_dt);
         }
 
+         $all_record = $record;
 		$filtered_count = $record->count();
-		$page_displayed = $record->offset($offset)->limit($length)->get();
+
+
+		for ($i = 0; $i < count($order); $i ++) {
+               $record = $record->orderBy($request->columns [$order [$i] ['column']] ['data'], strtoupper($order [$i] ['dir']));
+           }
+
+		
+		$page_displayed = $all_record->offset($offset)->limit($length)->get();
 		$count = $offset + 1;
 		foreach ($page_displayed as $row) {
 			$nestedData['id'] = $count;
