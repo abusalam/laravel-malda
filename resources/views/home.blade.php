@@ -152,7 +152,9 @@
                             <?php }else{?>
 
                             <li class="pull-right">
-                                <a href="#">Admin</a>
+                                <a href="#"><?php echo session()->get('user_name') ?>(<?php if(session()->get('user_type')==0){
+                                    echo " Admin ";
+                                }else{echo " User ";}  ?>)</a>
                                 <ul>
                                      <?php if (session()->get('user_type') == 0) { ?>
                                     <li><a href="#">User</a>
@@ -173,13 +175,19 @@
                                     <?php } ?> 
                                     <li><a href="#">Grievance</a>
                                         <ul>
-                                        <li><a href="{{route('grievance_list')}}">Grievance List</a></li>
-                                        <?php if (session()->get('user_type') == 0) { ?>
-                                        <li><a href="{{route('forworded_grievance_list')}}">Forwarded Grievance List</a></li>
-                                        <?php } ?>
+                                        <li><a href="{{route('grievance_list')}}">New List</a></li>
+                                        
+                                        <li><a href="{{route('forworded_grievance_list')}}">Forwarded List</a></li>
+
+                                        <li><a href="{{route('resolve_grievance_list')}}">Resolved List </a></li>
+                                
+                                        <li><a href="{{route('close_grievance_list')}}">Closed List</a></li>
+                                      
                                         </ul>
 
                                     </li>
+
+                                    
                                     <li><a href="{{route('logout')}}">Logout</a></li>
                                 </ul>
                             </li>

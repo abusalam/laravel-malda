@@ -12,11 +12,11 @@
                         <thead>
                             <tr>
                                 <th style="width: 5%;">#</th>
-                                <th style="width: 5%;">ID</th>
-                                <th style="width: 10%;">Name</th>              
-                                <th style="width: 15%;">Mobile No</th> 
-                                <th style="width: 15%;">Email</th> 
-                                <th style="width: 40%;">Complain</th>                                
+                                <th style="width: 10%;">ID</th>
+                                <th style="width: 25%;">Name</th>              
+                                <th style="width: 25%;">Mobile No</th> 
+                                <th style="width: 25%;">Email</th> 
+                                                                
                                 <th style="width: 10%;">Action</th>
                                 </tr>
                             
@@ -66,7 +66,7 @@
                          
 												str += '<tr><td><label> Forwarded : </label></td><td>';
 											  str += '<table class="table">';
-												str += '<tr><th width="20%">User</th><th width="30%">Date</th><th width="50%">Remark</th></tr>';
+												str += '<tr><th width="20%">User</th><th width="30%">Date</th><th width="40%">Remark</th><th width="10%">View</th></tr>';
 												
 //												$.each(data.remarkData, function(key, value){
 //													str += '<tr><td>' + value['name'] + '</td>';
@@ -75,15 +75,20 @@
 //												});
 
 											for(i=0; i<data.remarkData.length; i++){
-													str += '<tr><td>' + data.remarkData[i].name + '</td>';
-													str += '<td>' + data.remarkData[i].date + '</td>';
-													str += '<td>' + data.remarkData[i].remark + '</td></tr>';
-												}
+                                                    str += '<tr><td>' + data.remarkData[i].name + '</td>';
+                                                    str += '<td>' + data.remarkData[i].date + '</td>';
+                                                    str += '<td>' + data.remarkData[i].remark + '</td>';
+                                                    if(data.remarkData[i].attatchment == null){
+                                                     str += '<td> N/A </td></tr>';
+                                                    }else{
+                                                    str += '<td> <a href ="upload/forward_attatchment/'+ data.remarkData[i].attatchment + '" target="_blank"> View </a></td></tr>';
+                                                }
+                                            }
 												str += '</table>';
 												str += '</td></tr>';		
 												str += '<tr><td colspan="2"><center><input type="radio" style="width:20px; height:20px;" id="1" onclick="forwardresolved(1)" value="1" name="forwardresolved" /> <label for="resolved"  style="font-size: 20px;">Resolved</label>&emsp;&emsp;<input type="radio" onclick="forwardresolved(0)" value="0" style="width:20px; height:20px;"  id="0" name="forwardresolved"/> <label for="forward" style="font-size: 20px;">Forward</label></center></td></tr>';
                         
-												str += '<tr id="truser" style="display:none"><td><label> User : </label></td><td>{!!Form::select('user',[''=>'Select User'],null,['id'=>'user','class'=>'form - control','placeholder'=>'Select All'])!!}</td></tr>';
+												str += '<tr id="truser" style="display:none"><td><label> User : </label></td><td>{!!Form::select('user',[''=>'Select User'],null,['id'=>'user','class'=>'form - control','placeholder'=>'Select User'])!!}</td></tr>';
 
 												str += '<tr><td><label> Remarks : </label></td><td>{{Form::textarea('remark', '', ['id'=>'remark','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300']) }}</td></tr>';
 												str += '<tr><td><label> Attatchment :</br> (Only PDF) </label></td><td>{!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}</td></tr>';
@@ -223,7 +228,7 @@
             type: 'json',
             data: {grievance_code:grievance_code, _token:token},
             success:function(data){      
-                $('#user').html('<option value="">Select All</option>');
+                $('#user').html('<option value="">Select User</option>');
                 $.each(data.options, function(key, value){
                     $("#user").append('<option value=' + key + '>' + value + '</option>');
                 });
@@ -237,7 +242,7 @@
     //var case_data=$("#case_number").val();
 
 
-
+   
 
     $("#tbl_grievance_list").dataTable().fnDestroy();
     table = $('#tbl_grievance_list').DataTable({
@@ -305,10 +310,7 @@
     "targets": 4,
             "data": "email",
     },
-    {
-    "targets": 5,
-            "data": "complain",
-    },
+    
 
     {
     "targets": - 1,
@@ -331,6 +333,7 @@
     cell.innerHTML = table.page() * table.page.len() + (i + 1);
     });
     });
+    $(".loader").hide();
     }
 
     function redirectPost(url, data1) {
@@ -358,7 +361,7 @@
 			var to_forword = $("#user").val();
 			var remark = $("#remark").val();                                    
 			var attatchment = $('#attatchment')[0].files;
-            alert(attatchment);
+            
 
 			var fd = new FormData();
 			fd.append('to_forword', to_forword);		
@@ -451,6 +454,7 @@
 													content: "Resolved Successfully",
 													buttons: {
 															ok: function () {
+                                                                create_table();
 																forward.close();
 															}
 													}
@@ -485,7 +489,10 @@
 				});
 				
 					}
+                    
+
 					create_table();
+                    
 					
       }
 		

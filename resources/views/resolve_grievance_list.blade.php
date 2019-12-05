@@ -11,13 +11,15 @@
                         <thead>
                             <tr>
                                 <th style="width: 5%;">#</th>
-                                <th style="width: 5%;"> ID</th>
+                                <th style="width: 10%;"> ID</th>
                                 <th style="width: 15%;">Grievance Date</th>
-                                <th style="width: 10%;">Name</th>              
-                                <th style="width: 10%;">Mobile No</th> 
-                                 
-                                <th style="width: 50%;">Complain</th>                               
+                                <th style="width: 20%;">Name</th>              
+                                <th style="width: 20%;">Mobile No</th> 
+                               
+
+                                <?php  if(session()->get('user_type')==0){ ?>                                
                                  <th style="width: 15%;">Action</th>
+                                 <?php } ?>
                                 
 
 
@@ -269,13 +271,8 @@ close.close();
 
                         },
                         
-                        {
-                            "targets": 5,
-                            "data": "complain",
-
-                        },
                        
-                        
+                       <?php  if(session()->get('user_type')==0){ ?> 
                         {
                    "targets": - 1,
                 "data": 'action',
@@ -287,6 +284,8 @@ close.close();
                 return str_btns;
                 }
         }
+
+        <?php } ?>
 
                         
                         

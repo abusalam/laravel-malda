@@ -66,6 +66,7 @@
 
     </head>
     <body>
+        <div class="loader" style="display:none">Loading&#8230;</div>
         <div class="main-body">
             <a href="#" title="sroll" class="scrollToTop" style="display: inline;"><i class="fa fa-angle-up"></i></a>
             <header>
@@ -207,14 +208,21 @@
                                     <?php } ?> 
                                     <li><a href="#">Grievance</a>
                                         <ul>
-                                        <li><a href="{{route('grievance_list')}}">Grievance List</a></li>
+                                        <li><a href="{{route('grievance_list')}}">New List</a></li>
                                         
-                                        <li><a href="{{route('forworded_grievance_list')}}">Forwarded Grievance List</a></li>
+                                        <li><a href="{{route('forworded_grievance_list')}}">Forwarded List</a></li>
 
-                                        <li><a href="{{route('resolve_grievance_list')}}">Resolved Grievance List</a></li>
+                                        <li><a href="{{route('resolve_grievance_list')}}">Resolved List </a></li>
                                 
-                                        <li><a href="{{route('close_grievance_list')}}">Closed Grievance List</a></li>
+                                        <li><a href="{{route('close_grievance_list')}}">Closed List</a></li>
                                       
+                                        </ul>
+
+                                    </li>
+                                    <li><a href="#">Report</a>
+                                        <ul>
+                                        <li><a href="{{route('grievance_list')}}">New List</a></li>
+                                                                             
                                         </ul>
 
                                     </li>

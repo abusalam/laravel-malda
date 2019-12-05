@@ -14,16 +14,9 @@
                                 <th style="width: 5%;"> ID</th>
                                 <th style="width: 15%;">Grievance Date</th>
                                 <th style="width: 10%;">Name</th>              
-                                <th style="width: 10%;">Mobile No</th> 
-                                 
-                                <th style="width: 50%;">Complain</th>
-                                
+                                <th style="width: 10%;">Mobile No</th>                                
                                 <th style="width: 15%;">Closed Date</th>
                                  <th style="width: 15%;">Action</th>
-                                
-
-
-                                
 
                             </tr>
 
@@ -131,6 +124,7 @@ if(data.options.close_status == 1){
             bServerSide: true,
             bjQueryUI: true,
             "bInfo": false,
+           
             "ajax": {
                 url: "closed_grievance_datatable",
                 type: "post",
@@ -177,11 +171,13 @@ if(data.options.close_status == 1){
                         {
                             "targets": 1,
                             "data": "code",
+                            "sortable": true,
 
                         },
                         {
                             "targets": 2,
                             "data": "created_at",
+                           
 
                         },
                         {
@@ -195,14 +191,10 @@ if(data.options.close_status == 1){
 
                         },
                         
-                        {
-                            "targets": 5,
-                            "data": "complain",
-
-                        },
+                        
                        
                         {
-                            "targets": 6,
+                            "targets": 5,
                             "data": "updated_at",
 
                         },

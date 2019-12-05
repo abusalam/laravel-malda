@@ -45,16 +45,18 @@ class GrievanceStatusController extends Controller {
 			if ($checkMobile != null) {
 				
 				$gData = tbl_grievance::where('code', $request->grievance_id)->select('*')->first();
+				$created_at = \Carbon\Carbon::parse($gData->created_at)->format('d/m/Y'); 
 			
 				$grievanceData = tbl_grievence_forwored::join('tbl_user','tbl_user.code','tbl_grievence_forwored.from_forword')
-				->select('remark','tbl_user.name','tbl_grievence_forwored.created_at')
+				->select('remark','tbl_user.name','tbl_grievence_forwored.created_at','tbl_user.designation')
 				->where('griv_code', $request->grievance_id)
 				->get();
 			//print_r($grievanceData[0]->created_at);die;
 			$remarkData = array();
 				foreach ($grievanceData as $grievance){
-					$data['remark']= $grievance->remark;
+					
 					$data['name'] = $grievance->name;
+					$data['designation'] = $grievance->designation;
 					$data['date'] = \Carbon\Carbon::parse($grievance->created_at)->format('d/m/Y');
 					
 					$remarkData[] = $data;
@@ -63,6 +65,7 @@ class GrievanceStatusController extends Controller {
 				$response = array(
 					'gData' => $gData,
 					'remarkData' => $remarkData,
+					'created_at'=>$created_at,
 				);
 			}
 			else {
@@ -102,9 +105,9 @@ class GrievanceStatusController extends Controller {
 		$order = $request->order;
 
 		$this->validate($request, [
-			'search.*' => 'nullable|regex:/^[A-Za-z\s]+$/i',
+			'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
 			], [
-			'search.*.regex' => 'Search value accept only Alphabatic character',
+			'search.*.regex' => 'Search value accept only Alphanumeric character',
 		]);
 
 		$data = array();
@@ -115,8 +118,8 @@ class GrievanceStatusController extends Controller {
 			->where(function($q) use ($search) {
 			$q->orwhere('name', 'like', '%' . $search . '%');
 			$q->orwhere('mobile_no', 'like', '%' . $search . '%');
-			$q->orwhere('email', 'like', '%' . $search . '%');
-			$q->orwhere('complain', 'like', '%' . $search . '%');
+			$q->orwhere('code', 'like', '%' . $search . '%');
+			
 			
 		});
 
@@ -131,8 +134,8 @@ class GrievanceStatusController extends Controller {
 			->where(function($q) use ($search) {
 			$q->orwhere('tbl_grivense.name', 'like', '%' . $search . '%');
 			$q->orwhere('tbl_grivense.mobile_no', 'like', '%' . $search . '%');
-			$q->orwhere('tbl_grivense.email', 'like', '%' . $search . '%');
-			$q->orwhere('tbl_grivense.complain', 'like', '%' . $search . '%');
+			$q->orwhere('tbl_grivense.code', 'like', '%' . $search . '%');
+			
 			
 		});
 

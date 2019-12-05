@@ -29,13 +29,13 @@
                         <thead>
                             <tr>
                                 <th style="width: 5%;">#</th>
-                                <th style="width: 5%;"> ID</th>
-                                <th style="width: 15%;">Grievance Date</th>
-                                <th style="width: 10%;">Name</th>              
-                                <th style="width: 10%;">Mobile No</th>                                  
-                                <th style="width: 50%;">Complain</th>
-                                <th style="width: 15%;">To Forward</th>
-                                <th style="width: 15%;">Action</th>
+                                <th style="width: 10%;"> ID</th>
+                                <th style="width: 20%;">Grievance Date</th>
+                                <th style="width: 20%;">Name</th>              
+                                <th style="width: 20%;">Mobile No</th>                                  
+                                
+                                <th style="width: 20%;">To Forward</th>
+                                <th style="width: 5%;">Action</th>
                                 
                                 
 
@@ -275,13 +275,9 @@
 
                         },
                         
+                        
                         {
                             "targets": 5,
-                            "data": "complain",
-
-                        },
-                        {
-                            "targets": 6,
                             "data": "to_forword",
 
                         },

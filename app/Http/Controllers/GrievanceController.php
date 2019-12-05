@@ -22,7 +22,9 @@ class GrievanceController extends Controller {
             $statuscode = 400;
             $response = array('error' => 'Error occer in ajax call');
             return response()->json($response, $statuscode);
-        }      
+        }
+
+       
 
         if(env("CAPTCHA")==1){ 
         $this->validate($request, [
@@ -54,7 +56,7 @@ class GrievanceController extends Controller {
                 'mobile_no' => "required|digits:10",
                 'grivense_email' => 'required|email',
                 'grivense_complain' => 'required|regex:/^[A-Za-z0-9\/.,\s()-]+$/i',
-                'attatchment' => 'mimes:pdf| max:1024',
+                'attatchment' => 'nullable|mimes:pdf| max:1024',
                 
                     ], [
                 'grivense_name.required' => 'Name is Required',
@@ -137,9 +139,9 @@ class GrievanceController extends Controller {
 		$user_cd = session()->get('user_code');
 
 		$this->validate($request, [
-			'search.*' => 'nullable|regex:/^[A-Za-z\s]+$/i',
+			'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
 			], [
-			'search.*.regex' => 'Search value accept only Alphabatic character',
+			'search.*.regex' => 'Search value accept only Alphanumeric character',
 		]);
 
 		$data = array();
@@ -148,13 +150,13 @@ class GrievanceController extends Controller {
 
 			$record = tbl_grievance::leftjoin('tbl_grievence_forwored', 'tbl_grievence_forwored.griv_code', 'tbl_grivense.code')
 				->wherenull('tbl_grievence_forwored.griv_code')
-				->select('tbl_grivense.name', 'tbl_grivense.mobile_no', 'tbl_grivense.email', 'tbl_grivense.complain', 'tbl_grivense.code')->where('tbl_grivense.close_status',0)
+				->select('tbl_grivense.name', 'tbl_grivense.mobile_no', 'tbl_grivense.email', 'tbl_grivense.complain', 'tbl_grivense.code')
 				->orderby('code', 'desc')
 				->where(function($q) use ($search) {
 				$q->orwhere('tbl_grivense.name', 'like', '%' . $search . '%');
 				$q->orwhere('tbl_grivense.mobile_no', 'like', '%' . $search . '%');
-				$q->orwhere('tbl_grivense.email', 'like', '%' . $search . '%');
-				$q->orwhere('tbl_grivense.complain', 'like', '%' . $search . '%');
+				$q->orwhere('tbl_grivense.code', 'like', '%' . $search . '%');
+				
 			});
 		}
 		else {
@@ -163,13 +165,13 @@ class GrievanceController extends Controller {
 				->join('tbl_grivense', 'tbl_grivense.code', 'tbl_grievence_forwored.griv_code')
 				->select('tbl_grivense.name', 'tbl_grivense.mobile_no','tbl_grievence_forwored.from_forword','tbl_grievence_forwored.to_forword', 'tbl_grivense.email', 'tbl_grivense.complain', 'tbl_grivense.code')
 				->where('tbl_user.code', $user_cd)
-				->where('tbl_grivense.close_status', 0)
+				
 				->orderby('code', 'desc')
 				->where(function($q) use ($search) {
 				$q->orwhere('tbl_grivense.name', 'like', '%' . $search . '%');
 				$q->orwhere('tbl_grivense.mobile_no', 'like', '%' . $search . '%');
-				$q->orwhere('tbl_grivense.email', 'like', '%' . $search . '%');
-				$q->orwhere('tbl_grivense.complain', 'like', '%' . $search . '%');
+				$q->orwhere('tbl_grivense.code', 'like', '%' . $search . '%');
+				
 			});
 			
 			
@@ -396,96 +398,103 @@ class GrievanceController extends Controller {
 	public function save_forword(Request $request) {
 
 
-				$statusCode = 200;
-				if (!$request->ajax()) {
+$statusCode = 200;
+if (!$request->ajax()) {
 
-				$statusCode = 400;
-				$response = array('error' => 'Error occered in Json call.');
-				return response()->json($response, $statusCode);
-				}
-				$this->validate($request, [
-				'grievance_code' => "required|integer",
-				'to_forword' => "nullable|integer",
-				'remark' => "nullable",
-				'attatchment' => 'nullable|mimes:pdf|max:1024',
-				'forwardresolved' => 'required|integer',
-				], [
-				'grievance_code.required' => 'Grievance Code is Required',
-				'grievance_code.integer' => 'Grievance Code Should be Integer',
-				'forwardresolved.required' => 'Please Choose Resolved or Forward',
-				'forwardresolved.integer' => 'Please Choose Resolved or Forward',
-				'to_forword.required' => 'To Forword is required',
-				'to_forword.integer' => 'To Forword Should be Integer',
-				'remark.required' => 'Remark is Required',
-				'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',
-				]);
+$statusCode = 400;
+$response = array('error' => 'Error occered in Json call.');
+return response()->json($response, $statusCode);
+}
+$this->validate($request, [
+'grievance_code' => "required|integer",
+'to_forword' => "nullable|integer",
+'remark' => "nullable",
+'attatchment' => 'nullable|mimes:pdf|max:1024',
+'forwardresolved' => 'required|integer',
+], [
+'grievance_code.required' => 'Grievance Code is Required',
+'grievance_code.integer' => 'Grievance Code Should be Integer',
+'forwardresolved.required' => 'Please Choose Resolved or Forward',
+'forwardresolved.integer' => 'Please Choose Resolved or Forward',
+'to_forword.required' => 'To Forword is required',
+'to_forword.integer' => 'To Forword Should be Integer',
+'remark.required' => 'Remark is Required',
+'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',
+]);
 
-				try {
+try {
 
-				$result = tbl_grievence_forwored::where('griv_code', $request->grievance_code)->where('to_forword', $request->to_forword)->get();
+$result = tbl_grievence_forwored::where('griv_code', $request->grievance_code)->where('to_forword', $request->to_forword)->get();
 
-				if ($result->count() > 0) {
-				$response = array('status' => 2);
-				}
+if ($result->count() > 0) {
+$response = array('status' => 2);
+}
 
-				else {
-				if (!empty($request->file('attatchment'))) {
-				$file_attatchment = $request->file('attatchment');
-				$file_ext = $file_attatchment->getClientOriginalExtension();
-				$filename_upload = date("dmYhms") . rand(101, 99999) . "." . $file_ext;
-				$destination_path_attatchment = "upload/forward_attatchment";
-				$file_attatchment->move($destination_path_attatchment, $filename_upload);
-				}
-				//1 - Resolved
-				//0 - forward
-				// echo $request->forwardresolved;die;
-				$tbl_grivense_frd = new tbl_grievence_forwored();
-				$tbl_grivense_frd->griv_code = $request->grievance_code;
+else {
+if (!empty($request->file('attatchment'))) {
+$file_attatchment = $request->file('attatchment');
+$file_ext = $file_attatchment->getClientOriginalExtension();
+$filename_upload = date("dmYhms") . rand(101, 99999) . "." . $file_ext;
+$destination_path_attatchment = "upload/forward_attatchment";
+$file_attatchment->move($destination_path_attatchment, $filename_upload);
+}
+//1 - Resolved
+//0 - forward
+// echo $request->forwardresolved;die;
+$tbl_grivense_frd = new tbl_grievence_forwored();
+$tbl_grivense_frd->griv_code = $request->grievance_code;
 
-				$tbl_grivense_frd->from_forword = session()->get('user_code');
-				$tbl_grivense_frd->remark = $request->remark;
-				$tbl_grivense_frd->attatchment = $filename_upload;
-
-				if($request->forwardresolved==1){
-				$tbl_grivense_frd->to_forword = null;
-
-				// $tbl_grievance = tbl_grievance::firstOrCreate(['code' =>$request->grievance_code]);
-				// $tbl_grievance->close_status = 2;
-				// $tbl_grievance->save();
-				// $tbl_grievance = new tbl_grievance();
-				// $tbl_grievance->exists = true;
-				// $tbl_grievance->remark = $request->remark;
-				// $tbl_grievance->code = $request->grievance_code;
-				// $tbl_grievance->close_status = 2;
-				// $tbl_grievance->save();
-
-				$tbl_grievance = tbl_grievance::where('code', $request->grievance_code)
-				->update(['remark' => $request->remark, 'close_status' => 2]);
-
-				$tbl_grivense_frd->save();
-
-				$response = array('status' => 3);
-
-				}else{
-				$tbl_grivense_frd->to_forword = $request->to_forword;
-				$tbl_grivense_frd->save();
-				$response = array('status' => 1);
-				}
+$tbl_grivense_frd->from_forword = session()->get('user_code');
+$tbl_grivense_frd->remark = $request->remark;
+$tbl_grivense_frd->attatchment = $filename_upload;
 
 
-				}
-				}
-				catch (\Exception $e) {
+if($request->forwardresolved==1){
+$tbl_grivense_frd->to_forword = null;
 
-				$response = array(
-				'exception' => true,
-				'exception_message' => $e->getMessage(),
-				);
-				$statusCode = 400;
-				} finally {
-				return response()->json($response, $statusCode);
-				}
-    }
+// $tbl_grievance = tbl_grievance::firstOrCreate(['code' =>$request->grievance_code]);
+// $tbl_grievance->close_status = 2;
+// $tbl_grievance->save();
+// $tbl_grievance = new tbl_grievance();
+// $tbl_grievance->exists = true;
+// $tbl_grievance->remark = $request->remark;
+// $tbl_grievance->code = $request->grievance_code;
+// $tbl_grievance->close_status = 2;
+// $tbl_grievance->save();
+
+$tbl_grievance = tbl_grievance::where('code', $request->grievance_code)
+->update(['remark' => $request->remark, 'close_status' => 2]);
+
+$tbl_grivense_frd->save();
+
+$response = array('status' => 3);
+
+}else{
+$tbl_grivense_frd->to_forword = $request->to_forword;
+$tbl_grivense_frd->save();
+$tbl_grievance = tbl_grievance::where('code', $request->grievance_code)
+->update(['close_status' => 3]);
+
+$tbl_grivense_frd = tbl_grievence_forwored::where('griv_code', $request->grievance_code)->where('to_forword',session()->get('user_code'))
+->update(['status' => 1]);
+
+$response = array('status' => 1);
+}
+
+
+}
+}
+catch (\Exception $e) {
+
+$response = array(
+'exception' => true,
+'exception_message' => $e->getMessage(),
+);
+$statusCode = 400;
+} finally {
+return response()->json($response, $statusCode);
+}
+}
 
 	public function forworded_grievance_list() {
 		return view("forword_grievance_list");
@@ -509,9 +518,9 @@ class GrievanceController extends Controller {
         $to_dt = date('Y-m-d', strtotime(trim(str_replace('/', '-', $to_date))));
 
 		$this->validate($request, [
-			'search.*' => 'nullable|regex:/^[A-Za-z\s]+$/i',
+			'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
 			], [
-			'search.*.regex' => 'Search value accept only Alphabatic character',
+			'search.*.regex' => 'Search value accept only Alphanumeric character',
 		]);
 
 		$data = array();
@@ -524,8 +533,7 @@ class GrievanceController extends Controller {
 			->where(function($q) use ($search) {
 			$q->orwhere('tbl_grivense.name', 'like', '%' . $search . '%');
 			$q->orwhere('tbl_grivense.mobile_no', 'like', '%' . $search . '%');
-			$q->orwhere('tbl_grivense.email', 'like', '%' . $search . '%');
-			$q->orwhere('tbl_grivense.complain', 'like', '%' . $search . '%');
+			$q->orwhere('tbl_grivense.code', 'like', '%' . $search . '%');
 			$q->orwhere('tbl_user.name', 'like', '%' . $search . '%');
 		});
 
@@ -686,9 +694,9 @@ class GrievanceController extends Controller {
 		$order = $request->order;
 
 		$this->validate($request, [
-			'search.*' => 'nullable|regex:/^[A-Za-z\s]+$/i',
+			'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
 			], [
-			'search.*.regex' => 'Search value accept only Alphabatic character',
+			'search.*.regex' => 'Search value accept only Alphanumeric character',
 		]);
 
 		$data = array();
@@ -700,7 +708,8 @@ class GrievanceController extends Controller {
 			$q->orwhere('name', 'like', '%' . $search . '%');
 			$q->orwhere('mobile_no', 'like', '%' . $search . '%');
 			$q->orwhere('email', 'like', '%' . $search . '%');
-			$q->orwhere('complain', 'like', '%' . $search . '%');
+			$q->orwhere('code', 'like', '%' . $search . '%');
+			
 			
 		});
 
@@ -715,8 +724,8 @@ class GrievanceController extends Controller {
 			->where(function($q) use ($search) {
 			$q->orwhere('tbl_grivense.name', 'like', '%' . $search . '%');
 			$q->orwhere('tbl_grivense.mobile_no', 'like', '%' . $search . '%');
-			$q->orwhere('tbl_grivense.email', 'like', '%' . $search . '%');
-			$q->orwhere('tbl_grivense.complain', 'like', '%' . $search . '%');
+			$q->orwhere('tbl_grivense.code', 'like', '%' . $search . '%');
+			
 			
 		});
 
@@ -727,9 +736,16 @@ class GrievanceController extends Controller {
 		//            $record = $record->where('case_no', '=', $case_data);
 		//          }
 
-
+       $all_record = $record;
 		$filtered_count = $record->count();
-		$page_displayed = $record->offset($offset)->limit($length)->get();
+
+
+		for ($i = 0; $i < count($order); $i ++) {
+               $record = $record->orderBy($request->columns [$order [$i] ['column']] ['data'], strtoupper($order [$i] ['dir']));
+           }
+
+
+		$page_displayed = $all_record->offset($offset)->limit($length)->get();
 		$count = $offset + 1;
 		foreach ($page_displayed as $row) {
 			$nestedData['id'] = $count;

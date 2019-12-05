@@ -111,29 +111,35 @@
 								msg += '<tr><th>Name</th><td>'+data.gData.name+'</td></tr>';
 								msg += '<tr><th>Mobile No</th><td>'+data.gData.mobile_no+'</td></tr>';
 								msg += '<tr><th>Complain</th><td>'+data.gData.complain+'</td></tr>';
+                                msg += '<tr><th>Grievance Date</th><td>'+data.created_at+'</td></tr>';
 								msg += '<tr>';
-								msg += '<th>Remark</th>';
+								msg += '<th>Forwarded</th>';
 								msg += '<td>';
 								msg += '<table class="table table-striped table-bordered table-hover">';
-								msg += '<tr><th>Name</th><th>Date</th><th>Remark</th></tr>';
+								msg += '<tr><th>Name</th><th>Designation</th><th>Date</th></tr>';
 								for(i=0; i<data.remarkData.length; i++){
 													msg += '<tr><td>' + data.remarkData[i].name + '</td>';
-													msg += '<td>' + data.remarkData[i].date + '</td>';
-													msg += '<td>' + data.remarkData[i].remark + '</td></tr>';
+                                                    msg += '<td>' + data.remarkData[i].designation + '</td>';
+													msg += '<td>' + data.remarkData[i].date + '</td></tr>';
+													
 												}
 								msg += '</table>';
 								msg += '</td>';
 								msg += '</tr>';
 								if(data.gData.close_status == 1){
 									
-								msg += '<tr><th>Close Status</th><td>Closed</td></tr>';
+								msg += '<tr><th>Status</th><td class="text-success" style="font-weight:bold;">Closed</td></tr>';
 									if(data.gData.remark == null){
-										msg += '<tr><th>Close Remark</th><td>N/A</td></tr>';
+										msg += '<tr><th>Remark</th><td>N/A</td></tr>';
 									}else{
-										msg += '<tr><th>Close Remark</th><td>'+data.gData.remark+'</td></tr>';
+										msg += '<tr><th>Remark</th><td>'+data.gData.remark+'</td></tr>';
 									}
 									
-								}
+								}else{
+
+                                    msg += '<tr><th>Status</th><td class="text-danger" style="font-weight:bold;">Under Process</td></tr>';
+
+                                }
 								msg += '</table>';
 								
 								
