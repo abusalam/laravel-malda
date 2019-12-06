@@ -286,7 +286,7 @@ class GrievanceStatusController extends Controller {
 			);
 			$statusCode = 400;
 		} finally {
-			return response()->json($response, $statusCode);
+			 return response()->json($response, $statusCode);
 		 }
 	}
 

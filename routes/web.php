@@ -16,7 +16,7 @@ Route::get('/', 'UserController@home')->name('home');
 
 
 Route::group(['middleware' => 'disablepreventback'],function(){
-	Auth::routes();
+    Auth::routes();
   Route::get('/index', 'UserController@index')->name('index');
   Route::get('/user-registration','LoginController@userRegisration')->name('userRegisration');
   Route::get('/userList','registrationController@userList')->name('userList');
@@ -147,20 +147,3 @@ Route::post('resolve_grievance_datatable', 'GrievanceStatusController@resolve_gr
 Route::get('/pending_report', 'ReportController@pending_report')->name('pending_report');
 Route::post('pending_grievance_datatable', 'ReportController@pending_grievance_datatable');
 Route::post('show_pending_grievance', 'ReportController@show_pending_grievance');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

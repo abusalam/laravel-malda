@@ -108,11 +108,12 @@ $grievance_report=tbl_grievance::join('tbl_grievence_forwored','tbl_grievence_fo
 
 		
 
-			$record=tbl_grievance::join('tbl_grievence_forwored','tbl_grievence_forwored.griv_code','tbl_grivense.code')->join('tbl_user','tbl_user.code','tbl_grievence_forwored.to_forword')->where('tbl_grievence_forwored.status',0)->where('tbl_grivense.close_status',3)->groupby('tbl_user.name','tbl_user.code')->select('tbl_user.code','tbl_user.name',DB::raw('COUNT(tbl_grievence_forwored.griv_code) as griv_code'))
+			$record=tbl_grievance::join('tbl_grievence_forwored','tbl_grievence_forwored.griv_code','tbl_grivense.code')->join('tbl_user','tbl_user.code','tbl_grievence_forwored.to_forword')->where('tbl_grievence_forwored.status',0)->where('tbl_grivense.close_status',3)->groupby('tbl_user.name','tbl_user.code','tbl_user.designation')->select('tbl_user.code','tbl_user.name','tbl_user.designation',DB::raw('COUNT(tbl_grievence_forwored.griv_code) as griv_code'))
 
 
 			->where(function($q) use ($search) {
 			$q->orwhere('tbl_user.name', 'like', '%' . $search . '%');
+            $q->orwhere('tbl_user.designation', 'like', '%' . $search . '%');
 			
 			
 			
@@ -137,6 +138,7 @@ $grievance_report=tbl_grievance::join('tbl_grievence_forwored','tbl_grievence_fo
 			$nestedData['id'] = $count;
 			$nestedData['code'] = $row->code;
 			$nestedData['name'] = $row->name;
+            $nestedData['designation'] = $row->designation;
 			$nestedData['griv_code'] = $row->griv_code;
 			
 			
