@@ -260,7 +260,7 @@ class GrievanceController extends Controller {
 				$SEND_SMS = 'TRUE';
 				$mobile_no = $Destination;
 
-				//include_once("sms/test_sms.php");
+				include_once("sms/test_sms.php");
 			}
 
 			$response = array(
@@ -394,9 +394,9 @@ class GrievanceController extends Controller {
 
 			$loginUser = session()->get('user_code');
 			//echo $loginUser;die;
-			$dist = tbl_user::where('user_type', '<>', 0)
+			$dist = tbl_user::select(DB::raw("CONCAT('Name: ',name,',Designation: ',designation,',Mobile No :',mobile_no) AS user_details"),'code')->where('user_type', '<>', 0)
 				->where('code','!=',$loginUser)
-				->pluck('name', 'code')->all();
+				->pluck('user_details', 'code')->all();
 			
 			$response = array(
 				'options' => $dist, 'status' => 1

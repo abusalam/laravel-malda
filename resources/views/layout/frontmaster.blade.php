@@ -168,12 +168,19 @@
                                     <?php } ?>
                                     <li><a href="#">Grievance</a>
                                         <ul>
-                                            <li><a href="{{route('grievance_list')}}">New List</a></li>
-                                            <li><a href="{{route('forworded_grievance_list')}}">Forwarded List</a></li>
-                                            <li><a href="{{route('resolve_grievance_list')}}">Resolved List </a></li>
-                                            <li><a href="{{route('close_grievance_list')}}">Closed List</a></li>
+                                            <li><a href="{{route('grievance_list')}}">Recieved</a></li>
+                                            <li><a href="{{route('forworded_grievance_list')}}">Forwarded</a></li>
+                                            <li><a href="{{route('resolve_grievance_list')}}">Resolved</a></li>
+                                            <li><a href="{{route('close_grievance_list')}}">Closed</a></li>
                                         </ul>
                                     </li>
+                                    <?php if (session()->get('user_type') == 0) { ?>
+                                    <li><a href="#">Report</a>
+                                        <ul>
+                                            <li><a href="{{route('pending_report')}}">Pending Grievance</a></li>
+                                        </ul>
+                                    </li>
+                                    <?php }?>
                                     <li><a href="{{route('logout')}}">Logout</a></li>
                                 </ul>
                             </li>

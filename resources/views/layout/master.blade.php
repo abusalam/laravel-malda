@@ -201,10 +201,10 @@ window.location = "./session";
                                     <?php } ?>
                                     <li><a href="#">Grievance</a>
                                         <ul>
-                                            <li><a href="{{route('grievance_list')}}">New List</a></li>
-                                            <li><a href="{{route('forworded_grievance_list')}}">Forwarded List</a></li>
-                                            <li><a href="{{route('resolve_grievance_list')}}">Resolved List </a></li>
-                                            <li><a href="{{route('close_grievance_list')}}">Closed List</a></li>
+                                            <li><a href="{{route('grievance_list')}}">Received</a></li>
+                                            <li><a href="{{route('forworded_grievance_list')}}">Forwarded</a></li>
+                                            <li><a href="{{route('resolve_grievance_list')}}">Resolved</a></li>
+                                            <li><a href="{{route('close_grievance_list')}}">Closed</a></li>
                                         </ul>
                                     </li>
                                     <?php if (session()->get('user_type') == 0) { ?>

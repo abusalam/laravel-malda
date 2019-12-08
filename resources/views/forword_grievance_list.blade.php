@@ -34,7 +34,7 @@
                                 <th style="width: 20%;">Name</th>              
                                 <th style="width: 20%;">Mobile No</th>                                  
                                 
-                                <th style="width: 20%;">To Forward</th>
+                                <th style="width: 20%;">Forwarded To</th>
                                 <th style="width: 5%;">Action</th>
                                 
                                 

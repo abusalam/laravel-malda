@@ -51,53 +51,48 @@
 										},
                     success:function(data){
                         var str = "";
-                        str += '<table  class="table table-sm table-bordered" id="forwardTable">';
-                        str += '<tbody>';
-                        str += '<tr><td><label>Grievance ID : </label></td><td>' + data.options.code + '</td></tr>';
-                        str += '<tr><td><label> Name : </label></td><td>' + data.options.name + '</td></tr>';
-                        str += '<tr><td><label> Mobile Number : </label></td><td>' + data.options.mobile_no + '</td></tr>';
-                        str += '<tr><td><label> Email : </label></td><td>' + data.options.email + '</td></tr>';
-                        str += '<tr><td><label> Complain : </label></td><td>' + data.options.complain + '</td></tr>';
-                        if(data.options.attatchment != null){
-                            str += '<tr><td><label> Attatchment: </label></td><td><a href ="upload/grievance_attatchment/'+ data.options.attatchment + '" target="_blank"> View Attatchment </a></td></tr>';
+str += '<table  class="table table-sm table-bordered" id="forwardTable">';
+str += '<tbody>';
+str += '<tr><td><label>Grievance ID : </label></td><td>' + data.options.code + '</td></tr>';
+str += '<tr><td><label> Name : </label></td><td>' + data.options.name + '</td></tr>';
+str += '<tr><td><label> Mobile Number : </label></td><td>' + data.options.mobile_no + '</td></tr>';
+str += '<tr><td><label> Email : </label></td><td>' + data.options.email + '</td></tr>';
+str += '<tr><td><label> Complain : </label></td><td>' + data.options.complain + '</td></tr>';
+if(data.options.attatchment != null){
+str += '<tr><td><label> Attatchment: </label></td><td><a href ="upload/grievance_attatchment/'+ data.options.attatchment + '" target="_blank"> View Attatchment </a></td></tr>';
 
-                        }
+}
 
-                         
-												str += '<tr><td><label> Forwarded : </label></td><td>';
-											  str += '<table class="table">';
-												str += '<tr><th width="20%">User</th><th width="30%">Date</th><th width="40%">Remark</th><th width="10%">View</th></tr>';
-												
-//												$.each(data.remarkData, function(key, value){
-//													str += '<tr><td>' + value['name'] + '</td>';
-//													str += '<td>' + value.date + '</td>';
-//													str += '<td>' + value.remark + '</td></tr>';
-//												});
 
-											for(i=0; i<data.remarkData.length; i++){
-                                                    str += '<tr><td>' + data.remarkData[i].name + '</td>';
-                                                    str += '<td>' + data.remarkData[i].date + '</td>';
-                                                    str += '<td>' + data.remarkData[i].remark + '</td>';
-                                                    if(data.remarkData[i].attatchment == null){
-                                                     str += '<td> N/A </td></tr>';
-                                                    }else{
-                                                    str += '<td> <a href ="upload/forward_attatchment/'+ data.remarkData[i].attatchment + '" target="_blank"> View </a></td></tr>';
-                                                }
-                                            }
-												str += '</table>';
-												str += '</td></tr>';		
-												str += '<tr><td colspan="2"><center><input type="radio" style="width:20px; height:20px;" id="1" onclick="forwardresolved(1)" value="1" name="forwardresolved" /> <label for="resolved"  style="font-size: 20px;">Resolved</label>&emsp;&emsp;<input type="radio" onclick="forwardresolved(0)" value="0" style="width:20px; height:20px;"  id="0" name="forwardresolved"/> <label for="forward" style="font-size: 20px;">Forward</label></center></td></tr>';
-                        
-												str += '<tr id="truser" style="display:none"><td><label> User : </label></td><td>{!!Form::select('user',[''=>'Select User'],null,['id'=>'user','class'=>'form - control','placeholder'=>'Select User'])!!}</td></tr>';
+			str += '<tr><td><label> Forwarded : </label></td><td>';
+		  str += '<table class="table">';
+			str += '<tr><th width="20%">User</th><th width="30%">Date</th><th width="40%">Remark</th><th width="10%">View</th></tr>';
+			
 
-												str += '<tr><td><label> Remarks : </label></td><td>{{Form::textarea('remark', '', ['id'=>'remark','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300']) }}</td></tr>';
-												str += '<tr><td><label> Attatchment :</br> (Only PDF) </label></td><td>{!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}</td></tr>';
-                        str += '</tbody>';
-												str += '<tfoot><tr><td colspan=2>';
-												str += '<div class="text-center"><button onclick="submitForward('+grievance_code+')" class="btn btn-primary btn-lg">Submit</button></div>';
-												str += '</td></tr></tbody>';
-                        str += '</table>';
-												
+		for(i=0; i<data.remarkData.length; i++){
+                str += '<tr><td>' + data.remarkData[i].name + '</td>';
+                str += '<td>' + data.remarkData[i].date + '</td>';
+                str += '<td>' + data.remarkData[i].remark + '</td>';
+                if(data.remarkData[i].attatchment == null){
+                 str += '<td> N/A </td></tr>';
+                }else{
+                str += '<td> <a href ="upload/forward_attatchment/'+ data.remarkData[i].attatchment + '" target="_blank"> View </a></td></tr>';
+            }
+        }
+			str += '</table>';
+			str += '</td></tr>';		
+			str += '<tr><td colspan="2"><center><input type="radio" style="width:20px; height:20px;" id="1" onclick="forwardresolved(1)" value="1" name="forwardresolved" /> <label for="resolved"  style="font-size: 20px;">Resolved</label>&emsp;&emsp;<input type="radio" onclick="forwardresolved(0)" value="0" style="width:20px; height:20px;"  id="0" name="forwardresolved"/> <label for="forward" style="font-size: 20px;">Forward</label></center></td></tr>';
+
+			str += '<tr id="truser" style="display:none"><td><label> User : </label></td><td>{!!Form::select('user',[''=>'Select User'],null,['id'=>'user','class'=>'form - control','placeholder'=>'Select User'])!!}</td></tr>';
+
+			str += '<tr><td><label> Remarks : </label></td><td>{{Form::textarea('remark', '', ['id'=>'remark','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300']) }}</td></tr>';
+			str += '<tr><td><label> Attatchment :</br> (Only PDF) </label></td><td>{!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}</td></tr>';
+str += '</tbody>';
+			str += '<tfoot><tr><td colspan=2>';
+			str += '<div class="text-center"><button onclick="submitForward('+grievance_code+')" class="btn btn-primary btn-lg">Submit</button></div>';
+			str += '</td></tr></tbody>';
+str += '</table>';
+			
                         get_user(grievance_code);
                         forward =$.confirm({
                             title: 'Grievance Forward',
@@ -105,110 +100,7 @@
                             boxWidth: '80%',
                             useBootstrap: false,
                             buttons: {
-//                                forwoad: function(){
-//																	
-//                                    var token = $("input[name='_token']").val();
-//                                    var to_forword = $("#user").val();
-//                                    var remark = $("#remark").val();                                    
-//                                    var attatchment = $('#attatchment')[0].files;
-//
-//                                    var fd = new FormData();
-//                                    fd.append('to_forword', to_forword);
-//                                    fd.append('grievance_code', grievance_code);
-//                                    fd.append('remark', remark);
-//                                    
-//                                    fd.append('attatchment', attatchment[0]);
-//                                    fd.append('_token', '{{ csrf_token() }}');
-//
-//
-//
-//                                    
-//                                    var msg="";
-//                                    var f = 0;
-//                                    if(to_forword == ''){
-//                                    msg+= '<li>Please Select User.</li>';
-//                                    f=1;
-//                                    }
-//                                    if(remark == ''){
-//                                    msg+= '<li>Please Enter Remark.</li>';
-//                                    f=1;
-//                                    }
-//
-//                                   if (f==1){
-//                                       $.confirm({
-//                                           title: 'Warning!',
-//                                           type: 'orange',
-//                                           icon: 'fa fa-times',
-//                                           content: "<ul>"+msg+"</ul>",
-//                                           buttons: {
-//                                               ok: function () {
-//                                               }
-//                                           }
-//                                       });
-//                                   }
-//                                    else{
-//                                        $.ajax({
-//                                            url: "save_forword",
-//                                            method:'post',
-//                                            type: 'json',
-//                                            processData: false,
-//                                            contentType: false,
-//                                            data: fd,
-//                                            success:function(data){
-//                                                if (data.status == 1){
-//                                                    $.confirm({
-//                                                        title: 'Success!',
-//                                                        type: 'green',
-//                                                        icon: 'fa fa-check',
-//                                                        content: "Forworded Successfully",
-//                                                        buttons: {
-//                                                            ok: function () {
-//                                                                create_table();
-//                                                            }
-//                                                        }
-//                                                    });
-//                                                }else if(data.status == 2){
-//                                                    $.confirm({
-//                                                        title: 'Unsuccess!',
-//                                                        type: 'red',
-//                                                        icon: 'fa fa-check',
-//                                                        content: "Already Forwarded this User",
-//                                                        buttons: {
-//                                                            ok: function () {
-//                                                                
-//                                                            }
-//                                                        }
-//                                                    });
-//
-//
-//                                                }
-//                                            },
-//            error: function (jqXHR, textStatus, errorThrown) {
-//                $("#loadingDiv").hide();
-//                var msg = "";
-//                if (jqXHR.status !== 422 && jqXHR.status !== 400) {
-//                    msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
-//                } else {
-//                    if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-//                        msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
-//                    } else {
-//                        msg += "Error(s):<strong><ul>";
-//                        $.each(jqXHR.responseJSON, function (key, value) {
-//                            msg += "<li>" + value + "</li>";
-//                        });
-//                        msg += "</ul></strong>";
-//                    }
-//                }
-//                $.alert({
-//                    title: 'Error!!',
-//                    type: 'red',
-//                    icon: 'fa fa-exclamation-triangle',
-//                    content: msg
-//                });
-//            }
-//                                        });
-//                                    }
-//                                },
+
                                 cancel: function (){}
                             }
                         });

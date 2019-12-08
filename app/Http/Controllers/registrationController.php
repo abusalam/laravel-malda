@@ -305,7 +305,7 @@ class registrationController extends Controller {
                     $SEND_SMS = 'TRUE';
                     $mobile_no = $Destination;
 
-                     // include_once("sms/test_sms.php");
+                      include_once("sms/test_sms.php");
                 }
 
                 $response = array(

@@ -205,10 +205,12 @@ class GrievanceStatusController extends Controller {
 			return response()->json($response, $statusCode);
 		}
 		$response = [
-			'mobile_verification' => [] //Should be changed #9
+			'mobile_verification' => [] 
 		];
 
 		try {
+
+            
 			$mobile_no = $request->mobile_no;
 
 			$mobile_verification = new tbl_mobile_verify();
@@ -221,7 +223,7 @@ class GrievanceStatusController extends Controller {
 				$SEND_SMS = 'TRUE';
 				$mobile_no = $Destination;
 
-				//include_once("sms/test_sms.php");
+				include_once("sms/test_sms.php");
 			}
 
 			$response = array(
