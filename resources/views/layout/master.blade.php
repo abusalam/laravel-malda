@@ -70,39 +70,9 @@ window.location = "./session";
                         <div id="accessibility">
                             <ul id="accessibilityMenu">
                                 <li><a href="#SkipContent" class="skip-to-content" title="Skip to main content"><span class="icon-skip-to-main responsive-show"></span><strong class="responsive-hide">SKIP TO MAIN CONTENT</strong></a></li>
-                                <li><a href="javascript:void(0);" title="Site Search"><span class="icon-search" aria-hidden="true"></span></a>
-                                    <div class="goiSearch" role="search">
-                                        <form onsubmit="" action="" method="get">
-                                            <label for="search" class="hide">Search</label>
-                                            <input type="search" title="Enter Text" name="s" id="search" value="" />
-                                            <button type="submit" title="Search"><small class="tcon">Search</small><small class="tcon">Search</small><span class="icon-search" aria-hidden="true"></span></button>
-                                        </form>
-                                    </div>
-                                </li>
-                                <li><a href="javascript:void(0);" title="Social Media Links" class="show-social-links">
-                                        <span class="icon-social-link" aria-hidden="true">
-                                            <span class="icon-facebook"></span>
-                                            <span class="icon-twitter"></span>
-                                            <span class="icon-youtube"></span>
-                                        </span>
-                                        <span class="off-css">Social Media Links</span>
-                                    </a>
-                                    <div class="socialIcons" role="complementary">
-                                        <ul>
-                                            <li class="ico-social">
-                                                <ul>
-                                                    <li><a href="#" target="_blank" aria-label="Facebook | External site that opens in a new window"><img src="./front/images/icon/ico-facebook.png" title="Facebook | External site that opens in a new window" alt="Facebook | External site that opens in a new window"></a></li>
-                                                    <li><a href="#" target="_blank" aria-label="Twitter | External site that opens in a new window"><img src="./front/images/icon/ico-twitter.png" title="Twitter | External site that opens in a new window" alt="Twitter | External site that opens in a new window"></a></li>
-                                                    <li><a href="#" target="_blank" aria-label="Youtube | External site that opens in a new window"><img src="./front/images/icon/ico-youtube.png" title="Youtube | External site that opens in a new window" alt="Youtube | External site that opens in a new window"></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li><a href="" title="Sitemap"><span class="off-css">Site Map</span>
-                                        <span class="icon-sitemap" aria-hidden="true"></span>
-                                    </a>
-                                </li>
+                                
+                                
+                                
                                 <li>
                                     <a href="javascript:void(0);" title="Accessibility Links" aria-label="Accessibility Links" class="mobile-show accessible-icon"><span class="off-css">Accessibility Links</span><span class="icon-accessibility" aria-hidden="true"></span></a>
                                     <div class="accessiblelinks textSizing">
@@ -168,7 +138,9 @@ window.location = "./session";
                 <div class="container">
                     <div id="cssmenu">
                         <ul>
+                            
                             <li><a href="{{route('home')}}">Home</a></li>
+
                             <li><a href="{{route('grievance')}}">Grievance</a></li>
                             <li><a href="{{route('grievance_status')}}">Grievance Status</a></li>
                             <li><a href="{{route('search_case')}}">Case Search</a></li>
@@ -223,6 +195,7 @@ window.location = "./session";
                 </div>
             </div>
         </header>
+        <div id="SkipContent" tabindex="-1"></div>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12 p-0 top-banner">
@@ -243,36 +216,9 @@ window.location = "./session";
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="right-content pull-right">
-                                        <div class="printShare">
-                                            <ul class="">
-                                                <li>
-                                                    <a href="#" id="print" title="Print" aria-label="Print Page Content">
-                                                        <span class="icon-printer"></span><span class="off-css">Print</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <span class="share-text"><em class="icon-share"></em>
-                                                        <span class="off-css">Share</span>
-                                                    </span>
-                                                </li>
-                                                <li>
-                                                    <a href="" target="_blank" title="Share on Facebook" aria-label="Facebook that opens in a new window">
-                                                        <span class="icon-facebook"></span><span class="off-css">Facebook</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="" target="_blank" title="Share on Twitter" aria-label="Twitter that opens in a new window">
-                                                        <span class="icon-twitter"></span><span class="off-css">Twitter</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
-                            <div id="SkipContent" tabindex="-1"></div>
+                            
                             @yield('content')
                         </div>
                     </div>
@@ -280,41 +226,7 @@ window.location = "./session";
             </div>
         </div>
         <img src="front/images/footer_top_bg.gif" alt="Biswa Bangla" width="100%">
-        <div class="container-fluid footer-slider">
-            <div class="row">
-                <div class="col-sm-12 p-0">
-                    <div id="footerScrollbar" class="footer-slider nav-white flexslider main-banner-three">
-                        <ul class="slides" aria-label="Important Sites">
-                            <li>
-                                <a href="https://incredibleindia.org/" target="_blank" title="Digital India">
-                                    <img src="./front/images/footer_slider/3.png" alt="Digital India" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.india.gov.in/" target="_blank" title="National Portal of India">
-                                    <img src="./front/images/footer_slider/4.png" alt="india.gov.in" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://www.digitalindia.gov.in/" target="_blank" title="Kanyashree Prakalpa">
-                                    <img src="./front/images/footer_slider/5.png" alt="digital-india" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://www.digitalindia.gov.in/" target="_blank" title="Mission Nirmal Bangla">
-                                    <img src="./front/images/footer_slider/6.png" alt="digital-india" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://www.digitalindia.gov.in/" target="_blank" title="Swacch Bharat">
-                                    <img src="./front/images/footer_slider/7.png" alt="digital-india" />
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <footer id="footer2" class="footer-home pt-2" style="background:black">
             <div class="container-fluid">
                 <div class="row text-white p-3">
@@ -328,12 +240,7 @@ window.location = "./session";
                         <span class="visitor_count">Visitor Count <strong>1000</strong></span>
                     </div>
                 </div>
-                <ul id="footer-menu" class="menu-list pt-3">
-                    <li class="menu-list-item"><a href="/website-policies/">Website Policies</a></li>
-                    <li class="menu-list-item"><a href="/help/">Help</a></li>
-                    <li class="menu-list-item"><a href="/contact-us/">Contact Us</a></li>
-                    <li class="menu-list-item"><a href="/feedback/">Feedback</a></li>
-                </ul>
+                
                 <div class="row text-white p-3">
                     <div class="col-sm-2 offset-2">
                         <a href="http://www.nic.in/"><img src="./front/images/icon/nicLogo.png" alt="National Informatics Centre"></a>

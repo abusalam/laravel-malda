@@ -273,7 +273,7 @@ class SDOCourtController extends Controller
             $response = array('error' => 'Error occured in form submit.');
             return response()->json($response, $statusCode);
         }
-           if(env("CAPTCHA")==1){  
+           if(config('app.captcha')==0){  
         $this->validate($request, [
             'case_number' => 'required',
              'capcha' => 'required|captcha',
@@ -297,10 +297,18 @@ class SDOCourtController extends Controller
         try {
 
             $result=tbl_case_details::where('case_no',$request->case_number)->select('*',DB::raw('DATE_FORMAT(nxt_hearing_date, "%d/%m/%Y") as nxt_hearing_date '))->get();
+            if($result->count()>0){
 
             $response = array(
-                'options' => $result
+                'options' => $result,'status'=>1
             );
+        }else{
+
+            $response = array(
+                'status' => 2
+            );
+
+        }
 
 
            

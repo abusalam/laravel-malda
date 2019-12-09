@@ -7,6 +7,7 @@
                 <div class="card-title text-center">
                     <h3>Login</h3>
                 </div>
+               
                 <div class="col-sm-10 offset-sm-1 mt-5">
                     <div class="alert alert-danger" style="display: none" id="error"></div>
                     {{Form::open(['name'=>'userlogin','id'=>'userlogin','url' => '', 'method' => 'post'])}}
@@ -18,13 +19,13 @@
                             {{Form::text('username', '', ['id'=>'username','autocomplete'=>'off','placeholder'=>'Enter Mobile No','class' => 'form-control','maxlength'=>'10', 'onkeypress'=>'return isNumberKey(event)']) }}
                         </div>
                     </div>
-                    <?php if(env("CAPTCHA")==1){  ?>
+                    <?php if(config('app.captcha')==0){  ?>
                     <div class="row">
                         <div class="col-md-3"></div>
                         <div class="form-group col-md-7">
                             <div class="captcha">
                                 <span>{!! captcha_img() !!}</span>
-                                <button type="button" class="btn btn-success"><i class="fa fa-refresh" id="refresh"></i></button>
+                                <button type="button" class="btn btn-success"  id="refresh"><i class="fa fa-refresh"></i></button>
                             </div>
                         </div>
                     </div>
@@ -110,7 +111,8 @@ $(document).ready(function() {
             contentType: false,
             dataType: 'json',
             success: function(data) {
-                if (data.status == 1) {
+               
+                 if (data.status == 1) {
 
 
                     $.ajax({
@@ -120,33 +122,127 @@ $(document).ready(function() {
                         dataType: "json",
                         success: function(data) {
                             if (data.status == 1) {
-                                if (data.otp == 1) {
-                                    var msg = "";
-                                } else {
-                                    var msg = 'Your OTP Is ' + data.otp;
-                                    //alert(msg);
+                                if(data.otp == 1){
+                                var msg='';
+                            }else{
 
+                               var msg='SMS Diesabled in Configuration.</br> Your OTP is '+data.otp;
+                            }
+                               otp_call(msg,username);
+                            
+                            
+                            } else {
+
+                                $('#error').html('');
+                                $('#error').append('Mobile no is not register with us.');
+                                $('#error').show();
+                            }
+
+
+                           
+
+
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            $(".se-pre-con").fadeOut("slow");
+                            var msg = "";
+                            if (jqXHR.status !== 422 && jqXHR.status !== 400) {
+                                msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
+                            } else {
+                                if (jqXHR.responseJSON.hasOwnProperty('exception')) {
+                                    msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                                } else {
+                                    msg += "Error(s):<strong><ul>";
+                                    $.each(jqXHR.responseJSON['errors'], function(key, value) {
+                                        msg += "<li>" + value + "</li>";
+                                    });
+                                    msg += "</ul></strong>";
                                 }
-                                var jc = $.confirm({
+                            }
+                            //                                $.alert({
+                            //                                    title: 'Error!!',
+                            //                                    type: 'red',
+                            //                                    icon: 'fa fa-warning',
+                            //                                    content: msg,
+                            //                                });
+                            $('#error').html('');
+                            $('#error').append(msg);
+                            $('#error').show();
+                            //$("#save_app").attr('disabled',false);
+                        }
+                    });
+                } else {
+                    //                        $.alert({
+                    //                            title: 'Error!!',
+                    //                            type: 'red',
+                    //                            icon: 'fa fa-warning',
+                    //                            content: data.login_error,
+                    //                        });
+                    $('#error').html('');
+                    $('#error').append(data.login_error);
+                    $('#error').show();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $(".se-pre-con").fadeOut("slow");
+                var msg = "";
+                if (jqXHR.status !== 422 && jqXHR.status !== 400) {
+                    msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
+                } else {
+                    if (jqXHR.responseJSON.hasOwnProperty('exception')) {
+                        msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                    } else {
+                        msg += "Error(s):<strong><ul>";
+                        $.each(jqXHR.responseJSON['errors'], function(key, value) {
+                            msg += "<li>" + value + "</li>";
+                        });
+                        msg += "</ul></strong>";
+                    }
+                }
+                //                    $.alert({
+                //                        title: 'Error!!',
+                //                        type: 'red',
+                //                        icon: 'fa fa-warning',
+                //                        content: msg,
+                //                    });
+                $('#error').html('');
+                $('#error').append(msg);
+                $('#error').show();
+            }
+        });
+    }
+});
+
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
+
+function otp_call(msg,username){
+     var jc = $.confirm({
                                     title: 'Please enter OTP to continue',
-                                    content: msg + '<input type="hidden" class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + username + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
+                                    content:msg+'<input type="hidden" class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + username + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
                                     type: 'green',
                                     typeAnimated: true,
                                     buttons: {
                                         resend: {
                                             btnClass: 'btn-danger',
                                             action: function() {
-                                                //jc.open(true);
+                                               
                                                 $.ajax({
                                                     type: 'POST',
                                                     url: "{{route('saveOtpForLogin')}}",
-                                                    data: { 'mobile_no': username, '_token': $("input[name='_token']").val() },
+                                                    data: {'data':1, 'mobile_no': username, '_token': $("input[name='_token']").val() },
                                                     dataType: "json",
                                                     success: function(data) {
-                                                        jc.hideLoading(true);
+                                                        
                                                         if (data.status == 1) {
-                                                            // alert();
-                                                            jc.open(true);
+                                                             //alert(data.status);
+                                                            //jc.open(true);
+                                                            otp_call(msg,username);
                                                         }
                                                     },
                                                     error: function(jqXHR, textStatus, errorThrown) {
@@ -244,19 +340,13 @@ $(document).ready(function() {
                                     },
                                     onOpen: function() {
                                         // after the modal is displayed.
-                                        startTimer();
+                                        startTimer(jc);
                                     }
                                 });
-                            } else {
+}
 
-                                $('#error').html('');
-                                $('#error').append('Mobile no is not register with us.');
-                                $('#error').show();
-                            }
-
-
-                            function startTimer() {
-                                var counter = 5;
+                       function startTimer(jc) {
+                                var counter = 30;
                                 setInterval(function() {
                                     counter--;
                                     if (counter >= 0) {
@@ -264,91 +354,11 @@ $(document).ready(function() {
                                     }
                                     if (counter === 0) {
                                         jc.buttons.resend.removeClass("btn-danger");
-                                        jc.buttons.resend.setText("Resend OTP");
+                                        jc.buttons.resend.setText("Regenerate OTP");
                                         jc.buttons.resend.addClass("btn-success")
                                     }
                                 }, 1000);
                             }
-
-
-
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            $(".se-pre-con").fadeOut("slow");
-                            var msg = "";
-                            if (jqXHR.status !== 422 && jqXHR.status !== 400) {
-                                msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
-                            } else {
-                                if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                                    msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
-                                } else {
-                                    msg += "Error(s):<strong><ul>";
-                                    $.each(jqXHR.responseJSON['errors'], function(key, value) {
-                                        msg += "<li>" + value + "</li>";
-                                    });
-                                    msg += "</ul></strong>";
-                                }
-                            }
-                            //                                $.alert({
-                            //                                    title: 'Error!!',
-                            //                                    type: 'red',
-                            //                                    icon: 'fa fa-warning',
-                            //                                    content: msg,
-                            //                                });
-                            $('#error').html('');
-                            $('#error').append(msg);
-                            $('#error').show();
-                            //$("#save_app").attr('disabled',false);
-                        }
-                    });
-                } else {
-                    //                        $.alert({
-                    //                            title: 'Error!!',
-                    //                            type: 'red',
-                    //                            icon: 'fa fa-warning',
-                    //                            content: data.login_error,
-                    //                        });
-                    $('#error').html('');
-                    $('#error').append(data.login_error);
-                    $('#error').show();
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                $(".se-pre-con").fadeOut("slow");
-                var msg = "";
-                if (jqXHR.status !== 422 && jqXHR.status !== 400) {
-                    msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
-                } else {
-                    if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                        msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
-                    } else {
-                        msg += "Error(s):<strong><ul>";
-                        $.each(jqXHR.responseJSON['errors'], function(key, value) {
-                            msg += "<li>" + value + "</li>";
-                        });
-                        msg += "</ul></strong>";
-                    }
-                }
-                //                    $.alert({
-                //                        title: 'Error!!',
-                //                        type: 'red',
-                //                        icon: 'fa fa-warning',
-                //                        content: msg,
-                //                    });
-                $('#error').html('');
-                $('#error').append(msg);
-                $('#error').show();
-            }
-        });
-    }
-});
-
-function isNumberKey(evt) {
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57))
-        return false;
-    return true;
-}
 
 </script>
 @endsection

@@ -6,7 +6,7 @@
             <div class="card-body">
                 <h3 class="card-title">Grievance Status</h3>
                 <div id="search_data">
-                    <div class="alert message" style="display: none"></div>
+                    <div class="alert error" style="display: none"></div>
                     {{Form::open(['name'=>'grievance_status','id'=>'grievance_status','url' => '', 'method' => 'post'])}}
                     <div class="form-group row">
                         <div class="col-sm-2">&nbsp;</div>
@@ -20,27 +20,28 @@
                         <div class="col-sm-2">&nbsp;</div>
                         <div class="col-sm-2 mg-t-10">{{Form::label('mobileNo', 'Mobile No:', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
                         <div class="col-sm-4">
-                            {{Form::text('mobileNo', '', ['id'=>'mobileNo','placeholder'=>'Enter Registered Mobile No','autocomplete'=>'off', 'class' => 'form-control']) }}
+                            {{Form::text('mobileNo', '', ['id'=>'mobileNo','placeholder'=>'Enter Registered Mobile No','autocomplete'=>'off', 'class' => 'form-control','maxLength'=>10, 'onkeypress'=>'return isNumberKey(event)']) }}
                         </div>
                         <div class="col-sm-1">&nbsp;</div>
                     </div>
-                    <?php if(env("CAPTCHA")==1){  ?>
+                    <?php if(config('app.captcha')==0){  ?>
                     <div class="row">
-                        <div class="col-md-3"></div>
+                        <div class="col-md-4"></div>
                         <div class="form-group col-md-7">
                             <div class="captcha">
                                 <span>{!! captcha_img() !!}</span>
-                                <button type="button" class="btn btn-success"><i class="fa fa-refresh" id="refresh"></i></button>
+                                <button type="button" class="btn btn-success"  id="refresh"><i class="fa fa-refresh"></i></button>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="form-group col-md-9">
+                        <div class="col-md-4"></div>
+                        <div class="form-group col-md-4">
                             <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha"></div>
+                            <div class="col-md-4"></div>
                     </div>
                     <?php } ?>
-                    <div>
+                    
                         <div class="row form-group">
                             <div class="col-sm-4">
                                 &nbsp;
@@ -49,7 +50,7 @@
                                 {{Form::button( 'Search', ['type'=>'button','id'=>'Search','class' => 'btn btn-primary btn-block']) }}
                             </div>
                         </div>
-                    </div>
+                  
                     {!! Form::close() !!}
                 </div>
                 <div id="tbl_t" style="padding-left: 10px;">
@@ -87,6 +88,7 @@ $("#Search").click(function() {
             content: "Enter Mobile Number and Grievance ID",
         });
 
+
     } else {
 
         $.ajax({
@@ -97,7 +99,53 @@ $("#Search").click(function() {
             success: function(data) {
                 //alert(data.status);
                 if (data.status == 1) {
-                    var jc = $.confirm({
+                    otp_call(mobileNo,grievance_id,capcha);
+                } else {
+                   
+                    $('#error').html('');
+                    $('#error').append('Mobile no is already register');
+                    $('#error').show();
+
+                }
+
+                
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $(".se-pre-con").fadeOut("slow");
+                var msg = "";
+                if (jqXHR.status !== 422 && jqXHR.status !== 400) {
+                    msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
+                } else {
+                    if (jqXHR.responseJSON.hasOwnProperty('exception')) {
+                        msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                    } else {
+                        msg += "Error(s):<strong><ul>";
+                        $.each(jqXHR.responseJSON['errors'], function(key, value) {
+                            msg += "<li>" + value + "</li>";
+                        });
+                        msg += "</ul></strong>";
+                    }
+                }
+                $.alert({
+                    title: 'Error!!',
+                    type: 'red',
+                    icon: 'fa fa-warning',
+                    content: msg,
+                });
+                $('#error').html('');
+                $('#error').append(msg);
+                $('#error').show();
+            }
+        });
+    }
+
+
+
+});
+
+function otp_call(mobileNo,grievance_id,capcha){
+
+    var jc = $.confirm({
                         title: 'Please enter OTP to continue',
                         content: '<input type="hidden" class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + mobileNo + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
                         type: 'green',
@@ -180,13 +228,13 @@ $("#Search").click(function() {
                                                 success: function(data) {
 
                                                     if (data.flag == 1) {
-                                                        $('.message').html("");
-                                                        $('.message').append("Grievance ID and Mobile No Not Found");
-                                                        $('.message').removeClass('alert-success');
-                                                        $('.message').addClass('alert-danger');
-                                                        $('.message').show();
+                                                        $('.error').html("");
+                                                        $('.error').append("Grievance ID and Mobile No Not Found");
+                                                        $('.error').removeClass('alert-success');
+                                                        $('.error').addClass('alert-danger');
+                                                        $('.error').show();
                                                     } else {
-                                                        $('.message').hide();
+                                                        $('.error').hide();
                                                         $('#search_data').hide();
 
                                                         var msg = "";
@@ -264,6 +312,7 @@ $("#Search").click(function() {
                                                         icon: 'fa fa-warning',
                                                         content: msg,
                                                     });
+
                                                     //$("#save_app").attr('disabled',false);
                                                 }
 
@@ -312,23 +361,12 @@ $("#Search").click(function() {
                             close: function() {}
                         },
                         onOpen: function() {
-                            startTimer();
+                            startTimer(jc);
                         }
                     });
-                } else {
-                    //                        $.confirm({
-                    //                            title: 'Error!!',
-                    //                            type: 'red',
-                    //                            icon: 'fa fa-warning',
-                    //                            content: 'Mobile no is already register',
-                    //                        });
-                    $('#error').html('');
-                    $('#error').append('Mobile no is already register');
-                    $('#error').show();
+}
 
-                }
-
-                function startTimer() {
+function startTimer(jc) {
                     var counter = 30;
                     setInterval(function() {
                         counter--;
@@ -342,39 +380,13 @@ $("#Search").click(function() {
                         }
                     }, 1000);
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                $(".se-pre-con").fadeOut("slow");
-                var msg = "";
-                if (jqXHR.status !== 422 && jqXHR.status !== 400) {
-                    msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
-                } else {
-                    if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                        msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
-                    } else {
-                        msg += "Error(s):<strong><ul>";
-                        $.each(jqXHR.responseJSON['errors'], function(key, value) {
-                            msg += "<li>" + value + "</li>";
-                        });
-                        msg += "</ul></strong>";
-                    }
-                }
-                $.alert({
-                    title: 'Error!!',
-                    type: 'red',
-                    icon: 'fa fa-warning',
-                    content: msg,
-                });
-                $('#error').html('');
-                $('#error').append(msg);
-                $('#error').show();
-            }
-        });
-    }
 
-
-
-});
+   function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
 
 </script>
 @endsection

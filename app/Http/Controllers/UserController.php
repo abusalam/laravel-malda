@@ -17,8 +17,14 @@ class UserController extends Controller {
      public function home() {
         
 
-        return view('home');
+        return view('login_home');
     }
+
+    // public function login_home() {
+        
+
+    //     return view('login_home');
+    // }
 
     
 

@@ -27,7 +27,7 @@ class GrievanceStatusController extends Controller {
 			$response = array('error' => 'Error occured in form submit.');
 			return response()->json($response, $statusCode);
 		}
-         if(env("CAPTCHA")==1){
+         if(config('app.captcha')==0){
 		$this->validate($request, [
 			'grievance_id' => 'required',
 			'mobileNo' => 'required',

@@ -65,7 +65,7 @@
                 </div>
 
 
-                <?php if(env("CAPTCHA")==1){  ?>
+                <?php if(config('app.captcha')==0){  ?>
 
                 <div class="row">
                     <div class="col-md-4"></div>
@@ -246,17 +246,11 @@
                                                         });
                                                         msg += "</ul></strong>";
                                                     }
-                                                }
-//                                                $.alert({
-//                                                    title: 'Error!!',
-//                                                    type: 'red',
-//                                                    icon: 'fa fa-warning',
-//                                                    content: msg,
-//                                                });
+                                                }                                               
                                                 $('#error').html('');
                                                 $('#error').append(msg);
                                                 $('#error').show();
-                                                // $("#save_app").attr('disabled',false);
+                                                
                                             }
                                         });
                                     }
@@ -344,12 +338,7 @@
                                                                 msg += "</ul></strong>";
                                                             }
                                                         }
-//                                                        $.alert({
-//                                                            title: 'Error!!',
-//                                                            type: 'red',
-//                                                            icon: 'fa fa-warning',
-//                                                            content: msg,
-//                                                        });
+                                                        
                                                         $('#error').html('');
                                                         $('#error').append(msg);
                                                         $('#error').show();
@@ -384,12 +373,7 @@
                                                     msg += "</ul></strong>";
                                                 }
                                             }
-//                                            $.alert({
-//                                                title: 'Error!!',
-//                                                type: 'red',
-//                                                icon: 'fa fa-warning',
-//                                                content: msg,
-//                                            });
+                                            
                                             $('#error').html('');
                                             $('#error').append(msg);
                                             $('#error').show();
@@ -404,12 +388,7 @@
                             }
                         });
                     } else {
-//                        $.confirm({
-//                            title: 'Error!!',
-//                            type: 'red',
-//                            icon: 'fa fa-warning',
-//                            content: 'Mobile no is already register',
-//                        });
+                      
                         $('#error').html('');
                         $('#error').append('Mobile no is already register');
                         $('#error').show();

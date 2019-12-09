@@ -15,6 +15,18 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    /* 
+    |--------------------------------------------------------------------------
+    | Captcha and OTP Configuration 
+    |--------------------------------------------------------------------------
+    |
+    | Captcha Default = 0 - Show Captcha and 1 - Remove Captcha
+    | OTP Default = 0 - Show Captcha and 1 - Remove Captcha
+    |
+    */
+    'captcha' => env('CAPTCHA', '0'),
+    'otp' => env('OTP','0'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

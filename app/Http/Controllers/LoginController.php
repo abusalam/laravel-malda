@@ -18,9 +18,12 @@ class LoginController extends Controller {
     }
 
     public function loginAction(Request $request) {
-//        dd($request->all());
-
-  if(env("CAPTCHA")==1){ 
+       //dd($request->all());
+    
+           
+       
+    //echo config('app.captcha');die;
+  if(config('app.captcha')==0){ 
         $this->validate($request, [
             'username' => "required|digits:10",
             'captcha' => 'required|captcha'
@@ -51,9 +54,12 @@ class LoginController extends Controller {
         $check1 = tbl_user::where('mobile_no', $username)->first();
 
         if ($check1 != null) {
+     
             $response = array(
                 'status' => 1
             );
+    
+        
         } else {
             $response = array('login_error' => "Mobile No Does't Exist", 'status' => 2);
         }

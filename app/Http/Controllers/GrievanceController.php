@@ -28,7 +28,7 @@ class GrievanceController extends Controller {
 
        
 
-        if(env("CAPTCHA")==1){ 
+        if(config('app.captcha')==0){ 
         $this->validate($request, [
                 'grivense_name' => "required|regex:/^[\pL\s]+$/u",
                 'mobile_no' => "required|digits:10",

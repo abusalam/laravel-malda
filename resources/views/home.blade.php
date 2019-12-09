@@ -400,42 +400,7 @@
             </div>
         </div>
         <img src="./front/images/footer_top_bg.gif" alt="Biswa Bangla" width="100%">
-        <div class="container-fluid footer-slider">
-            <!-- Place somewhere in the <body> of your page -->
-            <div class="row">
-                <div class="col-sm-12 p-0">
-                    <div id="footerScrollbar" class="footer-slider nav-white flexslider main-banner-three">
-                        <ul class="slides" aria-label="Important Sites">
-                            <li>
-                                <a href="https://incredibleindia.org/" target="_blank" title="Digital India">
-                                    <img src="./front/images/footer_slider/3.png" alt="Digital India" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.india.gov.in/" target="_blank" title="National Portal of India">
-                                    <img src="./front/images/footer_slider/4.png" alt="india.gov.in" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://www.digitalindia.gov.in/" target="_blank" title="Kanyashree Prakalpa">
-                                    <img src="./front/images/footer_slider/5.png" alt="digital-india" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://www.digitalindia.gov.in/" target="_blank" title="Mission Nirmal Bangla">
-                                    <img src="./front/images/footer_slider/6.png" alt="digital-india" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://www.digitalindia.gov.in/" target="_blank" title="Swacch Bharat">
-                                    <img src="./front/images/footer_slider/7.png" alt="digital-india" />
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <footer id="footer2" class="footer-home pt-2" style="background:black">
             <div class="container-fluid">
                 <div class="row text-white p-3">
@@ -449,12 +414,7 @@
                         <span class="visitor_count">Visitor Count <strong>1000</strong></span>
                     </div>
                 </div>
-                <ul id="footer-menu" class="menu-list pt-3">
-                    <li class="menu-list-item"><a href="/website-policies/">Website Policies</a></li>
-                    <li class="menu-list-item"><a href="/help/">Help</a></li>
-                    <li class="menu-list-item"><a href="/contact-us/">Contact Us</a></li>
-                    <li class="menu-list-item"><a href="/feedback/">Feedback</a></li>
-                </ul>
+               
                 <div class="row text-white p-3">
                     <div class="col-sm-2 offset-2">
                         <a href="http://www.nic.in/"><img src="./front/images/icon/nicLogo.png" alt="National Informatics Centre"></a>

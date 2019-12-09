@@ -253,6 +253,7 @@ class registrationController extends Controller {
          }
          
          public function saveOtpForLogin(request $request){
+
              $statusCode = 200;
         $mobile_verification = null;
         if (!$request->ajax()) {
@@ -288,6 +289,10 @@ class registrationController extends Controller {
             //echo $date_time;die;
         }
 
+        if($request->data!=1){
+
+
+
           if(count($mobile_no_verify)==0 || $cenvertedTime < $date_time ){
 
             if (count($mobile_no_checking) > 0 ) {
@@ -309,7 +314,7 @@ class registrationController extends Controller {
                 }
 
                 $response = array(
-                    'status' => 1, 'otp'=>1
+                    'status' => 1,'otp'=>1
                 );
                 
             }
@@ -319,11 +324,33 @@ class registrationController extends Controller {
                 );
             }
         }else{
+             if(config('app.otp')==0){
             $response = array(
-                    'status' => 1, 'otp'=>$maxValue->otp
+                    'status' => 1,'otp'=>1
+                );
+           }else{
+            $response = array(
+                    'status' => 1,'otp'=>$maxValue->otp
                 );
 
+           }
+
         }
+
+    }else{
+
+                    $Destination = $mobile_no;
+                    $Message = 'Your OTP  is:' . $maxValue->otp;
+                    $SEND_SMS = 'TRUE';
+                    $mobile_no = $Destination;
+
+                      include_once("sms/test_sms.php");
+                    $response = array(
+                    'status' => 1
+                );
+
+
+    }
                 
            
         } catch (\Exception $e) {
