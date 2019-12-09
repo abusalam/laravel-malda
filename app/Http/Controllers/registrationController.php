@@ -329,8 +329,17 @@ class registrationController extends Controller {
                     'status' => 1,'otp'=>1
                 );
            }else{
+
+                $mobile_verification = new tbl_mobile_verify();
+                $mobile_verification->mobile_no = $mobile_no;
+                $mobile_verification->otp = rand(1000, 9999);
+                $mobile_verification->otp_creation_time = date('Y-m-d H:i:s');
+
+                $mobile_verification->save();
+
+
             $response = array(
-                    'status' => 1,'otp'=>$maxValue->otp
+                    'status' => 1,'otp'=>$mobile_verification->otp
                 );
 
            }

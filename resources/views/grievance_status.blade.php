@@ -99,7 +99,13 @@ $("#Search").click(function() {
             success: function(data) {
                 //alert(data.status);
                 if (data.status == 1) {
-                    otp_call(mobileNo,grievance_id,capcha);
+                    if(data.otp == 1){
+                                var msg='';
+                            }else{
+
+                               var msg='SMS Diesabled in Configuration.</br> Your OTP is '+data.otp;
+                            }
+                    otp_call(msg,mobileNo,grievance_id,capcha);
                 } else {
                    
                     $('#error').html('');
@@ -143,11 +149,11 @@ $("#Search").click(function() {
 
 });
 
-function otp_call(mobileNo,grievance_id,capcha){
+function otp_call(msg,mobileNo,grievance_id,capcha){
 
     var jc = $.confirm({
                         title: 'Please enter OTP to continue',
-                        content: '<input type="hidden" class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + mobileNo + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
+                        content: msg+'<input type="hidden" class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + mobileNo + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
                         type: 'green',
                         typeAnimated: true,
                         buttons: {

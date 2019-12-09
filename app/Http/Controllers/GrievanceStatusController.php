@@ -217,7 +217,8 @@ class GrievanceStatusController extends Controller {
 			$mobile_verification->mobile_no = $mobile_no;
 			$mobile_verification->otp = rand(1000, 9999);
 			$mobile_verification->save();
-			if ($mobile_no != '') {
+			if(config('app.otp')==0){
+			 		if ($mobile_no != '') {
 				$Destination = $mobile_no;
 				$Message = 'Your OTP  is:' . $mobile_verification->otp;
 				$SEND_SMS = 'TRUE';
@@ -226,9 +227,17 @@ class GrievanceStatusController extends Controller {
 				include_once("sms/test_sms.php");
 			}
 
-			$response = array(
-				'status' => 1
-			);
+
+            $response = array(
+                    'status' => 1,'otp'=>1
+                );
+           }else{
+
+            $response = array(
+                    'status' => 1,'otp'=>$mobile_verification->otp
+                );
+
+           }
 		}
 		catch (\Exception $e) {
 			$response = array(

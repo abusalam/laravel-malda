@@ -35,7 +35,7 @@ class GrievanceController extends Controller {
                 'grivense_email' => 'required|email',
                 'grivense_complain' => 'required|regex:/^[A-Za-z0-9\/.,\s()-]+$/i',
                 'captcha' => 'required|captcha',
-                'attatchment' => 'nullable|mimes:pdf| max:1024',
+                //'attatchment' => 'nullable|mimes:pdf| max:1024',
 
                     ], [
                 'grivense_name.required' => 'Name is Required',
@@ -47,8 +47,8 @@ class GrievanceController extends Controller {
                 'grivense_complain.required' => 'Please enter complain',
                 'grivense_complain.regex' => 'Alphanumric and some special characters like ()./- allow',  
                 'captcha.captcha' => 'Captcha Missmatch',
-                'attatchment.mimes' => 'Attatchment file must be a pdf format.',
-                'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.'  
+                // 'attatchment.mimes' => 'Attatchment file must be a pdf format.',
+                // 'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.'  
                         
             ]);
     }else{
@@ -98,6 +98,7 @@ class GrievanceController extends Controller {
 
       //echo $griv_idd; die;
 
+
       if (!empty($request->file('attatchment'))) {
                 $file_attatchment = $request->file('attatchment');
                 $file_ext = $file_attatchment->getClientOriginalExtension();
@@ -115,6 +116,16 @@ class GrievanceController extends Controller {
             $tbl_grivense->griev_auto_id = $griv_idd;
             $tbl_grivense->attatchment = $filename_upload;
             $tbl_grivense->save();
+            //$inserted_id = $tbl_grivense->code;
+            $maxValue = tbl_grievance::select('code')->where('code', DB::raw("(select max(code) from tbl_grivense where mobile_no=$request->mobile_no)"))->first();
+              //echo $maxValue->code;die;
+          
+                $Destination = $request->mobile_no;
+				$Message = 'Your Grievance ID is:' . $maxValue->code;
+				$SEND_SMS = 'TRUE';
+				$mobile_no = $Destination;
+
+				include_once("sms/test_sms.php");
 
 
             $response = array(
@@ -254,7 +265,11 @@ class GrievanceController extends Controller {
 			$mobile_verification->mobile_no = $mobile_no;
 			$mobile_verification->otp = rand(1000, 9999);
 			$mobile_verification->save();
-			if ($mobile_no != '') {
+		
+
+
+			 if(config('app.otp')==0){
+			 		if ($mobile_no != '') {
 				$Destination = $mobile_no;
 				$Message = 'Your OTP  is:' . $mobile_verification->otp;
 				$SEND_SMS = 'TRUE';
@@ -263,9 +278,17 @@ class GrievanceController extends Controller {
 				include_once("sms/test_sms.php");
 			}
 
-			$response = array(
-				'status' => 1
-			);
+
+            $response = array(
+                    'status' => 1,'otp'=>1
+                );
+           }else{
+
+            $response = array(
+                    'status' => 1,'otp'=>$mobile_verification->otp
+                );
+
+           }
 		}
 		catch (\Exception $e) {
 			$response = array(
