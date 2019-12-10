@@ -52,11 +52,14 @@ window.location = "./session";
     <link rel='stylesheet' href='./front/css/footer-logo-carousel.css' media='all' />
     <link rel="stylesheet" href="{{ asset('/css/bootstrapValidator.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/jquery-confirm.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/lib/fontawesome-free/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/lib/fontawesome/css/font-awesome.css') }}">
+    {{-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> --}}
     <link rel='stylesheet' href='./front/css/design.css' media='all' />
     <link href="{{ asset('/lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" integrity="sha256-bLNUHzSMEvxBhoysBE7EXYlIrmo7+n7F4oJra1IgOaM=" crossorigin="anonymous" />
+
+    <link href="{{ asset('/css/bootstrap-datepicker.css') }}" rel="stylesheet">
+   {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" integrity="sha256-bLNUHzSMEvxBhoysBE7EXYlIrmo7+n7F4oJra1IgOaM=" crossorigin="anonymous" /> --}} 
 </head>
 
 <body>
