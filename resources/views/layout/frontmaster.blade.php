@@ -19,13 +19,13 @@
     <link rel='stylesheet' href='./front/css/footer-logo-carousel.css' media='all' />
     <link rel="stylesheet" href="{{ asset('/css/bootstrapValidator.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/jquery-confirm.min.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
     <link rel="stylesheet" href="{{ asset('/lib/fontawesome/css/font-awesome.css') }}">
     <link rel='stylesheet' href='./front/css/design.css' media='all' />
     <link href="{{ asset('/lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrap-datepicker.css') }}" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" integrity="sha256-bLNUHzSMEvxBhoysBE7EXYlIrmo7+n7F4oJra1IgOaM=" crossorigin="anonymous" />  --}}
+   
 </head>
 
 <body>

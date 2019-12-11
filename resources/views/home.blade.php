@@ -17,8 +17,7 @@
     <link rel='stylesheet' id='flexslider-css' href='./front/css/flexslider.min.css' media='all' />
     <link rel='stylesheet' id='custom-flexslider-css' href='./front/css/custom-flexslider.css' media='all' />
     <link rel='stylesheet' id='footer-style-css' href='./front/css/footer-logo-carousel.css' media='all' />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('/lib/fontawesome/css/font-awesome.css') }}">
     <link rel='stylesheet' href='./front/css/design.css' media='all' />
 </head>
 
