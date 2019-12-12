@@ -4,7 +4,7 @@
     <div class="col-12">                        
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title"> Resolve Grievance List</h3>
+                <h3 class="card-title"> {{__('text.resolved_table_heading')}}</h3>
                 {{csrf_field()}}
                 <div class="datatbl  " style="width: 96%;margin-left: 20px;">
                     <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_grievance_list" style="width: 100%">
@@ -68,7 +68,7 @@
                         str += '<tr><td><label> Mobile Number : </label></td><td>' + data.options.mobile_no + '</td></tr>';
                         str += '<tr><td><label> Email : </label></td><td>' + data.options.email + '</td></tr>';
                         str += '<tr><td><label> Complain : </label></td><td>' + data.options.complain + '</td></tr>';
-                        str += '<tr><td><label> Attatchment : </label></td><td> <a href ="upload/grievance_attatchment/'+ data.options.attatchment + '" target="_blank"> View Attatchment </a></td></tr>';
+                        str += '<tr><td><label> Attachment : </label></td><td> <a href ="upload/grievance_attatchment/'+ data.options.attatchment + '" target="_blank"> View Attachment </a></td></tr>';
                                                 str += '<tr><td><label> Forwarded : </label></td><td>';
                                               str += '<table class="table">';
                                                 str += '<tr><th width="20%">User</th><th width="20%">Date</th><th width="50%">Remark</th><th width="10%">Attachment</th></tr>';

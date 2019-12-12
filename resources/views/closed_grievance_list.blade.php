@@ -4,7 +4,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title"> Closed Grievance List</h3>
+                <h3 class="card-title"> {{__('text.closed_table_heading')}}</h3>
                 {{csrf_field()}}
                 <div class="datatbl  " style="width: 96%;margin-left: 20px;">
                     <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_grievance_list" style="width: 100%">

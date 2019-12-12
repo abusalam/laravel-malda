@@ -4,7 +4,7 @@
     <div class="col-12">                        
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">Grievance</h3>
+                <h3 class="card-title">{{__('text.grievance')}}</h3>
                 <div class="row">
                     <div class="col-sm-4  offset-sm-4">
                         <div class="alert alert-danger" style="display: none" id="error"></div>
@@ -15,40 +15,40 @@
                 <div class="form-group row">
                     <div class="col-sm-2">&nbsp;</div>
                     <div class="col-sm-2 mg-t-10">
-                        {{Form::label('grivense_name', 'Name:', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}
+                        {{Form::label('grivense_name', __('text.name'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}
                     </div>
                     <div class="col-sm-4">
-                        {{Form::text('grivense_name', '', ['id'=>'grivense_name','placeholder'=>'Enter Name','autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'30']) }}
+                        {{Form::text('grivense_name', '', ['id'=>'grivense_name','placeholder'=>__('text.enter_name'),'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'30']) }}
                     </div>
                     <div class="col-sm-1">&nbsp;</div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-2">&nbsp;</div>
                     <div class="col-sm-2 mg-t-10">
-                        {{Form::label('mobile_no', 'Mobile Number :', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}
+                        {{Form::label('mobile_no', __('text.mobile_no'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}
                     </div>
                     <div class="col-sm-4">
-                        {{Form::text('mobile_no', '', ['id'=>'mobile_no','placeholder'=>'Enter Mobile No','autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'10']) }}
+                        {{Form::text('mobile_no', '', ['id'=>'mobile_no','placeholder'=>__('text.enter_mobile_number'),'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'10']) }}
                     </div>
                     <div class="col-sm-1">&nbsp;</div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-2">&nbsp;</div>
                     <div class="col-sm-2 mg-t-10">
-                        {{Form::label('grivense_email', 'Email :', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}
+                        {{Form::label('grivense_email', __('text.email'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}
                     </div>
                     <div class="col-sm-4">
-                        {{Form::text('grivense_email', '', ['id'=>'grivense_email','placeholder'=>'Enter Email','autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'30']) }}
+                        {{Form::text('grivense_email', '', ['id'=>'grivense_email','placeholder'=>__('text.enter_email'),'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'30']) }}
                     </div>
                     <div class="col-sm-1">&nbsp;</div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-2">&nbsp;</div>
                     <div class="col-sm-2 mg-t-10">
-                        {{Form::label('grivense_complain', 'Complain :', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}
+                        {{Form::label('grivense_complain', __('text.complain'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}
                     </div>
                     <div class="col-sm-4">
-                        {{Form::textarea('grivense_complain', '', ['id'=>'grivense_complain','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300']) }}
+                        {{Form::textarea('grivense_complain', '', ['id'=>'grivense_complain','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300','placeholder'=>__('text.enter_complain')]) }}
                     </div>
                     <div class="col-sm-1">&nbsp;</div>
                 </div>
@@ -56,7 +56,7 @@
                 <div class="form-group row">
                     <div class="col-sm-2">&nbsp;</div>
                     <div class="col-sm-2 mg-t-10">
-                        {!! Form::label('attatchment', 'Attatchment:', ['class'=>' mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) !!}
+                        {!! Form::label('attatchment', __('text.attachment'), ['class'=>' mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) !!}
                     </div>
                     <div class="col-sm-4">
                         {!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}
@@ -79,14 +79,14 @@
                 <div class="row">
                     <div class="col-md-4"></div>
                     <div class="form-group col-md-4">
-                        <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha"></div>
+                        <input id="captcha" type="text" class="form-control" placeholder="{{__('text.enter_captcha')}}" name="captcha"></div>
                 </div>
                 <?php } ?>
                 <div class="row">
 
                     <div class="col-sm-4">&nbsp;</div>
                     <div class="col-sm-4">
-                        {{ Form::button('Submit', ['class' => 'btn btn-primary btn-block', 'type' => 'submit','id'=>'Submit']) }}
+                        {{ Form::button(__('text.submit'), ['class' => 'btn btn-primary btn-block', 'type' => 'submit','id'=>'Submit']) }}
                     </div>
 
                 </div>

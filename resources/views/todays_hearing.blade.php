@@ -12,7 +12,7 @@
                         <a class="btn btn-info" href="{{route('search_case')}}" >Search Case by Number</a>
                     </div>
                     <div class="push-left" style="margin-bottom: 20px;">
-                        <h3 class="card-title">Today's Hearing</h3>
+                        <h3 class="card-title">{{__('text.todays_hearing')}}</h3>
                     </div>
                     
                 

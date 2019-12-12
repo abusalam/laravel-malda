@@ -106,13 +106,13 @@
                 <div class="container">
                     <div id="cssmenu">
                         <ul>
-                            <li><a href="{{route('home')}}">Home</a></li>
-                            <li><a href="{{route('grievance')}}">Grievance</a></li>
-                            <li><a href="{{route('grievance_status')}}">Grievance Status</a></li>
-                            <li><a href="{{route('search_case')}}">Case Search</a></li>
-                            <li><a href="{{route('todays_hearing')}}">Today's Hearing</a></li>
+                            <li><a href="{{route('home')}}">{{__('text.home')}}</a></li>
+                            <li><a href="{{route('grievance')}}">{{__('text.grievance')}}</a></li>
+                            <li><a href="{{route('grievance_status')}}">{{__('text.grievance_status')}}</a></li>
+                            <li><a href="{{route('search_case')}}">{{__('text.case_search')}}</a></li>
+                            <li><a href="{{route('todays_hearing')}}">{{__('text.todays_hearing')}}</a></li>
                             <?php if (session()->has('user_code') == false) { ?>
-                            <li class="pull-right"><a id="loginn" href="{{route('login')}}">Login</a></li>
+                            <li class="pull-right"><a id="loginn" href="{{route('login')}}">{{__('text.login')}}</a></li>
                             <?php }else{?>
                             <li class="pull-right">
                                 <a href="#">
@@ -122,37 +122,37 @@
                                 }else{echo " User ";}  ?>)</a>
                                 <ul>
                                     <?php if (session()->get('user_type') == 0) { ?>
-                                    <li><a href="{{route('index')}}">Dashboard</a></li>
-                                    <li><a href="#">User</a>
+                                    <li><a href="{{route('index')}}">{{__('text.dashboard')}}</a></li>
+                                    <li><a href="#">{{__('text.user')}}</a>
                                         <ul>
-                                            <li><a href="{{route('userRegisration')}}">User Create</a></li>
-                                            <li><a href="{{route('userList')}}">User List</a></li>
+                                            <li><a href="{{route('userRegisration')}}">{{__('text.user_create')}}</a></li>
+                                            <li><a href="{{route('userList')}}">{{__('text.user_list')}}</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="#">Case</a>
+                                        <a href="#">{{__('text.case')}}</a>
                                         <ul>
-                                            <li><a href="{{route('case_entry')}}">Case Entry</a></li>
-                                            <li><a href="{{route('case_list')}}">Case List</a></li>
+                                            <li><a href="{{route('case_entry')}}">{{__('text.case_entry')}}</a></li>
+                                            <li><a href="{{route('case_list')}}">{{__('text.case_list')}}</a></li>
                                         </ul>
                                     </li>
                                     <?php } ?>
-                                    <li><a href="#">Grievance</a>
+                                    <li><a href="#">{{__('text.grievance')}}</a>
                                         <ul>
-                                            <li><a href="{{route('grievance_list')}}">Recieved</a></li>
-                                            <li><a href="{{route('forworded_grievance_list')}}">Forwarded</a></li>
-                                            <li><a href="{{route('resolve_grievance_list')}}">Resolved</a></li>
-                                            <li><a href="{{route('close_grievance_list')}}">Closed</a></li>
+                                            <li><a href="{{route('grievance_list')}}">{{__('text.recieved')}}</a></li>
+                                            <li><a href="{{route('forworded_grievance_list')}}">{{__('text.forwarded')}}</a></li>
+                                            <li><a href="{{route('resolve_grievance_list')}}">{{__('text.resolved')}}</a></li>
+                                            <li><a href="{{route('close_grievance_list')}}">{{__('text.closed')}}</a></li>
                                         </ul>
                                     </li>
                                     <?php if (session()->get('user_type') == 0) { ?>
-                                    <li><a href="#">Report</a>
+                                    <li><a href="#">{{__('text.report')}}</a>
                                         <ul>
-                                            <li><a href="{{route('pending_report')}}">Pending Grievance</a></li>
+                                            <li><a href="{{route('pending_report')}}">{{__('text.pending_grievance_report')}}</a></li>
                                         </ul>
                                     </li>
                                     <?php }?>
-                                    <li><a href="{{route('logout')}}">Logout</a></li>
+                                    <li><a href="{{route('logout')}}">{{__('text.logout')}}</a></li>
                                 </ul>
                             </li>
                             <?php }?>
@@ -175,7 +175,7 @@
                                     <div class="left-content pull-left">
                                         <div id="breadcam" role="navigation" aria-label="breadcrumb">
                                             <ul class="breadcrumbs">
-                                                <li><a href="./" class="home"><span>Home</span></a></li>
+                                                <li><a href="./" class="home"><span>{{__('text.home')}}</span></a></li>
                                                 <!--                                                    <li><a href="">Directory</a></li>
                                                                                                         <li class="current">Grievance</li>-->
                                             </ul>

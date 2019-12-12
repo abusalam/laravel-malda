@@ -6,16 +6,16 @@
     <div class="col-12">                        
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">SDO Court List</h3>
+                <h3 class="card-title">{{__('text.case_list')}}</h3>
                 {{Form::open(['name'=>'case_search','id'=>'case_search','url' => '', 'method' => 'post'])}}
                 <div class="form-group row ">
                     <div class="col-sm-1">&nbsp;</div>
-                    <div class="col-sm-2 mg-t-10">{{Form::label('case_number', 'Case Number', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
+                    <div class="col-sm-2 mg-t-10">{{Form::label('case_number', __('text.case_number'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
                     <div class="col-sm-4">
-                        {{Form::text('case_number', '', ['id'=>'case_number','placeholder'=>'Enter Case Number','autocomplete'=>'off', 'class' => 'form-control']) }}
+                        {{Form::text('case_number', '', ['id'=>'case_number','placeholder'=>__('text.enter_case_number'),'autocomplete'=>'off', 'class' => 'form-control']) }}
                     </div>
                     <div class="col-sm-3">
-                        {{Form::button( 'Search', ['type'=>'button','id'=>'Search','class' => 'btn btn-primary btn-block']) }}
+                        {{Form::button( __('text.search'), ['type'=>'button','id'=>'Search','class' => 'btn btn-primary btn-block']) }}
                     </div>
                     <div class="col-sm-2">&nbsp;</div>
                 </div>

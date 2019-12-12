@@ -4,7 +4,7 @@
     <div class="col-12">                        
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title"> Forwarded Grievance List</h3>
+                <h3 class="card-title">{{__('text.forwarded_table_heading')}}</h3>
 
                 {{Form::open(['name'=>'to_form_search','id'=>'case_search','url' => '', 'method' => 'post'])}}
                 <div class="form-group row ">

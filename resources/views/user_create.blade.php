@@ -4,34 +4,34 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="card-title text-center"><h3>User Create</h3></div>
+                <div class="card-title text-center"><h3>{{__('text.user_create')}}</h3></div>
                 <div class="row">
                     <div class="col-sm-2 ">&nbsp</div>
                     <div class="col-sm-8 mt-5">
                         {{Form::open(['name'=>'userCreate','id'=>'userCreate','url' => '', 'method' => 'post'])}}
                         {!! Form::hidden('edit_code',null,['id'=>'edit_code']) !!}
                         <div class="form-group row">
-                            <div class="col-sm-4 mg-t-10">{{Form::label('name', 'Name:', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
+                            <div class="col-sm-4 mg-t-10">{{Form::label('name', __('text.name'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
                             <div class="col-sm-8">
-                                {{Form::text('name', '', ['id'=>'name','placeholder'=>'Enter Your Name','autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'30']) }}
+                                {{Form::text('name', '', ['id'=>'name','placeholder'=>__('text.enter_name'),'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'30']) }}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-4 mg-t-10">{{Form::label('mobile_no', 'Mobile No:', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
+                            <div class="col-sm-4 mg-t-10">{{Form::label('mobile_no',__('text.mobile_no'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
                             <div class="col-sm-8">
-                                {{Form::text('mobile_no', '', ['id'=>'mobile_no','placeholder'=>'Enter Mobile No','autocomplete'=>'off','class' => 'form-control','pattern'=>'[0-9]*', 'inputmode'=>'numeric','onkeypress'=>'return isNumberKey(event)','maxlength'=>'10']) }}
+                                {{Form::text('mobile_no', '', ['id'=>'mobile_no','placeholder'=>__('text.enter_mobile_number'),'autocomplete'=>'off','class' => 'form-control','pattern'=>'[0-9]*', 'inputmode'=>'numeric','onkeypress'=>'return isNumberKey(event)','maxlength'=>'10']) }}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-4 mg-t-10">{{Form::label('designation', 'Designation:', ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
+                            <div class="col-sm-4 mg-t-10">{{Form::label('designation', __('text.designation'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
                             <div class="col-sm-8">
-                                {{Form::text('designation', '', ['id'=>'designation','placeholder'=>'Enter Designation','autocomplete'=>'off','class' => 'form-control', 'maxlength'=>'30']) }}
+                                {{Form::text('designation', '', ['id'=>'designation','placeholder'=>__('text.enter_designation'),'autocomplete'=>'off','class' => 'form-control', 'maxlength'=>'30']) }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-4 mg-t-10">&nbsp;</div>
                             <div class="col-sm-8">
-                                {{Form::submit( 'Save', ['id'=>'login','class' => 'btn btn-success btn-block']) }}
+                                {{Form::submit( __('text.save'), ['id'=>'login','class' => 'btn btn-success btn-block']) }}
                             </div>
                         </div>
                         {!! Form::close() !!}

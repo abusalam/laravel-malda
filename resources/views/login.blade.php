@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-body" style="min-height: 250px;">
                 <div class="card-title text-center">
-                    <h3>Login</h3>
+                    <h3>{{__('text.login')}}</h3>
                 </div>
                
                 <div class="col-sm-10 offset-sm-1 mt-5">
@@ -13,10 +13,10 @@
                     {{Form::open(['name'=>'userlogin','id'=>'userlogin','url' => '', 'method' => 'post'])}}
                     <div class="form-group row">
                         <div class="col-sm-3" style="font-weight: bold; font-size: 17px;">
-                            {{Form::label('username', 'Mobile No:', ['class' => 'form-label mg-b-0 required']) }}
+                            {{Form::label('username', __('text.mobile_no'), ['class' => 'form-label mg-b-0 required']) }}
                         </div>
                         <div class="col-sm-9">
-                            {{Form::text('username', '', ['id'=>'username','autocomplete'=>'off','placeholder'=>'Enter Mobile No','class' => 'form-control','maxlength'=>'10', 'onkeypress'=>'return isNumberKey(event)']) }}
+                            {{Form::text('username', '', ['id'=>'username','autocomplete'=>'off','placeholder'=>__('text.enter_mobile_number'),'class' => 'form-control','maxlength'=>'10', 'onkeypress'=>'return isNumberKey(event)']) }}
                         </div>
                     </div>
                     <?php if(config('app.captcha')==0){  ?>
@@ -32,13 +32,13 @@
                     <div class="row">
                         <div class="col-md-3"></div>
                         <div class="form-group col-md-9">
-                            <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha"></div>
+                            <input id="captcha" type="text" class="form-control" placeholder="{{__('text.enter_captcha')}}" name="captcha"></div>
                     </div>
                     <?php } ?>
                     <div class="form-group row">
                         <div class="col-sm-3">&nbsp;</div>
                         <div class="col-sm-9">
-                            {{Form::submit( 'Sign In', ['id'=>'login','class' => 'btn btn-primary btn-block']) }}
+                            {{Form::submit( __('text.sign_in'), ['id'=>'login','class' => 'btn btn-primary btn-block']) }}
                         </div>
                     </div>
                     {!! Form::close() !!}
@@ -126,7 +126,7 @@ $(document).ready(function() {
                                 var msg='';
                             }else{
 
-                               var msg='SMS Diesabled in Configuration.</br> Your OTP is '+data.otp;
+                               var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
                             }
                                otp_call(msg,username);
                             

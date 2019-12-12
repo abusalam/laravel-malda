@@ -39,33 +39,33 @@
           <div class="col-md-2 text-center box-element">
             
                  <div class="block">
-                   <div class="ssb-title">&nbsp;Total&nbsp; &nbsp;Grievance</div>
+                   <div class="ssb-title">{{__('text.total_grievances')}}</div>
                  <h2 class="ssb-icon">{{$grievance_report['total_griv']}}</h2>  
                  </div>
                
           </div>
           <div class="col-md-2 text-center box-element">
               <div class="block">
-                 <div class="ssb-title">Pending Grievance</div>
+                 <div class="ssb-title">{{__('text.pending_grievances')}}</div>
                  <h2 class="ssb-icon">{{$grievance_report['pending_griv']}}</h2>  
                </div>
           </div>
           <div class="col-md-2 text-center box-element">
              <div class="block">
-                 <div class="ssb-title">Forwarded Grievance</div>
+                 <div class="ssb-title">{{__('text.forwarded_grievances')}}</div>
                  <h2 class="ssb-icon">{{$grievance_report['forward_griv']}}</h2>  
               </div>
           </div>
       
           <div class="col-md-2 text-center box-element">
               <div class="block">
-                 <div class="ssb-title">Resolved Grievance</div>
+                 <div class="ssb-title">{{__('text.resolved_grievances')}}</div>
                  <h2 class="ssb-icon">{{$grievance_report['resolve_griv']}}</h2>  
                </div>
           </div>
           <div class="col-md-2 text-center box-element">
               <div class="block">
-                 <div class="ssb-title">Closed Grievance</div>
+                 <div class="ssb-title">{{__('text.closed_grievances')}}</div>
                  <h2 class="ssb-icon">{{$grievance_report['close_griv']}}</h2>  
               </div>
           </div>

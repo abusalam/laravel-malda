@@ -5,7 +5,7 @@
         <div class="card">
             
             <div class="card-body">
-                <h3 class="card-title">New Grievance List</h3>
+                <h3 class="card-title">{{__('text.recieved_table_heading')}}</h3>
                 {!! csrf_field() !!}
                 <div class="datatbl  " style="width: 96%;margin-left: 20px;">
                     <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_grievance_list" style="width: 100%">
@@ -59,7 +59,7 @@ str += '<tr><td><label> Mobile Number : </label></td><td>' + data.options.mobile
 str += '<tr><td><label> Email : </label></td><td>' + data.options.email + '</td></tr>';
 str += '<tr><td><label> Complain : </label></td><td>' + data.options.complain + '</td></tr>';
 if(data.options.attatchment != null){
-str += '<tr><td><label> Attatchment: </label></td><td><a href ="upload/grievance_attatchment/'+ data.options.attatchment + '" target="_blank"> View Attatchment </a></td></tr>';
+str += '<tr><td><label> Attachment: </label></td><td><a href ="upload/grievance_attatchment/'+ data.options.attatchment + '" target="_blank"> View Attachment </a></td></tr>';
 
 }
 
@@ -86,7 +86,7 @@ str += '<tr><td><label> Attatchment: </label></td><td><a href ="upload/grievance
 			str += '<tr id="truser" style="display:none"><td><label> User : </label></td><td>{!!Form::select('user',[''=>'Select User'],null,['id'=>'user','class'=>'form - control','placeholder'=>'Select User'])!!}</td></tr>';
 
 			str += '<tr><td><label> Remarks : </label></td><td>{{Form::textarea('remark', '', ['id'=>'remark','rows'=>"4", 'cols'=>"50",'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'300']) }}</td></tr>';
-			str += '<tr><td><label> Attatchment :</br> (Only PDF) </label></td><td>{!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}</td></tr>';
+			str += '<tr><td><label> Attachment :</br> (Only PDF) </label></td><td>{!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}</td></tr>';
 str += '</tbody>';
 			str += '<tfoot><tr><td colspan=2>';
 			str += '<div class="text-center"><button onclick="submitForward('+grievance_code+')" class="btn btn-primary btn-lg">Submit</button></div>';
