@@ -304,6 +304,7 @@ class registrationController extends Controller {
                 $mobile_verification->otp_creation_time = date('Y-m-d H:i:s');
 
                 $mobile_verification->save();
+                if(config('app.otp')==0){
                 if ($mobile_no != '') {
                     $Destination = $mobile_no;
                     $Message = 'Your OTP  is:' . $mobile_verification->otp;
@@ -311,11 +312,18 @@ class registrationController extends Controller {
                     $mobile_no = $Destination;
 
                       include_once("sms/test_sms.php");
-                }
-
-                $response = array(
+                       $response = array(
                     'status' => 1,'otp'=>1
                 );
+                }
+            }else{
+                $response = array(
+                    'status' => 1,'otp'=>$mobile_verification->otp
+                );
+
+            }
+
+               
                 
             }
             else{

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3307
--- Generation Time: Dec 05, 2019 at 04:14 AM
+-- Generation Time: Dec 13, 2019 at 04:13 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.11
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `tbl_grievence_forwored` (
   `status` int(10) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_grievence_forwored`
@@ -85,7 +85,10 @@ INSERT INTO `tbl_grievence_forwored` (`code`, `griv_code`, `to_forword`, `from_f
 (17, 2543, 3, 2, 'remarkss', '041220191212219252.pdf', 0, '2019-12-04 07:26:21', '2019-12-04 07:26:21'),
 (18, 2543, NULL, 3, 'remarksss123', '041220191212173366.pdf', 0, '2019-12-04 07:27:18', '2019-12-04 07:27:18'),
 (19, 2542, 2, 1, 'nbkmbnkjhi', '0412201906121419311.pdf', 1, '2019-12-04 12:35:15', '2019-12-04 22:13:33'),
-(20, 2542, 3, 2, 'cgnc', '0512201903123363185.pdf', 0, '2019-12-04 22:13:33', '2019-12-04 22:13:33');
+(20, 2542, 3, 2, 'cgnc', '0512201903123363185.pdf', 0, '2019-12-04 22:13:33', '2019-12-04 22:13:33'),
+(21, 2541, 2, 1, 'vbhvh', '0512201901125756881.pdf', 1, '2019-12-05 07:56:57', '2019-12-05 23:23:16'),
+(22, 2540, 2, 1, 'bj', '', 0, '2019-12-05 08:27:11', '2019-12-05 08:27:11'),
+(23, 2541, 4, 2, 'fgjfc', '0612201904121696018.pdf', 0, '2019-12-05 23:23:16', '2019-12-05 23:23:16');
 
 -- --------------------------------------------------------
 
@@ -105,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `tbl_grivense` (
   `attatchment` varchar(300) DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2550 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2559 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_grivense`
@@ -2656,8 +2659,8 @@ INSERT INTO `tbl_grivense` (`code`, `name`, `mobile_no`, `email`, `complain`, `r
 (2537, 'G2537', '1234570426', 'G1@g.com', 'C2537', NULL, 0, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 04:56:25'),
 (2538, 'G2538', '1234570427', 'G2@g.com', 'C2538', NULL, 0, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 04:56:25'),
 (2539, 'G2539', '1234570428', 'G1@g.com', 'C2539', NULL, 0, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 04:56:25'),
-(2540, 'G2540', '1234570429', 'G2@g.com', 'C2540', NULL, 0, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 04:56:25'),
-(2541, 'G2541', '1234570430', 'G1@g.com', 'C2541', NULL, 0, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 04:56:25'),
+(2540, 'G2540', '1234570429', 'G2@g.com', 'C2540', NULL, 3, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-05 08:27:11'),
+(2541, 'G2541', '1234570430', 'G1@g.com', 'C2541', NULL, 3, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-05 23:23:16'),
 (2542, 'G2542', '1234570431', 'G2@g.com', 'C2542', NULL, 3, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 22:13:33'),
 (2543, 'G2543', '1234570432', 'G1@g.com', 'C2543', 'sdfszvszgs', 1, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 07:35:37'),
 (2544, 'G2544', '1234570433', 'G2@g.com', 'C2544', 'close1', 1, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 01:30:13'),
@@ -2665,7 +2668,16 @@ INSERT INTO `tbl_grivense` (`code`, `name`, `mobile_no`, `email`, `complain`, `r
 (2546, 'G2546', '1234570435', 'G2@g.com', 'C2546', NULL, 3, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 01:22:05'),
 (2547, 'G2547', '1234570436', 'G1@g.com', 'C2547', 'resolve123', 2, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 01:53:47'),
 (2548, 'G2548', '1234570437', 'G2@g.com', 'C2548', NULL, 3, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 01:03:56'),
-(2549, 'G2549', '1234570438', 'G1@g.com', 'C2549', 'resolve1', 1, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 01:28:30');
+(2549, 'G2549', '1234570438', 'G1@g.com', 'C2549', 'resolve1', 1, 'rr', NULL, '2019-12-04 04:56:25', '2019-12-04 01:28:30'),
+(2550, 'csscsc', '8918511594', 'a@1.com', 'sdwdqwdqw', NULL, 0, 'Y7QsL6Th', '', '2019-12-09 06:41:43', '2019-12-09 06:41:43'),
+(2551, 'hbjb', '9998899990', 'ggg@j.com', 'bjbjbk', NULL, 0, 'AptUzlu5', '', '2019-12-09 11:27:20', '2019-12-09 11:27:20'),
+(2552, 'jbj', '6666666666', 'a@g.vv', 'jk', NULL, 0, 'J5ZiQiOL', '', '2019-12-09 11:29:23', '2019-12-09 11:29:23'),
+(2553, 'jbj', '6666666666', 'a@g.vv', 'jko', NULL, 0, 'W6LchinU', '', '2019-12-09 11:29:47', '2019-12-09 11:29:47'),
+(2554, 'jbj', '6666666666', 'a@g.vv', 'jku', NULL, 0, 'H0hxsUnU', '', '2019-12-09 11:36:00', '2019-12-09 11:36:00'),
+(2555, 'hgj', '8918511594', 'd@ghgg.vvv', 'ygfju', NULL, 0, 'zvNkfqgt', '', '2019-12-09 11:49:46', '2019-12-09 11:49:46'),
+(2556, 'hgjh', '8918511594', 'd@ghgg.vvv', 'ygfju', NULL, 0, 'EhBZuzyf', '', '2019-12-09 11:57:14', '2019-12-09 11:57:14'),
+(2557, 'hgjh', '8918511594', 'd@ghgg.vvv', 'ygfjuj', NULL, 0, '9G71DFnM', '', '2019-12-09 11:58:18', '2019-12-09 11:58:18'),
+(2558, 'hvj', '8918511594', 'bjb@h.vvv', 'hjgvj', NULL, 0, 'kjPGbw2m', '', '2019-12-09 11:59:41', '2019-12-09 11:59:41');
 
 -- --------------------------------------------------------
 
@@ -2681,22 +2693,7 @@ CREATE TABLE IF NOT EXISTS `tbl_mobile_verify` (
   `otp_creation_time` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_mobile_verify`
---
-
-INSERT INTO `tbl_mobile_verify` (`code`, `mobile_no`, `otp`, `status_otp`, `otp_creation_time`, `created_at`, `updated_at`) VALUES
-(1, '1111111111', '9152', 0, '2019-12-04 05:51:21', '2019-12-04 05:51:21', '2019-12-04 05:51:21'),
-(2, '2222222222', '5036', 0, '2019-12-04 05:54:09', '2019-12-04 05:54:09', '2019-12-04 05:54:09'),
-(3, '3333333333', '8736', 0, '2019-12-04 06:02:53', '2019-12-04 06:02:53', '2019-12-04 06:02:53'),
-(4, '4444444444', '9104', 0, '2019-12-04 06:05:09', '2019-12-04 06:05:09', '2019-12-04 06:05:09'),
-(5, '5555555555', '1626', 0, '2019-12-04 06:54:58', '2019-12-04 06:54:58', '2019-12-04 06:54:58'),
-(6, '1111111111', '2640', 0, '2019-12-04 18:04:24', '2019-12-04 18:04:24', '2019-12-04 18:04:24'),
-(7, '2222222222', '7344', 0, '2019-12-04 18:05:30', '2019-12-04 18:05:30', '2019-12-04 18:05:30'),
-(8, '5555555555', '2706', 0, '2019-12-05 03:52:05', '2019-12-05 03:52:05', '2019-12-05 03:52:05'),
-(9, '3333333333', '3992', 0, '2019-12-05 03:57:06', '2019-12-05 03:57:06', '2019-12-05 03:57:06');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2719,7 +2716,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`code`, `mobile_no`, `name`, `designation`, `user_type`, `created_at`, `updated_at`) VALUES
-(1, '1111111111', 'A1', 'DM', 0, '2019-12-04 04:56:25', '2019-12-04 04:56:25'),
+(1, '7719360755', 'A1', 'DM', 0, '2019-12-04 04:56:25', '2019-12-04 04:56:25'),
 (2, '2222222222', 'A2', 'oc1', 1, '2019-12-04 04:56:25', '2019-12-04 04:56:25'),
 (3, '3333333333', 'A3', 'oc2', 1, '2019-12-04 04:56:25', '2019-12-04 04:56:25'),
 (4, '4444444444', 'A4', 'oc3', 1, '2019-12-04 04:56:25', '2019-12-04 04:56:25'),
@@ -2773,17 +2770,17 @@ ALTER TABLE `tbl_case_details`
 -- AUTO_INCREMENT for table `tbl_grievence_forwored`
 --
 ALTER TABLE `tbl_grievence_forwored`
-  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `tbl_grivense`
 --
 ALTER TABLE `tbl_grivense`
-  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2550;
+  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2559;
 --
 -- AUTO_INCREMENT for table `tbl_mobile_verify`
 --
 ALTER TABLE `tbl_mobile_verify`
-  MODIFY `code` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `code` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
