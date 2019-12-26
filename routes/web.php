@@ -119,7 +119,7 @@ Route::post('closed_grievance_datatable', 'GrievanceController@closed_grievance_
 
 
 Route::get('session', function () {
-   return view('layout.session');
+  return view('layout.session');
 });
 
 
@@ -127,7 +127,7 @@ Route::get('/todays_hearing', 'SDOCourtController@todays_hearing')->name('todays
 
 Route::post('/caselist_datatable_for_todays_hearing', 'SDOCourtController@caselist_datatable_for_todays_hearing')->name('caselist_datatable_for_todays_hearing');
 
-//grievance Status 
+//grievance Status
 
 Route::get('/grievance_status', 'GrievanceStatusController@grievance_status')->name('grievance_status');
 Route::get('refreshcaptcha', 'SDOCourtController@refreshCaptcha');

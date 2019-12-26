@@ -81,9 +81,4 @@ return [
 'resolved_table_heading'=>"Resolved Grievance List",
 'closed_table_heading'=>"Closed Grievance List",
 
-
-
-
-
-
 ];
