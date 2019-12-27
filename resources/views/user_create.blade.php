@@ -153,7 +153,9 @@
                 contentType: false,
                 dataType: "json",
                 success: function (data) {
-
+if(data.logout_error==true){
+                  logout_error();
+                }
                     if (data.status == 1) {
 
                         $.confirm({

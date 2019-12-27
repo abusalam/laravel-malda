@@ -1,9 +1,5 @@
-<?php if(session()->has('user_code')==false){ ?>
-<script>
-window.location = "{{route('login')}}";
 
-</script>
-<?php } else{ 
+<?php 
 
         header("Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval';  frame-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' 'unsafe-inline' 'unsafe-eval';");
         //header("X-XSS-Protection 1; mode=block");
@@ -14,23 +10,7 @@ window.location = "{{route('login')}}";
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
 
-            
-            $now = time(); // checking the time now when home page starts  
-            if(session()->has('expire')==1){
-                if($now > session()->get('expire')){
-                   Session::flush();
-                }else{
-                   session(['expire' => $now + (60 * 15)]); 
-                }
-            }else{
-                session(['expire' => $now + (60 * 15)]);
-            }
-            if (session()->has('user_code') != 1) { ?>
-<script type="text/javascript">
-window.location = "./session";
-
-</script>
-<?php } ?>
+    } ?>
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -278,7 +258,12 @@ window.location = "./session";
     <script src="{{asset('/js/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('/lib/fontawesome-free/js/fontawesome.min.js')}}"></script>
     @yield('script')
+    <script>
+    function logout_error(){
+      window.location.href = "{{url('/session')}}";
+      }
+    </script>
 </body>
 
 </html>
-<?php } ?>
+

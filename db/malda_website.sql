@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
--- http://www.phpmyadmin.net
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost:3307
--- Generation Time: Dec 13, 2019 at 04:13 AM
+-- Host: localhost:3306
+-- Generation Time: Dec 27, 2019 at 08:02 AM
 -- Server version: 5.7.24
--- PHP Version: 7.2.11
+-- PHP Version: 7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,8 +19,27 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `malda_website`
+-- Database: `laravel_malda`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(3, '2019_12_27_053357_create_tbl_user_log_details_table', 1);
 
 -- --------------------------------------------------------
 
@@ -26,14 +47,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `tbl_case_details`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_case_details` (
+CREATE TABLE `tbl_case_details` (
   `code` int(11) NOT NULL,
   `case_no` varchar(11) NOT NULL,
   `nxt_hearing_date` date NOT NULL,
   `description` varchar(200) NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_case_details`
@@ -51,7 +72,7 @@ INSERT INTO `tbl_case_details` (`code`, `case_no`, `nxt_hearing_date`, `descript
 -- Table structure for table `tbl_grievence_forwored`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_grievence_forwored` (
+CREATE TABLE `tbl_grievence_forwored` (
   `code` int(11) NOT NULL,
   `griv_code` int(11) NOT NULL,
   `to_forword` int(11) DEFAULT NULL,
@@ -61,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `tbl_grievence_forwored` (
   `status` int(10) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_grievence_forwored`
@@ -96,7 +117,7 @@ INSERT INTO `tbl_grievence_forwored` (`code`, `griv_code`, `to_forword`, `from_f
 -- Table structure for table `tbl_grivense`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_grivense` (
+CREATE TABLE `tbl_grivense` (
   `code` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
   `mobile_no` varchar(10) NOT NULL,
@@ -108,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `tbl_grivense` (
   `attatchment` varchar(300) DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2559 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_grivense`
@@ -2685,7 +2706,7 @@ INSERT INTO `tbl_grivense` (`code`, `name`, `mobile_no`, `email`, `complain`, `r
 -- Table structure for table `tbl_mobile_verify`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_mobile_verify` (
+CREATE TABLE `tbl_mobile_verify` (
   `code` int(10) NOT NULL,
   `mobile_no` varchar(20) NOT NULL,
   `otp` varchar(30) NOT NULL,
@@ -2695,13 +2716,25 @@ CREATE TABLE IF NOT EXISTS `tbl_mobile_verify` (
   `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tbl_mobile_verify`
+--
+
+INSERT INTO `tbl_mobile_verify` (`code`, `mobile_no`, `otp`, `status_otp`, `otp_creation_time`, `created_at`, `updated_at`) VALUES
+(1, '8989898989', '2727', 0, NULL, '2019-12-27 01:10:29', '2019-12-27 01:10:29'),
+(2, '8989898989', '4098', 0, NULL, '2019-12-27 01:13:05', '2019-12-27 01:13:05'),
+(3, '2222222222', '7572', 0, '2019-12-27 06:48:06', '2019-12-27 06:48:06', '2019-12-27 06:48:06'),
+(4, '2222222222', '4905', 0, NULL, '2019-12-27 01:35:09', '2019-12-27 01:35:09'),
+(5, '2222222222', '9312', 0, '2019-12-27 07:08:30', '2019-12-27 07:08:30', '2019-12-27 07:08:30'),
+(6, '2222222222', '6203', 0, '2019-12-27 07:40:51', '2019-12-27 07:40:51', '2019-12-27 07:40:51');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tbl_user`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_user` (
+CREATE TABLE `tbl_user` (
   `code` int(11) NOT NULL,
   `mobile_no` varchar(10) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -2709,7 +2742,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
   `user_type` int(5) NOT NULL DEFAULT '1' COMMENT '0->admin,1->user',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_user`
@@ -2723,9 +2756,107 @@ INSERT INTO `tbl_user` (`code`, `mobile_no`, `name`, `designation`, `user_type`,
 (5, '5555555555', 'A5', 'oc4', 1, '2019-12-04 04:56:25', '2019-12-04 04:56:25'),
 (6, '6666666666', 'A6', 'oc5', 1, '2019-12-04 04:56:25', '2019-12-04 04:56:25');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user_log_details`
+--
+
+CREATE TABLE `tbl_user_log_details` (
+  `code` int(10) UNSIGNED NOT NULL,
+  `userCode` int(11) NOT NULL,
+  `sessionId` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `userIp` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `visitedPage` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` json NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_user_log_details`
+--
+
+INSERT INTO `tbl_user_log_details` (`code`, `userCode`, `sessionId`, `userIp`, `visitedPage`, `description`, `created_at`, `updated_at`) VALUES
+(1, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/view_user_for_forward', '{\"_token\": \"LvDlUu9RZLdgzi4UUQf8M5SZcqe25jKps3OQXZ33\", \"grievance_code\": \"2548\"}', '2019-12-27 01:32:52', '2019-12-27 01:32:52'),
+(2, 0, 'uZtpx7LviTP1KgDPKn3MF009i14OFQzZszeCK0xO', '192.168.0.5', '/laravel-malda/public/grievance_status', '[]', '2019-12-27 01:34:24', '2019-12-27 01:34:24'),
+(3, 0, 'uZtpx7LviTP1KgDPKn3MF009i14OFQzZszeCK0xO', '192.168.0.5', '/laravel-malda/public/save_otp_for_grievancestatus', '{\"_token\": \"PshxAzgDkhKdy9wWM1FefmPwdbWB4xIxP7DvkgAU\", \"mobile_no\": \"2222222222\"}', '2019-12-27 01:35:09', '2019-12-27 01:35:09'),
+(4, 0, 'uZtpx7LviTP1KgDPKn3MF009i14OFQzZszeCK0xO', '192.168.0.5', '/laravel-malda/public/check_otp_for_grievancestatus', '{\"mob\": \"2222222222\", \"otp\": \"4905\", \"_token\": \"PshxAzgDkhKdy9wWM1FefmPwdbWB4xIxP7DvkgAU\"}', '2019-12-27 01:35:14', '2019-12-27 01:35:14'),
+(5, 0, 'uZtpx7LviTP1KgDPKn3MF009i14OFQzZszeCK0xO', '192.168.0.5', '/laravel-malda/public/grievance_statuss', '{\"_token\": \"PshxAzgDkhKdy9wWM1FefmPwdbWB4xIxP7DvkgAU\", \"mobileNo\": \"2222222222\", \"grievance_id\": \"45656565\"}', '2019-12-27 01:35:15', '2019-12-27 01:35:15'),
+(6, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"LvDlUu9RZLdgzi4UUQf8M5SZcqe25jKps3OQXZ33\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:36:18', '2019-12-27 01:36:18'),
+(7, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"LvDlUu9RZLdgzi4UUQf8M5SZcqe25jKps3OQXZ33\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": \"25/12/2019\", \"from_date\": \"24/12/2019\"}', '2019-12-27 01:37:27', '2019-12-27 01:37:27'),
+(8, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"LvDlUu9RZLdgzi4UUQf8M5SZcqe25jKps3OQXZ33\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": \"25/12/2019\", \"from_date\": \"24/12/2019\"}', '2019-12-27 01:37:53', '2019-12-27 01:37:53'),
+(9, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"LvDlUu9RZLdgzi4UUQf8M5SZcqe25jKps3OQXZ33\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:38:00', '2019-12-27 01:38:00'),
+(10, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"LvDlUu9RZLdgzi4UUQf8M5SZcqe25jKps3OQXZ33\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:38:02', '2019-12-27 01:38:02'),
+(11, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"LvDlUu9RZLdgzi4UUQf8M5SZcqe25jKps3OQXZ33\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:38:03', '2019-12-27 01:38:03'),
+(12, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"LvDlUu9RZLdgzi4UUQf8M5SZcqe25jKps3OQXZ33\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:38:04', '2019-12-27 01:38:04'),
+(13, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"LvDlUu9RZLdgzi4UUQf8M5SZcqe25jKps3OQXZ33\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:38:05', '2019-12-27 01:38:05'),
+(14, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"LvDlUu9RZLdgzi4UUQf8M5SZcqe25jKps3OQXZ33\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:38:07', '2019-12-27 01:38:07'),
+(15, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/search_case', '[]', '2019-12-27 01:38:13', '2019-12-27 01:38:13'),
+(16, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/resolve_grievance_list', '[]', '2019-12-27 01:38:18', '2019-12-27 01:38:18'),
+(17, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/session', '[]', '2019-12-27 01:38:19', '2019-12-27 01:38:19'),
+(18, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/login', '[]', '2019-12-27 01:38:25', '2019-12-27 01:38:25'),
+(19, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/login-action', '{\"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"captcha\": \"undefined\", \"username\": \"2222222222\"}', '2019-12-27 01:38:30', '2019-12-27 01:38:30'),
+(20, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/saveOtpForLogin', '{\"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"mobile_no\": \"2222222222\"}', '2019-12-27 01:38:30', '2019-12-27 01:38:30'),
+(21, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/checkOtpForLogin', '{\"mob\": \"2222222222\", \"otp\": \"9012\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\"}', '2019-12-27 01:38:37', '2019-12-27 01:38:37'),
+(22, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/checkOtpForLogin', '{\"mob\": \"2222222222\", \"otp\": \"9312\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\"}', '2019-12-27 01:38:43', '2019-12-27 01:38:43'),
+(23, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/index', '[]', '2019-12-27 01:38:43', '2019-12-27 01:38:43'),
+(24, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forworded_grievance_list', '[]', '2019-12-27 01:38:58', '2019-12-27 01:38:58'),
+(25, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:39:00', '2019-12-27 01:39:00'),
+(26, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:39:02', '2019-12-27 01:39:02'),
+(27, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:39:03', '2019-12-27 01:39:03'),
+(28, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:39:05', '2019-12-27 01:39:05'),
+(29, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/resolve_grievance_list', '[]', '2019-12-27 01:39:10', '2019-12-27 01:39:10'),
+(30, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/resolve_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}]}', '2019-12-27 01:39:12', '2019-12-27 01:39:12'),
+(31, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/view_user_for_forward', '{\"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"grievance_code\": \"2547\"}', '2019-12-27 01:39:13', '2019-12-27 01:39:13'),
+(32, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/resolve_grievance_datatable', '{\"draw\": \"2\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": \"h\"}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}]}', '2019-12-27 01:39:16', '2019-12-27 01:39:16'),
+(33, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/resolve_grievance_datatable', '{\"draw\": \"3\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}]}', '2019-12-27 01:39:19', '2019-12-27 01:39:19'),
+(34, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forworded_grievance_list', '[]', '2019-12-27 01:39:21', '2019-12-27 01:39:21'),
+(35, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:39:23', '2019-12-27 01:39:23'),
+(36, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"2\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": \"4\"}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:39:24', '2019-12-27 01:39:24'),
+(37, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"3\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": \"44\"}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:39:26', '2019-12-27 01:39:26'),
+(38, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:39:27', '2019-12-27 01:39:27'),
+(39, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/forwored_grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"ZWOCd1kM88rugTkipzWfKCzSDr2FSejIro6nYpIO\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"created_at\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"to_forword\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}], \"to_date\": null, \"from_date\": null}', '2019-12-27 01:39:29', '2019-12-27 01:39:29'),
+(40, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/session', '[]', '2019-12-27 02:10:42', '2019-12-27 02:10:42'),
+(41, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/login', '[]', '2019-12-27 02:10:47', '2019-12-27 02:10:47'),
+(42, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/login-action', '{\"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"captcha\": \"undefined\", \"username\": \"2222222222\"}', '2019-12-27 02:10:50', '2019-12-27 02:10:50'),
+(43, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/saveOtpForLogin', '{\"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"mobile_no\": \"2222222222\"}', '2019-12-27 02:10:51', '2019-12-27 02:10:51'),
+(44, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/checkOtpForLogin', '{\"mob\": \"2222222222\", \"otp\": \"6203\", \"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\"}', '2019-12-27 02:10:55', '2019-12-27 02:10:55'),
+(45, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/index', '[]', '2019-12-27 02:10:56', '2019-12-27 02:10:56'),
+(46, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/index', '[]', '2019-12-27 02:11:42', '2019-12-27 02:11:42'),
+(47, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/index', '[]', '2019-12-27 02:12:03', '2019-12-27 02:12:03'),
+(48, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_list', '[]', '2019-12-27 02:12:08', '2019-12-27 02:12:08'),
+(49, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"email\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}]}', '2019-12-27 02:12:10', '2019-12-27 02:12:10'),
+(50, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_list', '[]', '2019-12-27 02:12:49', '2019-12-27 02:12:49'),
+(51, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"email\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}]}', '2019-12-27 02:12:50', '2019-12-27 02:12:50'),
+(52, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/view_user', '{\"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"grievance_code\": \"2540\"}', '2019-12-27 02:13:50', '2019-12-27 02:13:50'),
+(53, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/user_list', '{\"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"grievance_code\": \"2540\"}', '2019-12-27 02:13:50', '2019-12-27 02:13:50'),
+(54, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/view_user', '{\"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"grievance_code\": \"2540\"}', '2019-12-27 02:16:06', '2019-12-27 02:16:06'),
+(55, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/user_list', '{\"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"grievance_code\": \"2540\"}', '2019-12-27 02:16:07', '2019-12-27 02:16:07'),
+(56, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_list', '[]', '2019-12-27 02:16:10', '2019-12-27 02:16:10'),
+(57, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"email\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}]}', '2019-12-27 02:16:15', '2019-12-27 02:16:15'),
+(58, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/index', '[]', '2019-12-27 02:16:23', '2019-12-27 02:16:23'),
+(59, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/index', '[]', '2019-12-27 02:18:10', '2019-12-27 02:18:10'),
+(60, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_list', '[]', '2019-12-27 02:18:20', '2019-12-27 02:18:20'),
+(61, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"email\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}]}', '2019-12-27 02:18:23', '2019-12-27 02:18:23'),
+(62, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_list', '[]', '2019-12-27 02:18:50', '2019-12-27 02:18:50'),
+(63, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_list', '[]', '2019-12-27 02:19:29', '2019-12-27 02:19:29'),
+(64, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"email\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}]}', '2019-12-27 02:19:31', '2019-12-27 02:19:31'),
+(65, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_list', '[]', '2019-12-27 02:19:48', '2019-12-27 02:19:48'),
+(66, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"email\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}]}', '2019-12-27 02:19:50', '2019-12-27 02:19:50'),
+(67, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_list', '[]', '2019-12-27 02:19:58', '2019-12-27 02:19:58'),
+(68, 2, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/grievance_datatable', '{\"draw\": \"1\", \"order\": [{\"dir\": \"asc\", \"column\": \"1\"}], \"start\": \"0\", \"_token\": \"RsOI2YUFFO4c71cCg3VQVA6bVWAkLOD1wdgOiv8A\", \"length\": \"10\", \"search\": {\"regex\": \"false\", \"value\": null}, \"columns\": [{\"data\": \"id\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}, {\"data\": \"code\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"name\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"mobile_no\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"email\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"true\", \"searchable\": \"true\"}, {\"data\": \"action\", \"name\": null, \"search\": {\"regex\": \"false\", \"value\": null}, \"orderable\": \"false\", \"searchable\": \"false\"}]}', '2019-12-27 02:20:00', '2019-12-27 02:20:00'),
+(69, 0, 'T6uvXTtZoPo3RD90hCIZMHhtlCPGOxRprUgbrQtx', '::1', '/laravel-malda/public/session', '[]', '2019-12-27 02:21:14', '2019-12-27 02:21:14');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tbl_case_details`
@@ -2758,34 +2889,58 @@ ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`code`);
 
 --
+-- Indexes for table `tbl_user_log_details`
+--
+ALTER TABLE `tbl_user_log_details`
+  ADD PRIMARY KEY (`code`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_case_details`
 --
 ALTER TABLE `tbl_case_details`
-  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `tbl_grievence_forwored`
 --
 ALTER TABLE `tbl_grievence_forwored`
-  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
 --
 -- AUTO_INCREMENT for table `tbl_grivense`
 --
 ALTER TABLE `tbl_grivense`
-  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2559;
+  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2559;
+
 --
 -- AUTO_INCREMENT for table `tbl_mobile_verify`
 --
 ALTER TABLE `tbl_mobile_verify`
-  MODIFY `code` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `code` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `tbl_user_log_details`
+--
+ALTER TABLE `tbl_user_log_details`
+  MODIFY `code` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

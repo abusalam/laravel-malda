@@ -61,6 +61,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'disablepreventback' => \App\Http\Middleware\DisablePreventBack::class,
+        'sessioncheking' => \App\Http\Middleware\SessionChecking::class,
+        'userlogdetails' => \App\Http\Middleware\UserLogDetails::class,
     ];
 
     /**

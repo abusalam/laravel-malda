@@ -45,7 +45,9 @@ $(document).ready(function() {
                 type: 'json',
                 data: { 'grievance_code': grievance_code, _token: token },
                 success: function(data) {
-
+if(data.logout_error==true){
+                  logout_error();
+                }
                     var str = "";
                     str += '<table  class="table table-sm table-bordered" id="forwardTable">';
                     str += '<tbody>';

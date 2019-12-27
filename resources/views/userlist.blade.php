@@ -85,6 +85,9 @@
                     data: {'user_code': user_code, '_token': $('input[name="_token"]').val()},
                     dataType: 'json',
                     success: function (datam) {
+                      if(datam.logout_error==true){
+                  logout_error();
+                }
                         if (datam.status == 1) {
                             create_table();
                             $.alert({

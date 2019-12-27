@@ -50,6 +50,9 @@
 											
 										},
                     success:function(data){
+                      if(data.logout_error==true){
+                  logout_error();
+                }
                         var str = "";
 str += '<table  class="table table-sm table-bordered" id="forwardTable">';
 str += '<tbody>';
@@ -119,7 +122,10 @@ str += '</table>';
             method:'post',
             type: 'json',
             data: {grievance_code:grievance_code, _token:token},
-            success:function(data){      
+            success:function(data){  
+              if(data.logout_error==true){
+                  logout_error();
+                }
                 $('#user').html('<option value="">Select User</option>');
                 $.each(data.options, function(key, value){
                     $("#user").append('<option value=' + key + '>' + value + '</option>');
@@ -313,6 +319,9 @@ str += '</table>';
 							contentType: false,
 							data: fd,
 							success:function(data){
+                if(data.logout_error==true){
+                  logout_error();
+                }
 									if (data.status == 1){
 											$.confirm({
 													title: 'Success!',

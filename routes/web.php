@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', 'UserController@home')->name('home');
 
 
 
-Route::group(['middleware' => 'disablepreventback'],function(){
+
+Route::group(['middleware' => ['sessioncheking','disablepreventback','userlogdetails']],function(){
     Auth::routes();
   Route::get('/index', 'UserController@index')->name('index');
   Route::get('/user-registration','LoginController@userRegisration')->name('userRegisration');
@@ -28,6 +28,8 @@ Route::group(['middleware' => 'disablepreventback'],function(){
   //Route::get('/home', 'HomeController@index');
 });
 
+Route::group(['middleware' => 'userlogdetails'],function(){
+Route::get('/', 'UserController@home')->name('home');
 Route::get('/login','LoginController@login')->name('login');
 Route::post('/login-action','LoginController@loginAction')->name('loginAction');
 
@@ -147,3 +149,4 @@ Route::post('resolve_grievance_datatable', 'GrievanceStatusController@resolve_gr
 Route::get('/pending_report', 'ReportController@pending_report')->name('pending_report');
 Route::post('pending_grievance_datatable', 'ReportController@pending_grievance_datatable');
 Route::post('show_pending_grievance', 'ReportController@show_pending_grievance');
+});

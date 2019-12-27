@@ -68,6 +68,9 @@
             url: 'refreshcaptcha',
             dataType: 'json',
             success: function (data) {
+              if(data.logout_error==true){
+                  logout_error();
+                }
                 $(".captcha span").html(data.captcha);
                 $("#case_number").val('');
                 $("#captcha").val('');
@@ -84,6 +87,9 @@
             url: 'capchavalidation',
             data: {'_token': $('input[name="_token"]').val(), 'case_number': case_number, 'capcha': capcha},
             success: function (data) {
+              if(data.logout_error==true){
+                  logout_error();
+                }
                 if(data.status==1){
                 $("#search_data").hide();
 
