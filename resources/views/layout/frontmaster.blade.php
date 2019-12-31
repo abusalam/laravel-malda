@@ -106,7 +106,7 @@
                 <div class="container">
                     <div id="cssmenu">
                         <ul>
-                            <li><a href="{{route('home')}}">{{__('text.home')}}</a></li>
+                            <li><a href="/">{{__('text.home')}}</a></li>
                             <li><a href="{{route('grievance')}}">{{__('text.grievance')}}</a></li>
                             <li><a href="{{route('grievance_status')}}">{{__('text.grievance_status')}}</a></li>
                             <li><a href="{{route('search_case')}}">{{__('text.case_search')}}</a></li>
@@ -122,7 +122,7 @@
                                 }else{echo " User ";}  ?>)</a>
                                 <ul>
                                     <?php if (session()->get('user_type') == 0) { ?>
-                                    <li><a href="{{route('index')}}">{{__('text.dashboard')}}</a></li>
+                                    <li><a href="/">{{__('text.dashboard')}}</a></li>
                                     <li><a href="#">{{__('text.user')}}</a>
                                         <ul>
                                             <li><a href="{{route('userRegisration')}}">{{__('text.user_create')}}</a></li>
