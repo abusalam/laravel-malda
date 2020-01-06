@@ -26,6 +26,7 @@ return [
 'closed'=>"Closed",
 'report'=>"Report",
 'pending_grievance_report'=>"Pending Grievance",
+'user_log_details'=>"Log Details",
 'logout'=>"Logout",
 
 //Label

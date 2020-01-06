@@ -23,6 +23,16 @@ class SessionChecking
             if(session()->has('expire')==1){
                 if($now > session()->get('expire')){
                    Session::flush();
+                   if ($request->ajax()) {
+                    $response = array(
+               'logout_error'=>true
+           );
+               return response()->json($response, 200);
+          
+             }else{
+               return redirect("./session");
+         
+           }
                 }else{
                    session(['expire' => $now + (15 * 60)]); 
                 }
@@ -32,7 +42,6 @@ class SessionChecking
             if (session()->has('user_code') != 1) { 
 //                Session::flush();
                 if ($request->ajax()) {
-
                      $response = array(
                 'logout_error'=>true
             );

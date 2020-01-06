@@ -10,7 +10,7 @@
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
 
-    } ?>
+    ?>
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -168,6 +168,7 @@
                                             <li><a href="{{route('pending_report')}}">{{__('text.pending_grievance_report')}}</a></li>
                                         </ul>
                                     </li>
+                                    <li><a href="{{route('log_details')}}">{{__('text.user_log_details')}}</a></li>
                                     <?php }?>
                                     <li><a href="{{route('logout')}}">{{__('text.logout')}}</a></li>
                                 </ul>
