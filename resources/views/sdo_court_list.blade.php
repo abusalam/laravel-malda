@@ -71,10 +71,10 @@
                 var case_code = this.id;
 
                 // alert(user_code);
-
-
+      
                 var datas = {'case_code': case_code, '_token': $('input[name="_token"]').val()};
                 redirectPost('{{url("case_edit")}}', datas);
+            
             });
 
             $('.delete-button').click(function () {

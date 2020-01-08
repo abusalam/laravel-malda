@@ -44,7 +44,7 @@ $(document).ready(function() {
                 type: 'json',
                 data: { 'user_code': user_code, _token: token },
                 success: function(data) {
-if(data.logout_error==true){
+                if(data.logout_error==true){
                   logout_error();
                 }
                     var i = 0;
