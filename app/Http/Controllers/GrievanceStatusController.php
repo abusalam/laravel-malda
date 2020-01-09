@@ -97,7 +97,7 @@ class GrievanceStatusController extends Controller {
 		catch (\Exception $e) {
 			$response = array(
 				'exception' => true,
-				'exception_message' => $e->getMessage(),
+				
 			);
 			$statusCode = 400;
 		} finally {
@@ -243,7 +243,7 @@ class GrievanceStatusController extends Controller {
 		catch (\Exception $e) {
 			$response = array(
 				'exception' => true,
-				'exception_message' => $e->getMessage(),
+				
 			);
 			$statusCode = 400;
 		} finally {
@@ -295,7 +295,7 @@ class GrievanceStatusController extends Controller {
 		catch (\Exception $e) {
 			$response = array(
 				'exception' => true,
-				'exception_message' => $e->getMessage(),
+				
 			);
 			$statusCode = 400;
 		} finally {

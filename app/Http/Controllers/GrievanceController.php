@@ -136,7 +136,7 @@ class GrievanceController extends Controller {
 
 			$response = array(
 				'exception' => true,
-				'exception_message' => $e->getMessage(),
+				
 			);
 			$statuscode = 400;
 		} finally {
@@ -294,7 +294,7 @@ class GrievanceController extends Controller {
 		catch (\Exception $e) {
 			$response = array(
 				'exception' => true,
-				'exception_message' => $e->getMessage(),
+				
 			);
 			$statusCode = 400;
 		} finally {
@@ -343,7 +343,7 @@ class GrievanceController extends Controller {
 		catch (\Exception $e) {
 			$response = array(
 				'exception' => true,
-				'exception_message' => $e->getMessage(),
+				
 			);
 			$statusCode = 400;
 		} finally {
@@ -399,7 +399,7 @@ class GrievanceController extends Controller {
 		catch (\Exception $e) {
 			$response = array(
 				'exception' => true,
-				'exception_message' => $e->getMessage(),
+				
 			);
 			$statusCode = 400;
 		} finally {
@@ -434,7 +434,7 @@ class GrievanceController extends Controller {
 
 			$response = array(
 				'exception' => true,
-				'exception_message' => $e->getMessage(),
+				
 			);
 			$statusCode = 400;
 		} finally {
@@ -547,7 +547,6 @@ catch (\Exception $e) {
 
 $response = array(
 'exception' => true,
-'exception_message' => $e->getMessage(),
 );
 $statusCode = 400;
 } finally {
@@ -692,7 +691,7 @@ return $res;
 		catch (\Exception $e) {
 			$response = array(
 				'exception' => true,
-				'exception_message' => $e->getMessage(),
+				
 			);
 			$statusCode = 400;
 		} finally {
@@ -737,7 +736,7 @@ return $res;
 
 			$response = array(
 				'exception' => true,
-				'exception_message' => $e->getMessage(),
+				
 			);
 			$statusCode = 400;
 		} finally {

@@ -109,7 +109,7 @@ class SDOCourtController extends Controller
 
             $response = array(
                 'exception' => true,
-                'exception_message' => $e->getMessage(),
+                
             );
             $statuscode = 400;
         } finally {
@@ -200,7 +200,7 @@ class SDOCourtController extends Controller
         } catch (\Exception $e) {
             $response = array(
                 'exception' => true,
-                'exception_message' => $e->getMessage(),
+                
             );
             $statusCode = 400;
         } finally {
@@ -244,7 +244,7 @@ class SDOCourtController extends Controller
         } catch (\Exception $e) {
             $response = array(
                 'exception' => true,
-                'exception_message' => $e->getMessage(),
+               
             );
             $statusCode = 400;
         } finally {
@@ -318,7 +318,7 @@ class SDOCourtController extends Controller
         } catch (\Exception $e) {
             $response = array(
                 'exception' => true,
-                'exception_message' => $e->getMessage(),
+                
             );
             $statusCode = 400;
         } finally {

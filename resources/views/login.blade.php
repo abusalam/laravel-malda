@@ -146,7 +146,7 @@ $(document).ready(function() {
 
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
-                            alert(jqXHR.status);
+                            
                             $(".se-pre-con").fadeOut("slow");
                             var msg = "";
                             if (jqXHR.status !== 422 && jqXHR.status !== 400) {

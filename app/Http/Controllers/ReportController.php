@@ -196,7 +196,7 @@ $grievance_report=tbl_grievance::join('tbl_grievence_forwored','tbl_grievence_fo
 
 			$response = array(
 				'exception' => true,
-				'exception_message' => $e->getMessage(),
+				
 			);
 			$statusCode = 400;
 		} finally {
