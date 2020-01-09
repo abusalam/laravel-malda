@@ -225,7 +225,7 @@
                             }
                         var jc = $.confirm({
                             title: 'Please enter OTP to continue',
-                            content: msg+'<input type="hidden" class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + mobile_no + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
+                            content: msg+'<input type="text" style="display:none" class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + mobile_no + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
                             type: 'green',
                             typeAnimated: true,
                             buttons: {
