@@ -96,8 +96,9 @@ class registrationController extends Controller {
             $statusCode = 400;
         } finally {
 
-            return view('user_create')->with('user_details', $result);
+             $res= view('user_create')->with('user_details', $result);
         }
+        return $res;
 
 
 
@@ -138,8 +139,9 @@ class registrationController extends Controller {
             );
             $statusCode = 400;
         } finally {
-            return response()->json($response, $statusCode);
+             $res= response()->json($response, $statusCode);
         }
+        return $res;
 
     }
 
@@ -300,7 +302,7 @@ class registrationController extends Controller {
                 
                 $mobile_verification = new tbl_mobile_verify();
                 $mobile_verification->mobile_no = $mobile_no;
-                $mobile_verification->otp = rand(1000, 9999);
+                $mobile_verification->otp = mt_rand(1000, 9999);
                 $mobile_verification->otp_creation_time = date('Y-m-d H:i:s');
 
                 $mobile_verification->save();
@@ -340,7 +342,7 @@ class registrationController extends Controller {
 
                 $mobile_verification = new tbl_mobile_verify();
                 $mobile_verification->mobile_no = $mobile_no;
-                $mobile_verification->otp = rand(1000, 9999);
+                $mobile_verification->otp = mt_rand(1000, 9999);
                 $mobile_verification->otp_creation_time = date('Y-m-d H:i:s');
 
                 $mobile_verification->save();
@@ -377,8 +379,10 @@ class registrationController extends Controller {
             );
             $statusCode = 400;
         } finally {
-            return response()->json($response, $statusCode);
+            $res= response()->json($response, $statusCode);
         }
+        return $res;
+
          }
          
          public function checkOtpForLogin(Request $request){
@@ -434,8 +438,9 @@ class registrationController extends Controller {
             );
             $statusCode = 400;
         } finally {
-            return response()->json($response, $statusCode);
+             $res= response()->json($response, $statusCode);
         }
+        return $res;
          }
          
          public function passwordChange(Request $request){
@@ -492,8 +497,9 @@ class registrationController extends Controller {
             );
             $statusCode = 400;
         } finally {
-            return response()->json($response, $statusCode);
+             $res= response()->json($response, $statusCode);
         }
+        return $res;
          }
 
 }

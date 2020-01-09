@@ -103,9 +103,11 @@
     $(document).ready(function () {
         $('#refresh').click(function () {
             $('#error').hide();
+
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: 'refreshcaptcha',
+                data: {_token: '{{csrf_token()}}'},
                 dataType: 'json',
                 success: function (data) {
                     $(".captcha span").html(data.captcha);
@@ -245,7 +247,7 @@
                                                     msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                                                 } else {
                                                     if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                                                        msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                                                        msg += "Server Error";
                                                     } else {
                                                         msg += "Error(s):<strong><ul>";
                                                         $.each(jqXHR.responseJSON['errors'], function (key, value) {
@@ -284,7 +286,7 @@
                                             url: "{{route('check_otp_for_grievance')}}",
                                             dataType: 'json',
                                             data: {'mob': $("#mob_no_new").val(), 'otp': $("#otp").val(), '_token': $("input[name='_token']").val()},
-                                            method: 'post'
+                                            method: 'POST'
                                         }).done(function (response) {
                                             //alert('hi');
                                             jc.hideLoading(true);
@@ -336,7 +338,7 @@
                                                             msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                                                         } else {
                                                             if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                                                                msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                                                                msg += "Server Error";
                                                             } else {
                                                                 msg += "Error(s):<strong><ul>";
                                                                 $.each(jqXHR.responseJSON['errors'], function (key, value) {
@@ -371,10 +373,10 @@
                                                 msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                                             } else {
                                                 if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                                                    msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                                                    msg += "Server Error";
                                                 } else {
                                                     msg += "Error(s):<strong><ul>";
-                                                    $.each(jqXHR.responseJSON, function (key, value) {
+                                                    $.each(jqXHR.responseJSON['errors'], function (key, value) {
                                                         msg += "<li>" + value + "</li>";
                                                     });
                                                     msg += "</ul></strong>";
@@ -423,7 +425,7 @@
                         msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                     } else {
                         if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                            msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                            msg += "Server Error";
                         } else {
                             msg += "Error(s):<strong><ul>";
                             $.each(jqXHR.responseJSON['errors'], function (key, value) {

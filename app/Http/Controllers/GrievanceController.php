@@ -91,7 +91,7 @@ class GrievanceController extends Controller {
     $griv_id = array(); //remember to declare $pass as an array
     $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
     for ($i = 0; $i < 8; $i++) {
-        $n = rand(0, $alphaLength);
+        $n = mt_rand(0, $alphaLength);
         $griv_id[] = $alphabet[$n];
     }
       $griv_idd= implode($griv_id); 
@@ -102,7 +102,7 @@ class GrievanceController extends Controller {
       if (!empty($request->file('attatchment'))) {
                 $file_attatchment = $request->file('attatchment');
                 $file_ext = $file_attatchment->getClientOriginalExtension();
-                $filename_upload = date("dmYhms") . rand(101, 99999) . "." . $file_ext;
+                $filename_upload = date("dmYhms") . mt_rand(101, 99999) . "." . $file_ext;
                 $destination_path_attatchment = "upload/grievance_attatchment";
                 $file_attatchment->move($destination_path_attatchment, $filename_upload);
             }
@@ -140,8 +140,9 @@ class GrievanceController extends Controller {
 			);
 			$statuscode = 400;
 		} finally {
-			return response()->json($response, $statuscode);
+			 $res= response()->json($response, $statuscode);
 		}
+        return $res;
 	}
 
 	public function grievance_list() {
@@ -263,7 +264,7 @@ class GrievanceController extends Controller {
 
 			$mobile_verification = new tbl_mobile_verify();
 			$mobile_verification->mobile_no = $mobile_no;
-			$mobile_verification->otp = rand(1000, 9999);
+			$mobile_verification->otp = mt_rand(1000, 9999);
 			$mobile_verification->save();
 		
 
@@ -297,8 +298,9 @@ class GrievanceController extends Controller {
 			);
 			$statusCode = 400;
 		} finally {
-			return response()->json($response, $statusCode);
+			$res= response()->json($response, $statusCode);
 		}
+        return $res;
 	}
 
 	public function check_otp_for_grievance(Request $request) {
@@ -345,8 +347,9 @@ class GrievanceController extends Controller {
 			);
 			$statusCode = 400;
 		} finally {
-			return response()->json($response, $statusCode);
+			$res= response()->json($response, $statusCode);
 		}
+        return $res;
 	}
 
 	public function view_user(Request $request) {
@@ -400,8 +403,10 @@ class GrievanceController extends Controller {
 			);
 			$statusCode = 400;
 		} finally {
-			return response()->json($response, $statusCode);
+			$res= response()->json($response, $statusCode);
 		}
+
+        return $res;
 	}
 
 	public function user_list(Request $request) {
@@ -433,8 +438,9 @@ class GrievanceController extends Controller {
 			);
 			$statusCode = 400;
 		} finally {
-			return response()->json($response, $statusCode);
+			 $res= response()->json($response, $statusCode);
 		}
+        return $res;
 	}
 
 	public function save_forword(Request $request) {
@@ -487,7 +493,7 @@ else {
 if (!empty($request->file('attatchment'))) {
 $file_attatchment = $request->file('attatchment');
 $file_ext = $file_attatchment->getClientOriginalExtension();
-$filename_upload = date("dmYhms") . rand(101, 99999) . "." . $file_ext;
+$filename_upload = date("dmYhms") . mt_rand(101, 99999) . "." . $file_ext;
 $destination_path_attatchment = "upload/forward_attatchment";
 $file_attatchment->move($destination_path_attatchment, $filename_upload);
 }
@@ -545,8 +551,9 @@ $response = array(
 );
 $statusCode = 400;
 } finally {
-return response()->json($response, $statusCode);
+ $res= response()->json($response, $statusCode);
 }
+return $res;
 }
 
 	public function forworded_grievance_list() {
@@ -689,8 +696,9 @@ return response()->json($response, $statusCode);
 			);
 			$statusCode = 400;
 		} finally {
-			return response()->json($response, $statusCode);
+			 $res=response()->json($response, $statusCode);
 		}
+        return $res;
 
 
 	}
@@ -733,8 +741,9 @@ return response()->json($response, $statusCode);
 			);
 			$statusCode = 400;
 		} finally {
-			return response()->json($response, $statusCode);
+			 $res= response()->json($response, $statusCode);
 		}
+        return $res;
 
 
 

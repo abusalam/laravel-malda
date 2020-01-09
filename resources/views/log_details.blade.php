@@ -167,9 +167,9 @@
                     } else {
                         if (jqXHR.responseJSON.hasOwnProperty('exception')) {
                             if (jqXHR.responseJSON.exception_code == 23000) {
-                                msg += "Some Sql Exception Occured";
+                                msg += "Server Error";
                             } else {
-                                msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                                msg += "Server Error";
                             }
                         } else {
                             msg += "Error(s):<strong><ul>";

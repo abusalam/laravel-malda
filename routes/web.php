@@ -89,7 +89,7 @@ Route::group(['middleware' => 'userlogdetails'],function(){
 
 
   Route::get('/search_case', 'SDOCourtController@search_case')->name('search_case');
-  Route::get('refreshcaptcha', 'SDOCourtController@refreshCaptcha');
+  Route::post('refreshcaptcha', 'SDOCourtController@refreshCaptcha');
   Route::post('capchavalidation', 'SDOCourtController@capchavalidation');
 
 

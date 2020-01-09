@@ -64,8 +64,9 @@
 <script type="text/javascript">
 $('#refresh').click(function() {
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: 'refreshcaptcha',
+        data: {_token: '{{csrf_token()}}'},
         dataType: 'json',
         success: function(data) {
             $(".captcha span").html(data.captcha);
@@ -123,7 +124,7 @@ $("#Search").click(function() {
                     msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                 } else {
                     if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                        msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                        msg += "Server Error";
                     } else {
                         msg += "Error(s):<strong><ul>";
                         $.each(jqXHR.responseJSON['errors'], function(key, value) {
@@ -175,7 +176,7 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                                 msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                                             } else {
                                                 if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                                                    msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                                                    msg += "Server Error";
                                                 } else {
                                                     msg += "Error(s):<strong><ul>";
                                                     $.each(jqXHR.responseJSON['errors'], function(key, value) {
@@ -220,7 +221,7 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                         url: "{{route('check_otp_for_grievancestatus')}}",
                                         dataType: 'json',
                                         data: { 'mob': $("#mob_no_new").val(), 'otp': $("#otp").val(), '_token': $("input[name='_token']").val() },
-                                        method: 'post'
+                                        method: 'POST'
                                     }).done(function(response) {
                                         //alert('hi');
                                         jc.hideLoading(true);
@@ -303,7 +304,7 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                                         msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                                                     } else {
                                                         if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                                                            msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                                                            msg += "Server Error";
                                                         } else {
                                                             msg += "Error(s):<strong><ul>";
                                                             $.each(jqXHR.responseJSON['errors'], function(key, value) {
@@ -343,10 +344,10 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                             msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                                         } else {
                                             if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                                                msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                                                msg += "Server Error";
                                             } else {
                                                 msg += "Error(s):<strong><ul>";
-                                                $.each(jqXHR.responseJSON, function(key, value) {
+                                                $.each(jqXHR.responseJSON['errors'], function(key, value) {
                                                     msg += "<li>" + value + "</li>";
                                                 });
                                                 msg += "</ul></strong>";

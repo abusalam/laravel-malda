@@ -116,7 +116,7 @@ class LoginController extends Controller {
                 ]);
             }
         try {
-
+              
             $mobile_no = $request->mobile_no;
             $designation = $request->designation;
             $name = $request->name;
@@ -151,8 +151,9 @@ class LoginController extends Controller {
             );
             $statuscode = 400;
         } finally {
-            return response()->json($response, $statuscode);
+            $res= response()->json($response, $statuscode);
         }
+        return $res;
     }
 
     public function logout() {

@@ -227,13 +227,13 @@ close.close();
                     } else {
                         if (jqXHR.responseJSON.hasOwnProperty('exception')) {
                             if (jqXHR.responseJSON.exception_code == 23000) {
-                                msg += "Some Sql Exception Occured";
+                                msg += "Server Error";
                             } else {
-                                msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                                msg += "Server Error";
                             }
                         } else {
                             msg += "Error(s):<strong><ul>";
-                            $.each(jqXHR.responseJSON, function (key, value) {
+                            $.each(jqXHR.responseJSON['errors'], function (key, value) {
                                 msg += "<li>" + value + "</li>";
                             });
                             msg += "</ul></strong>";
@@ -310,16 +310,7 @@ close.close();
         });
     }
 
-    function redirectPost(url, data1) {
-        var $form = $("<form />");
-        $form.attr("action", url);
-        $form.attr("method", "post");
-        //         $form.attr("target", "_blank");
-        for (var data in data1)
-            $form.append('<input type="hidden" name="' + data + '" value="' + data1[data] + '" />');
-        $("body").append($form);
-        $form.submit();
-    }
+    
 </script>
 
 @endsection

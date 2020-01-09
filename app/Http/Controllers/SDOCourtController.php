@@ -113,8 +113,9 @@ class SDOCourtController extends Controller
             );
             $statuscode = 400;
         } finally {
-            return response()->json($response, $statuscode);
+             $res= response()->json($response, $statuscode);
         }
+        return $res; 
 
     }
 
@@ -204,8 +205,9 @@ class SDOCourtController extends Controller
             $statusCode = 400;
         } finally {
 
-            return view('Sdo_court_entry')->with('case_details', $result);
+             $res= view('Sdo_court_entry')->with('case_details', $result);
         }
+        return $res; 
 
 
     }
@@ -246,8 +248,9 @@ class SDOCourtController extends Controller
             );
             $statusCode = 400;
         } finally {
-            return response()->json($response, $statusCode);
+             $res= response()->json($response, $statusCode);
         }
+        return $res;
 
     }
 
@@ -319,8 +322,10 @@ class SDOCourtController extends Controller
             );
             $statusCode = 400;
         } finally {
-            return response()->json($response, $statusCode);
+
+             $res=response()->json($response, $statusCode);
         }
+        return $res; 
 
     }
 

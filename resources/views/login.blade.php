@@ -55,8 +55,9 @@ $(document).ready(function() {
     $('#refresh').click(function() {
         $('#error').hide();
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: 'refreshcaptcha',
+            data: {_token: '{{csrf_token()}}'},
             dataType: 'json',
             success: function(data) {
                 $(".captcha span").html(data.captcha);
@@ -145,13 +146,14 @@ $(document).ready(function() {
 
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
+                            alert(jqXHR.status);
                             $(".se-pre-con").fadeOut("slow");
                             var msg = "";
                             if (jqXHR.status !== 422 && jqXHR.status !== 400) {
                                 msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                             } else {
                                 if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                                    msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                                    msg += "Server Error";
                                 } else {
                                     msg += "Error(s):<strong><ul>";
                                     $.each(jqXHR.responseJSON['errors'], function(key, value) {
@@ -292,7 +294,7 @@ function otp_call(msg,username){
                                                     url: "{{route('checkOtpForLogin')}}",
                                                     dataType: 'json',
                                                     data: { 'mob': $("#mob_no_new").val(), 'otp': $("#otp").val(), '_token': $("input[name='_token']").val() },
-                                                    method: 'post'
+                                                    method: 'POST'
                                                 }).done(function(response) {
                                                     //alert('hi');
                                                     jc.hideLoading(true);

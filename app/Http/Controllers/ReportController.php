@@ -200,8 +200,9 @@ $grievance_report=tbl_grievance::join('tbl_grievence_forwored','tbl_grievence_fo
 			);
 			$statusCode = 400;
 		} finally {
-			return response()->json($response, $statusCode);
+			 $res= response()->json($response, $statusCode);
 		}
+        return $res;
 
 
 

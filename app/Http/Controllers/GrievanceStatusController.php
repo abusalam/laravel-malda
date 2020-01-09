@@ -101,8 +101,9 @@ class GrievanceStatusController extends Controller {
 			);
 			$statusCode = 400;
 		} finally {
-			return response()->json($response, $statusCode);
+			$res= response()->json($response, $statusCode);
 		}
+        return $res;
 	}
 
 	public function resolve_grievance_list(){
@@ -215,7 +216,7 @@ class GrievanceStatusController extends Controller {
 
 			$mobile_verification = new tbl_mobile_verify();
 			$mobile_verification->mobile_no = $mobile_no;
-			$mobile_verification->otp = rand(1000, 9999);
+			$mobile_verification->otp = mt_rand(1000, 9999);
 			$mobile_verification->save();
 			if(config('app.otp')==0){
 			 		if ($mobile_no != '') {
@@ -246,8 +247,9 @@ class GrievanceStatusController extends Controller {
 			);
 			$statusCode = 400;
 		} finally {
-			return response()->json($response, $statusCode);
+			$res= response()->json($response, $statusCode);
 		}
+        return $res;
 	}
 
 	public function check_otp_for_grievancestatus(Request $request) {
@@ -297,8 +299,9 @@ class GrievanceStatusController extends Controller {
 			);
 			$statusCode = 400;
 		} finally {
-			 return response()->json($response, $statusCode);
+			  $res= response()->json($response, $statusCode);
 		 }
+         return  $res;
 	}
 
 }

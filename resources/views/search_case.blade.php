@@ -64,8 +64,9 @@
    
     $('#refresh').click(function () {
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: 'refreshcaptcha',
+            data: {_token: '{{csrf_token()}}'},
             dataType: 'json',
             success: function (data) {
               if(data.logout_error==true){
@@ -151,7 +152,7 @@
                     msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                 } else {
                     if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                        msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                        msg += "Server Error";
                     } else {
                         msg += "Error(s):<strong><ul>";
                         $.each(jqXHR.responseJSON['errors'], function (key, value) {

@@ -204,7 +204,7 @@ if(data.logout_error==true){
                         msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                     } else {
                         if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                            msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                            msg += "Server Error";
                         } else {
                             msg += "Error(s):<strong><ul>";
                             $.each(jqXHR.responseJSON['errors'], function (key, value) {
