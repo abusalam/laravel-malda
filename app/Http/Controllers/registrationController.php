@@ -145,110 +145,8 @@ class registrationController extends Controller {
 
     }
 
-    public function save_otp(Request $request) {
-        $statusCode = 200;
-        $mobile_verification = null;
-        if (!$request->ajax()) {
-            $statusCode = 400;
-            $response = array('error' => 'Error occured in form submit.');
-            return response()->json($response, $statusCode);
-        }
-        $response = [
-            'mobile_verification' => [] //Should be changed #9
-        ];
-
-        try {
-         $mobile_no = $request->mobile_no;
-            $mobile_no_checking = tbl_user::select('*')->where('mobile_no', '=', $mobile_no)->get();
-
-            if (count($mobile_no_checking) > 0) {
-                $response = array(
-                    'status' => 2
-                );
-            } else {
-                $mobile_verification = new tbl_mobile_verify();
-                $mobile_verification->mobile_no = $mobile_no;
-                $mobile_verification->otp = rand(1000, 9999);
-                $mobile_verification->save();
-                if ($mobile_no != '') {
-                    $Destination = $mobile_no;
-                    $Message = 'Your OTP  is:' . $mobile_verification->otp;
-                    $SEND_SMS = 'TRUE';
-                    $mobile_no = $Destination;
-
-                     // include_once("sms/test_sms.php");
-                }
-
-                $response = array(
-                    'status' => 1
-                );
-            }
-        } catch (\Exception $e) {
-            $response = array(
-                'exception' => true,
-               
-            );
-            $statusCode = 400;
-        } finally {
-            return response()->json($response, $statusCode);
-        }
-    }
-
-    public function check_otp(Request $request) {
-        $statusCode = 200;
-        $mobile_verification = null;
-        if (!$request->ajax()) {
-            $statusCode = 400;
-            $response = array('error' => 'Error occured in form submit.');
-            return response()->json($response, $statusCode);
-        }
-        $response = [
-            'mobile_verification' => [] //Should be changed #9
-        ];
-//$dt = new Carbon\Carbon();
-//$before = $dt->subYears(13)->format('Y-m-d');
-        $this->validate($request, [
-            'otp' => 'required|integer',
-            'mob' => 'required|digits:10|unique:tbl_user,mobile_no',
-                ], [
-            'otp.required' => 'OTP is required',
-            'otp.integer' => ' OTP must be an integer',
-            'mob.required' => 'Mobile No is required',
-            'mob.digits' => ' Mobile no. must be 10 digit',
-            'mob.unique' => 'Mobile no. must be Unique'
-        ]);
-        try {
-            $mobile_no = $request->mob;
-            $maxValue = tbl_mobile_verify::select('otp')->where('code', DB::raw("(select max(code) from tbl_mobile_verify where mobile_no=$mobile_no)"))->get();
-            if ($request->otp == $maxValue[0]->otp) {
-
-                $response = array(
-                    'status' => 1
-                );
-            } else {
-                $response = array(
-                    'status' => 2
-                );
-            }
-        } catch (\Exception $e) {
-            $response = array(
-                'exception' => true,
-                
-            );
-            $statusCode = 400;
-        } finally {
-            return response()->json($response, $statusCode);
-        }
-    }
-
-   
 
     
-
-    
-
-    
-         
          
          public function forgotPassword(){
              return view('forgotPassword');
@@ -298,7 +196,7 @@ class registrationController extends Controller {
           if(count($mobile_no_verify)==0 || $cenvertedTime < $date_time ){
 
             if (count($mobile_no_checking) > 0 ) {
-                date_default_timezone_set('Asia/Kolkata');
+                date_default_timezone_set('Asia/Kolkata'); 
                 
                 $mobile_verification = new tbl_mobile_verify();
                 $mobile_verification->mobile_no = $mobile_no;
@@ -443,63 +341,6 @@ class registrationController extends Controller {
         return $res;
          }
          
-         public function passwordChange(Request $request){
-              $statusCode = 200;
-        $usermaster = null;
-      
-        if (!$request->ajax()) {
-            $statusCode = 400;
-            $response = array('error' => 'Error occured in form submit.');
-            return response()->json($response, $statusCode);
-        }
-        $response = [
-            'usermaster' => [] //Should be changed #9
-        ];
-         
-        /*         * ****Validation****** */
-        $this->validate($request, [
-            'pin' => "required|digits:4",
-              'mob' => 'required|digits:10',
-             
-            
-                ], [
-            'pin.required' => 'Pin is required.',
-           'pin.digits' => 'Pin should be in 4 digits.',
-                 'mob.required' => 'Mobile No is required',
-            'mob.digits' => ' Mobile no. must be 10 digit',  
-            
-        ]);
-      
-        try {
-         
-            $Pin = md5($request->pin);
-             $mob = $request->mob;
-          $usermaster = tbl_user::where('mobile_no', '=', $mob)->update(['password' => $Pin]);
-          if($usermaster==1){
-                $response = array(
-                    'status' => 1 //Should be changed #13
-                );
-          }
-          else{
-               $response = array(
-                    'status' => 2 //Should be changed #13
-                );
-          }
-       
-           
-           
-           
-            
-        } catch (\Exception $e) {
-            $response = array(
-                'exception' => true,
-               
-            );
-            $statusCode = 400;
-        } finally {
-             $res= response()->json($response, $statusCode);
-        }
-        return $res;
-         }
+
 
 }

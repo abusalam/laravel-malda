@@ -85,7 +85,7 @@
                     
                         $.ajax({
                             url: 'logview',
-                            method: 'post',
+                            method: 'POST',
                             data: {
                                 'code': code,
                                 '_token': '{{csrf_token()}}'
@@ -249,16 +249,7 @@
         });
     
 
-    function redirectPost(url, data1) {
-        var $form = $("<form />");
-        $form.attr("action", url);
-        $form.attr("method", "post");
-        //         $form.attr("target", "_blank");
-        for (var data in data1)
-            $form.append('<input type="hidden" name="' + data + '" value="' + data1[data] + '" />');
-        $("body").append($form);
-        $form.submit();
-    }
+  
 </script>
 
 

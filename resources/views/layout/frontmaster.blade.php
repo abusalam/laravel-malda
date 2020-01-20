@@ -226,12 +226,12 @@
             </div>
         </footer>
     </div>
-    <script src="./front/js/jquery-3.4.1.min.js"></script>
-    <script src="./front/js/menumaker.js"></script>
-    <script src="./front/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src='./front/js/themescript.js'></script>
-    <script src='./front/js/jquery.flexslider.js'></script>
-    <script src='./front/js/jquery.flexslider-min.js'></script>
+    <script src="{{ asset('./front/js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ asset('./front/js/menumaker.js') }}"></script>
+    <script src="{{ asset('./front/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src='{{ asset('./front/js/themescript.js') }}'></script>
+    <script src='{{ asset('./front/js/jquery.flexslider.js') }}'></script>
+    <script src='{{ asset('./front/js/jquery.flexslider-min.js') }}'></script>
     <script src="{{ asset('/js/bootstrapValidator.min.js') }}"></script>
     <script src="{{ asset('/js/jquery-confirm.min.js') }}"></script>
     <script src="{{asset('lib/datatables.net/js/jquery.dataTables.min.js')}}"></script>
