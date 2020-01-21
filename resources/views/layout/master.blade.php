@@ -194,8 +194,6 @@
                                         <div id="breadcam" role="navigation" aria-label="breadcrumb">
                                             <ul class="breadcrumbs">
                                                 <li><a href="./" class="home"><span>{{__('home')}}</span></a></li>
-                                                <!--                                                    <li><a href="">Directory</a></li>
-                                                                                                        <-->>
                                             </ul>
                                         </div>
                                     </div>

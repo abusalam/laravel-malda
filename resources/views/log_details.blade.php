@@ -96,33 +96,33 @@
                                 str += '<table class="table table-sm table-3">';
                                 str += '<tbody>';
                                 if(datas.options.name == null){
-                                    str += '<tr><td width="40%"><label>  Name : </label></td><td width="60%">Anonymous USer</td></tr>';
+                                    str += '<tr><td width="40%">Name : </td><td width="60%">Anonymous USer</td></tr>';
                                 }else{
-                                    str += '<tr><td><label>  Name : </label></td><td>' + datas.options.name + '</td></tr>';
+                                    str += '<tr><td>  Name : </td><td>' + datas.options.name + '</td></tr>';
                                 }
                                 if(datas.options.mobile_no == null){
-                                    str += '<tr><td><label> Mobile No : </label></td><td>NA</td></tr>';
+                                    str += '<tr><td> Mobile No : </td><td>NA</td></tr>';
                                 }
                                 else{
-                                    str += '<tr><td><label>  Mobile No : </label></td><td>' + datas.options.mobile_no + '</td></tr>';
+                                    str += '<tr><td>  Mobile No : </td><td>' + datas.options.mobile_no + '</td></tr>';
 
                                 }
                                 
                                 if(datas.options.mobile_no == null){
-                                    str += '<tr><td><label> Designation : </label></td><td>NA</td></tr>';
+                                    str += '<tr><td> Designation : </td><td>NA</td></tr>';
                                 }
                                 else{
-                                    str += '<tr><td><label> Designation : </label></td><td>' + datas.options.designation + '</td></tr>';
+                                    str += '<tr><td> Designation : </td><td>' + datas.options.designation + '</td></tr>';
 
                                 }
 
                                 
-                                str += '<tr><td><label>  Session Id : </label></td><td>' + datas.options.sessionId + '</td></tr>';
-                                str += '<tr><td><label>  User Ip : </label></td><td>' + datas.options.userIp + '</td></tr>';
-                                str += '<tr><td><label>  Visited Page : </label></td><td>' + datas.options.visitedPage + '</td></tr>';
-                                str += '<tr><td><label>  Description : </label></td><td>' + datas.options.description + '</td></tr>';
-                                str += '<tr><td><label>  Created At : </label></td><td>' + datas.options.created + '</td></tr>';
-                                str += '<tr><td><label>  Updated At : </label></td><td>' + datas.options.updated + '</td></tr>';
+                                str += '<tr><td>  Session Id : </td><td>' + datas.options.sessionId + '</td></tr>';
+                                str += '<tr><td>  User Ip : </td><td>' + datas.options.userIp + '</td></tr>';
+                                str += '<tr><td>  Visited Page : </td><td>' + datas.options.visitedPage + '</td></tr>';
+                                str += '<tr><td>  Description : </td><td>' + datas.options.description + '</td></tr>';
+                                str += '<tr><td>  Created At : </td><td>' + datas.options.created + '</td></tr>';
+                                str += '<tr><td>  Updated At : </td><td>' + datas.options.updated + '</td></tr>';
                                 str += '</tbody>';
                                 str += '</table>';
                                 $('#view_log_details').html("");
@@ -229,7 +229,7 @@
                             "render": function (data, type, full, meta) {
                                var str_btns="";
                                
-                               str_btns += '<button type="button"  class="btn btn-info  view-button" id="' + data.v+ '" title="View"><i class="fa fa-view">View</i></button>&nbsp;';
+                               str_btns += '<button type="button"  class="btn btn-info  view-button" id="' + data.v+ '" title="View"><i class="fa fa-view fa-eye"></i></button>&nbsp;';
 
 
 

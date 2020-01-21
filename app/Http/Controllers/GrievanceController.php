@@ -87,11 +87,9 @@ class GrievanceController extends Controller {
     }
         try {
 
-             $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-    $griv_id = array(); //remember to declare $pass as an array
-    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache  
+            
     for ($i = 0; $i < 8; $i++) {
-        $n = random_int ( 0 , int $alphaLength );
+        $n = random_int ( 1111111111 , 9999999999 );
         $griv_id[] = $alphabet[$n];
     }
       $griv_idd= implode($griv_id); 
