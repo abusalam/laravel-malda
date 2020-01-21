@@ -70,12 +70,14 @@
             $('.edit-button').click(function () {
                 var case_code = this.id;
 
-                // alert(user_code);
-                 if($.isNumeric(case_code)==true){
+               var token = $('input[name="_token"]').val();
+             if((/^([1-9]{1,})$/.test(case_code)) && token != '' ){
       
                 var datas = {'case_code': case_code, '_token': $('input[name="_token"]').val()};
                 redirectPost('{{url("case_edit")}}', datas);
-            }
+            }else{
+                location.reload();
+             }
             
             });
 

@@ -197,10 +197,11 @@ class registrationController extends Controller {
 
             if (count($mobile_no_checking) > 0 ) {
                 date_default_timezone_set('Asia/Kolkata'); 
+               
                 
                 $mobile_verification = new tbl_mobile_verify();
                 $mobile_verification->mobile_no = $mobile_no;
-                $mobile_verification->otp = mt_rand(1000, 9999);
+                $mobile_verification->otp = random_int ( 1000 , 9999 );
                 $mobile_verification->otp_creation_time = date('Y-m-d H:i:s');
 
                 $mobile_verification->save();
@@ -238,9 +239,10 @@ class registrationController extends Controller {
                 );
            }else{
 
+
                 $mobile_verification = new tbl_mobile_verify();
                 $mobile_verification->mobile_no = $mobile_no;
-                $mobile_verification->otp = mt_rand(1000, 9999);
+                $mobile_verification->otp = random_int ( 1000 , 9999 );
                 $mobile_verification->otp_creation_time = date('Y-m-d H:i:s');
 
                 $mobile_verification->save();
@@ -340,6 +342,8 @@ class registrationController extends Controller {
         }
         return $res;
          }
+
+        
          
 
 

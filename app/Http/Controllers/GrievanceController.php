@@ -89,20 +89,21 @@ class GrievanceController extends Controller {
 
              $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
     $griv_id = array(); //remember to declare $pass as an array
-    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache  
     for ($i = 0; $i < 8; $i++) {
-        $n = mt_rand(0, $alphaLength);
+        $n = random_int ( 0 , int $alphaLength );
         $griv_id[] = $alphabet[$n];
     }
       $griv_idd= implode($griv_id); 
 
       //echo $griv_idd; die;
+     
 
 
       if (!empty($request->file('attatchment'))) {
                 $file_attatchment = $request->file('attatchment');
                 $file_ext = $file_attatchment->getClientOriginalExtension();
-                $filename_upload = date("dmYhms") . mt_rand(101, 99999) . "." . $file_ext;
+                $filename_upload = date("dmYhms") . random_int ( 101 , 99999 ) . "." . $file_ext;
                 $destination_path_attatchment = "upload/grievance_attatchment";
                 $file_attatchment->move($destination_path_attatchment, $filename_upload);
             }
@@ -260,11 +261,12 @@ class GrievanceController extends Controller {
 		];
 
 		try {
+            
 			$mobile_no = $request->mobile_no;
 
 			$mobile_verification = new tbl_mobile_verify();
 			$mobile_verification->mobile_no = $mobile_no;
-			$mobile_verification->otp = mt_rand(1000, 9999);
+			$mobile_verification->otp =random_int ( 1000 , 9999 );
 			$mobile_verification->save();
 		
 
@@ -490,10 +492,12 @@ $response = array('status' => 2);
 }
 
 else {
+
 if (!empty($request->file('attatchment'))) {
+    
 $file_attatchment = $request->file('attatchment');
 $file_ext = $file_attatchment->getClientOriginalExtension();
-$filename_upload = date("dmYhms") . mt_rand(101, 99999) . "." . $file_ext;
+$filename_upload = date("dmYhms") . random_int ( 101 , 99999 ) . "." . $file_ext;
 $destination_path_attatchment = "upload/forward_attatchment";
 $file_attatchment->move($destination_path_attatchment, $filename_upload);
 }
@@ -843,5 +847,7 @@ return $res;
 		  return response()->json($response);
 
 	}
+
+    
 
 }

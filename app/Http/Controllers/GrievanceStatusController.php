@@ -210,13 +210,12 @@ class GrievanceStatusController extends Controller {
 		];
 
 		try {
-
-            
+           
 			$mobile_no = $request->mobile_no;
 
 			$mobile_verification = new tbl_mobile_verify();
 			$mobile_verification->mobile_no = $mobile_no;
-			$mobile_verification->otp = mt_rand(1000, 9999);
+			$mobile_verification->otp = random_int ( 1000 , 9999 );
 			$mobile_verification->save();
 			if(config('app.otp')==0){
 			 		if ($mobile_no != '') {
@@ -303,5 +302,7 @@ class GrievanceStatusController extends Controller {
 		 }
          return  $res;
 	}
+
+     
 
 }

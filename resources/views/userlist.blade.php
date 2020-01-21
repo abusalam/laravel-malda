@@ -63,15 +63,19 @@
 
             $('.edit-button').click(function () {
                 var user_code = this.id;
-
-                // alert(user_code);
-                if($.isNumeric(user_code)==true){
-
+                var token = $('input[name="_token"]').val();
+             if((/^([1-9]{1,})$/.test(user_code)) && token != '' ){
+                
 
                 var datas = {'user_code': user_code, '_token': $('input[name="_token"]').val()};
                 redirectPost('{{url("user_edit")}}', datas);
 
-                }
+               
+             }else{
+                location.reload();
+             }
+
+                
             });
 
             $('.delete-button').click(function () {
