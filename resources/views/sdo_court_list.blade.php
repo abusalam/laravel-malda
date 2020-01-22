@@ -267,9 +267,17 @@
         $form.attr("method", "post");
         //         $form.attr("target", "_blank");
         for (var data in data1)
-            $form.append('<input type="text" name="' + data + '" value="' + data1[data] + '" />');
+            $form.append('<input type="hidden" name="' + data + '"  id="' + data + '" value="' + data1[data] + '" />');
         $("body").append($form);
-        $form.submit();
+        
+        var case_code = $('#case_code').val();
+        var token = $('#_token').val();
+        if((/^([1-9]{1,})$/.test(case_code)) && token != '' ){              
+            $form.submit();               
+        }else{
+            location.reload();
+        }  
+        
     }
 </script>
 

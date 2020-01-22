@@ -261,12 +261,23 @@
     function redirectPost(url, data1) {
         var $form = $("<form />");
         $form.attr("action", url);
+        $form.attr("name", "editForm");
+        $form.attr("id", "editForm");
         $form.attr("method", "post");
         //         $form.attr("target", "_blank");
         for (var data in data1)
-            $form.append('<input type="text" name="' + data + '" value="' + data1[data] + '" />');
+        {
+            $form.append('<input type="hidden" name="' + data + '" id="' + data + '" value="' + data1[data] + '" />');
+        }
         $("body").append($form);
-        $form.submit();
+
+        var user_code = $('#user_code').val();
+        var token = $('#_token').val();
+        if((/^([1-9]{1,})$/.test(user_code)) && token != '' ){              
+            $form.submit();               
+        }else{
+            location.reload();
+        }              
     }
 </script>
 
