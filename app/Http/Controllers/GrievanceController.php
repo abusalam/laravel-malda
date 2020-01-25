@@ -88,11 +88,11 @@ class GrievanceController extends Controller {
         try {
 
             
-    for ($i = 0; $i < 8; $i++) {
+    
         $n = random_int ( 1111111111 , 9999999999 );
-        $griv_id[] = $alphabet[$n];
-    }
-      $griv_idd= implode($griv_id); 
+        
+          $griv_idd= $n;
+
 
       //echo $griv_idd; die;
      
@@ -135,7 +135,6 @@ class GrievanceController extends Controller {
 
 			$response = array(
 				'exception' => true,
-				
 			);
 			$statuscode = 400;
 		} finally {

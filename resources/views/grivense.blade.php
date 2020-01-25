@@ -222,8 +222,52 @@
                             }else{
 
                                var msg='SMS Diesabled in Configuration.</br> Your OTP is '+data.otp;
+
+                               otp_call(msg,mobile_no,fd);
                             }
-                        var jc = $.confirm({
+                       
+                    } else {
+                      
+                        $('#error').html('');
+                        $('#error').append('Mobile no is already register');
+                        $('#error').show();
+
+                    }
+                   
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $(".se-pre-con").fadeOut("slow");
+                    var msg = "";
+                    if (jqXHR.status !== 422 && jqXHR.status !== 400) {
+                        msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
+                    } else {
+                        if (jqXHR.responseJSON.hasOwnProperty('exception')) {
+                            msg += "Server Error";
+                        } else {
+                            msg += "Error(s):<strong><ul>";
+                            $.each(jqXHR.responseJSON['errors'], function (key, value) {
+                                msg += "<li>" + value + "</li>";
+                            });
+                            msg += "</ul></strong>";
+                        }
+                    }
+                    $.alert({
+                        title: 'Error!!',
+                        type: 'red',
+                        icon: 'fa fa-warning',
+                        content: msg,
+                    });
+                    $('#error').html('');
+                    $('#error').append(msg);
+                    $('#error').show();
+                }
+            });
+        }
+    });
+
+    function otp_call(msg,mobile_no,fd){
+
+     var jc = $.confirm({
                             title: 'Please enter OTP to continue',
                             content: msg+'<input type="text" style="display:none" class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + mobile_no + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
                             type: 'green',
@@ -238,7 +282,9 @@
                                             data: {'mobile_no': mobile_no, '_token': $("input[name='_token']").val()},
                                             dataType: "json",
                                             success: function (data) {
-                                                jc.open(true);
+                                                var msg='SMS Diesabled in Configuration.</br> Your OTP is '+data.otp;
+                                                 otp_call(msg,mobile_no,fd);
+                                               // jc.open(true);
                                             },
                                             error: function (jqXHR, textStatus, errorThrown) {
                                                 $(".se-pre-con").fadeOut("slow");
@@ -276,13 +322,15 @@
                                             return false;
                                             jc.open(true);
                                         }
+
+                                        //alert(mob_no_new);
                                         if (isNaN(mob_no_new)) {
                                             jc.hideLoading(true);
                                             $.alert('Mobile No must be an integer');
                                             return false;
                                             jc.open(true);
                                         }
-                                        return $.ajax({
+                                        $.ajax({
                                             url: "{{route('check_otp_for_grievance')}}",
                                             dataType: 'json',
                                             data: {'mob': $("#mob_no_new").val(), 'otp': $("#otp").val(), '_token': $("input[name='_token']").val()},
@@ -393,17 +441,12 @@
                                 }
                             },
                             onOpen: function () {
-                                startTimer();
+                                startTimer(jc);
                             }
                         });
-                    } else {
-                      
-                        $('#error').html('');
-                        $('#error').append('Mobile no is already register');
-                        $('#error').show();
+}
 
-                    }
-                    function startTimer() {
+ function startTimer(jc) {
                         var counter = 30;
                         setInterval(function () {
                             counter--;
@@ -417,36 +460,6 @@
                             }
                         }, 1000);
                     }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $(".se-pre-con").fadeOut("slow");
-                    var msg = "";
-                    if (jqXHR.status !== 422 && jqXHR.status !== 400) {
-                        msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
-                    } else {
-                        if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                            msg += "Server Error";
-                        } else {
-                            msg += "Error(s):<strong><ul>";
-                            $.each(jqXHR.responseJSON['errors'], function (key, value) {
-                                msg += "<li>" + value + "</li>";
-                            });
-                            msg += "</ul></strong>";
-                        }
-                    }
-                    $.alert({
-                        title: 'Error!!',
-                        type: 'red',
-                        icon: 'fa fa-warning',
-                        content: msg,
-                    });
-                    $('#error').html('');
-                    $('#error').append(msg);
-                    $('#error').show();
-                }
-            });
-        }
-    });
     function isNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : evt.keyCode;
         if (charCode > 31 && (charCode < 48 || charCode > 57))

@@ -290,7 +290,7 @@ function otp_call(msg,username){
                                                     return false;
                                                     jc.open(true);
                                                 }
-                                                return $.ajax({
+                                                 $.ajax({
                                                     url: "{{route('checkOtpForLogin')}}",
                                                     dataType: 'json',
                                                     data: { 'mob': $("#mob_no_new").val(), 'otp': $("#otp").val(), '_token': $("input[name='_token']").val() },
@@ -321,7 +321,7 @@ function otp_call(msg,username){
                                                         msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
                                                     } else {
                                                         if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                                                            msg += "Exception: <strong>" + jqXHR.responseJSON.exception_message + "</strong>";
+                                                            msg += "Server Error";
                                                         } else {
                                                             msg += "Error(s):<strong><ul>";
                                                             $.each(jqXHR.responseJSON['errors'], function(key, value) {

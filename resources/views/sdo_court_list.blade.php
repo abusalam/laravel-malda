@@ -68,12 +68,14 @@
         table.on('draw.dt', function () {
 
             $('.edit-button').click(function () {
+
                 var case_code = this.id;
+                 
 
                var token = $('input[name="_token"]').val();
              if((/^([1-9]{1,})$/.test(case_code)) && token != '' ){
       
-                var datas = {'case_code': case_code, '_token': $('input[name="_token"]').val()};
+                var datas = {'case_code': encodeURI(case_code), '_token': $('input[name="_token"]').val()};
                 redirectPost('{{url("case_edit")}}', datas);
             }else{
                 location.reload();
@@ -270,7 +272,7 @@
             $form.append('<input type="hidden" name="' + data + '"  id="' + data + '" value="' + data1[data] + '" />');
         $("body").append($form);
         
-        var case_code = $('#case_code').val();
+        var case_code = encodeURI($('#case_code').val());
         var token = $('#_token').val();
         if((/^([1-9]{1,})$/.test(case_code)) && token != '' ){              
             $form.submit();               

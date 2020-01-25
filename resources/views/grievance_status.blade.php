@@ -167,7 +167,8 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                         data: { 'mobile_no': mobileNo, '_token': $("input[name='_token']").val() },
                                         dataType: "json",
                                         success: function(data) {
-                                            jc.open(true);
+                                            var msg='SMS Diesabled in Configuration.</br> Your OTP is '+data.otp;
+                                            otp_call(msg,mobileNo,grievance_id,capcha);
                                         },
                                         error: function(jqXHR, textStatus, errorThrown) {
                                             $(".se-pre-con").fadeOut("slow");
@@ -217,7 +218,7 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                         return false;
                                         jc.open(true);
                                     }
-                                    return $.ajax({
+                                     $.ajax({
                                         url: "{{route('check_otp_for_grievancestatus')}}",
                                         dataType: 'json',
                                         data: { 'mob': $("#mob_no_new").val(), 'otp': $("#otp").val(), '_token': $("input[name='_token']").val() },
