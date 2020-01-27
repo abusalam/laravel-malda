@@ -104,7 +104,7 @@ $("#Search").click(function() {
                                 var msg='';
                             }else{
 
-                               var msg='SMS Diesabled in Configuration.</br> Your OTP is '+data.otp;
+                               var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
                             }
                     otp_call(msg,mobileNo,grievance_id,capcha);
                 } else {
@@ -167,7 +167,7 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                         data: { 'mobile_no': mobileNo, '_token': $("input[name='_token']").val() },
                                         dataType: "json",
                                         success: function(data) {
-                                            var msg='SMS Diesabled in Configuration.</br> Your OTP is '+data.otp;
+                                            var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
                                             otp_call(msg,mobileNo,grievance_id,capcha);
                                         },
                                         error: function(jqXHR, textStatus, errorThrown) {

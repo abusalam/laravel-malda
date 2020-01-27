@@ -221,7 +221,7 @@
                                 var msg='';
                             }else{
 
-                               var msg='SMS Diesabled in Configuration.</br> Your OTP is '+data.otp;
+                               var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
 
                                otp_call(msg,mobile_no,fd);
                             }
@@ -282,7 +282,7 @@
                                             data: {'mobile_no': mobile_no, '_token': $("input[name='_token']").val()},
                                             dataType: "json",
                                             success: function (data) {
-                                                var msg='SMS Diesabled in Configuration.</br> Your OTP is '+data.otp;
+                                                var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
                                                  otp_call(msg,mobile_no,fd);
                                                // jc.open(true);
                                             },
