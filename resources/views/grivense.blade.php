@@ -223,8 +223,8 @@
 
                                var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
 
-                               otp_call(msg,mobile_no,fd);
                             }
+                            otp_call(msg,mobile_no,fd);
                        
                     } else {
                       
@@ -282,7 +282,11 @@
                                             data: {'mobile_no': mobile_no, '_token': $("input[name='_token']").val()},
                                             dataType: "json",
                                             success: function (data) {
+                                                if(data.otp == 1){
+                                                  var msg='';
+                                                 }else{
                                                 var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
+                                                    }
                                                  otp_call(msg,mobile_no,fd);
                                                // jc.open(true);
                                             },

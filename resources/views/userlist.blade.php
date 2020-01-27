@@ -67,7 +67,7 @@
              if((/^([1-9]{1,})$/.test(user_code)) && token != '' ){
                 
 
-                var datas = {'user_code': encodeURI(user_code), '_token': $('input[name="_token"]').val()};
+                var datas = {'user_code': encodeURI(user_code), '_token': encodeURI($('input[name="_token"]').val())};
                 redirectPost('{{url("user_edit")}}', datas);
 
                
@@ -272,7 +272,7 @@
         $("body").append($form);
 
         var user_code = encodeURI($('#user_code').val());
-        var token = $('#_token').val();
+        var token = encodeURI($('#_token').val());
         if((/^([1-9]{1,})$/.test(user_code)) && token != '' ){              
             $form.submit();               
         }else{

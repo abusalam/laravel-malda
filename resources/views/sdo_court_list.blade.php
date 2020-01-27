@@ -75,7 +75,7 @@
                var token = $('input[name="_token"]').val();
              if((/^([1-9]{1,})$/.test(case_code)) && token != '' ){
       
-                var datas = {'case_code': encodeURI(case_code), '_token': $('input[name="_token"]').val()};
+                var datas = {'case_code': encodeURI(case_code), '_token': encodeURI($('input[name="_token"]').val())};
                 redirectPost('{{url("case_edit")}}', datas);
             }else{
                 location.reload();
@@ -273,7 +273,7 @@
         $("body").append($form);
         
         var case_code = encodeURI($('#case_code').val());
-        var token = $('#_token').val();
+        var token = encodeURI($('#_token').val());
         if((/^([1-9]{1,})$/.test(case_code)) && token != '' ){              
             $form.submit();               
         }else{

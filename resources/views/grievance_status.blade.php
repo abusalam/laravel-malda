@@ -167,7 +167,12 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                         data: { 'mobile_no': mobileNo, '_token': $("input[name='_token']").val() },
                                         dataType: "json",
                                         success: function(data) {
-                                            var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
+                                            if(data.otp == 1){
+                                              var msg='';
+                                              }else{
+
+                                             var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
+                                                }
                                             otp_call(msg,mobileNo,grievance_id,capcha);
                                         },
                                         error: function(jqXHR, textStatus, errorThrown) {
@@ -330,7 +335,7 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                                 title: 'Error!!',
                                                 type: 'red',
                                                 icon: 'fa fa-warning',
-                                                content: "Please Enter Corretct Otp To continue",
+                                                content: "Please Enter Correct Otp To continue",
                                                 buttons: {
                                                     Ok: function() {
                                                         jc.open(true);
