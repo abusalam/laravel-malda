@@ -84,10 +84,10 @@
             var date2 = new Date(arrEndDate[2], arrEndDate[1], arrEndDate[0]);
 
             if ((Date.parse(date2) < Date.parse(date1))) {
-                alert("To date should be greater than from date");
+                alert("{{__('text.to_date_should_be_greater_than_from_date')}}");
                 document.getElementById("to_date").value = "";
                 $('.has-error').addClass('has-error');
-                $('#transit_pass_search').data('bootstrapValidator').updateStatus('to_date', 'INVALID', null)
+                $('#case_search').data('bootstrapValidator').updateStatus('to_date', 'INVALID', null)
                 //$('.help-block').css('display', 'block');
             }
         });
@@ -104,10 +104,10 @@
             //alert(date2);
             if ((Date.parse(date2) < Date.parse(date1))) {
 
-                alert("From date should be lesser than to date");
+                alert("{{__('text.from_date_should_be_lesser_than_to_date')}}");
                 document.getElementById("from_date").value = "";
                 $('.has-error').addClass('has-error');
-                $('#transit_pass_search').data('bootstrapValidator').updateStatus('from_date', 'INVALID', null)
+                $('#case_search').data('bootstrapValidator').updateStatus('from_date', 'INVALID', null)
                 //$('.help-block').css('display', 'block');
             }
         });

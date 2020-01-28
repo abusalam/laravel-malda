@@ -170,7 +170,7 @@ if(data.logout_error==true){
                                                         title: 'Success!',
                                                         type: 'green',
                                                         icon: 'fa fa-check',
-                                                        content: "Grievance Close Successfully",
+                                                        content: "{{__('text.grievance_closed_successfully')}}",
                                                         buttons: {
                                                             ok: function () {
 
@@ -188,7 +188,7 @@ if(data.logout_error==true){
 
 $.confirm({
         title: 'Unsuccess !!',
-        content: "Please Cleck confirmation for Close the Grievance",
+        content: "{{__('text.check_confirmation_for_close')}}",
         boxWidth: '20%',
         useBootstrap: false,
         buttons: {

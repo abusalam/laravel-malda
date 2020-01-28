@@ -80,7 +80,7 @@
 
             $('.delete-button').click(function () {
 
-                var reply = confirm('Are you sure to delete the record?');
+                var reply = confirm('{{__('text.want_to_delete')}}');
                 if (!reply) {
                     return false;
                 }
@@ -101,14 +101,14 @@
                                 type: 'green',
                                 icon: 'fa fa-check',
                                 title: 'Success!!',
-                                content: '<strong>SUCCESS:</strong> User deleted successfully.'
+                                content: '{{__('text.failed_to_delete_data')}}'
                             });
                         } else {
                             $.alert({
                                 type: 'red',
                                 icon: 'fa fa-warning',
                                 title: 'Error!!',
-                                content: '<strong>SUCCESS:</strong> Failed to delete data.'
+                                content: '{{__('text.failed_to_delete_data')}}'
                             });
                         }
                     },

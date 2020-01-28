@@ -122,48 +122,48 @@
                 grivense_name: {
                     validators: {
                         notEmpty: {
-                            message: 'Enter Name'
+                            message: '{{__('text.name_required')}}'
                         },
                         regexp: {
                             regexp: /^[a-z\s]+$/i,
-                            message: 'Name consist of alphabatical characters and spaces only'
+                            message: '{{__('text.regex_for_name')}}'
                         }
                     }
                 },
                 mobile_no: {
                     validators: {
                         notEmpty: {
-                            message: 'Enter Mobile Number'
+                            message: '{{__('text.mobile_no_required')}}'
                         },
                         digits: {
-                            message: 'Mobile Number is not valid'
+                            message: '{{__('text.mobile_no_digit')}}'
                         },
                         stringLength: {
                             min: 10,
                             max: 10,
-                            message: 'Mobile Number have 10 digit'
+                            message: '{{__('text.mobile_no_stringlength')}}'
                         }
                     }
                 },
                 grivense_email: {
                     validators: {
                         notEmpty: {
-                            message: 'Email Id Is Required'
+                            message: '{{__('text.email_required')}}'
                         },
                         regexp: {
                             regexp: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
-                            message: 'Enter correct email Format'
+                            message: '{{__('text.regex_for_email')}}'
                         }
                     }
                 },
                 grivense_complain: {
                     validators: {
                         notEmpty: {
-                            message: 'Please enter complain'
+                            message: '{{__('text.grivense_complain_required')}}'
                         },
                         regexp: {
                             regexp: /^[A-Za-z0-9\/.,\s()-]+$/i,
-                            message: 'Alphanumric and some special characters like ()./- allow'
+                            message: '{{__('text.grivense_complain_for_regex')}}'
                         }
                     }
                 },
@@ -173,7 +173,7 @@
                             extension: 'pdf',
                             type: 'application/pdf',
                             maxSize: 1024 * 1024, // 5 MB
-                            message: 'The selected file is not valid, it should be (pdf) and 1 MB at maximum.'
+                            message: '{{__('text.attachment_validation')}}'
                         }
                     }
                 },
@@ -181,7 +181,7 @@
                 captcha: {
                     validators: {
                         notEmpty: {
-                            message: 'Captcha is Required'
+                            message: '{{__('text.captcha_required')}}'
                         }
 
                     }
@@ -221,7 +221,7 @@
                                 var msg='';
                             }else{
 
-                               var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
+                               var msg='{{__('text.configuration_disabled_msg')}} '+data.otp;
 
                             }
                             otp_call(msg,mobile_no,fd);
@@ -229,7 +229,7 @@
                     } else {
                       
                         $('#error').html('');
-                        $('#error').append('Mobile no is already register');
+                        $('#error').append('{{__('text.mobile_no_is_already_registered')}}');
                         $('#error').show();
 
                     }
@@ -268,7 +268,7 @@
     function otp_call(msg,mobile_no,fd){
 
      var jc = $.confirm({
-                            title: 'Please enter OTP to continue',
+                            title: '{{__('text.enter_otp_to_continue')}}',
                             content: msg+'<input type="text" style="display:none" class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + mobile_no + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
                             type: 'green',
                             typeAnimated: true,
@@ -285,7 +285,7 @@
                                                 if(data.otp == 1){
                                                   var msg='';
                                                  }else{
-                                                var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
+                                                var msg='{{__('text.configuration_disabled_msg')}}'+data.otp;
                                                     }
                                                  otp_call(msg,mobile_no,fd);
                                                // jc.open(true);
@@ -322,7 +322,7 @@
                                         var otp = $("#otp").val();
                                         if (isNaN(otp)) {
                                             jc.hideLoading(true);
-                                            $.alert('Otp must be an integer');
+                                            $.alert('{{__('text.otp_integer')}}');
                                             return false;
                                             jc.open(true);
                                         }
@@ -330,7 +330,7 @@
                                         //alert(mob_no_new);
                                         if (isNaN(mob_no_new)) {
                                             jc.hideLoading(true);
-                                            $.alert('Mobile No must be an integer');
+                                            $.alert('{{__('text.mobile_number_integer')}}');
                                             return false;
                                             jc.open(true);
                                         }
@@ -358,7 +358,7 @@
                                                                 title: 'Success!!',
                                                                 type: 'green',
                                                                 icon: 'fa fa-check',
-                                                                content: "Grievance saved successfully.",
+                                                                content: "{{__('text.grievance_saved_successfully')}}",
                                                                 buttons: {
                                                                     ok: function () {
                                                                         location.reload();
@@ -372,7 +372,7 @@
                                                                 title: 'Error!!',
                                                                 type: 'red',
                                                                 icon: 'fa fa-warning',
-                                                                content: '<strong>failed to save data. Try again</strong>',
+                                                                content: '{{__('text.failed_to_saved_data')}}',
                                                                 buttons: {
                                                                     ok: function () {
                                                                         location.reload();
@@ -410,7 +410,7 @@
                                                     title: 'Error!!',
                                                     type: 'red',
                                                     icon: 'fa fa-warning',
-                                                    content: "Please Enter Corretct Otp To continue",
+                                                    content: "{{__('text.otp_incorrect_msg')}}",
                                                     buttons: {
                                                         Ok: function () {
                                                             jc.open(true);

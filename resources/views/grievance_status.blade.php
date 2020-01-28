@@ -86,7 +86,7 @@ $("#Search").click(function() {
             title: 'Error!!',
             type: 'red',
             icon: 'fa fa-warning',
-            content: "Enter Mobile Number and Grievance ID",
+            content: "{{__('text.enter_mobile_number_grievance_id')}}",
         });
 
 
@@ -104,13 +104,13 @@ $("#Search").click(function() {
                                 var msg='';
                             }else{
 
-                               var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
+                               var msg='{{__('text.configuration_disabled_msg')}}'+data.otp;
                             }
                     otp_call(msg,mobileNo,grievance_id,capcha);
                 } else {
                    
                     $('#error').html('');
-                    $('#error').append('Mobile no is already register');
+                    $('#error').append('{{__('text.mobile_no_is_already_registered')}}');
                     $('#error').show();
 
                 }
@@ -153,7 +153,7 @@ $("#Search").click(function() {
 function otp_call(msg,mobileNo,grievance_id,capcha){
 
     var jc = $.confirm({
-                        title: 'Please enter OTP to continue',
+                        title: '{{__('text.enter_otp_to_continue')}}',
                         content: msg+'<input type="text" style="display:none" class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + mobileNo + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
                         type: 'green',
                         typeAnimated: true,
@@ -171,7 +171,7 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                               var msg='';
                                               }else{
 
-                                             var msg='SMS Disabled in Configuration.</br> Your OTP is '+data.otp;
+                                             var msg='{{__('text.configuration_disabled_msg')}}'+data.otp;
                                                 }
                                             otp_call(msg,mobileNo,grievance_id,capcha);
                                         },
@@ -213,13 +213,13 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                     var otp = $("#otp").val();
                                     if (isNaN(otp)) {
                                         jc.hideLoading(true);
-                                        $.alert('Otp must be an integer');
+                                        $.alert('{{__('text.otp_integer')}}');
                                         return false;
                                         jc.open(true);
                                     }
                                     if (isNaN(mob_no_new)) {
                                         jc.hideLoading(true);
-                                        $.alert('Mobile No must be an integer');
+                                        $.alert('{{__('text.mobile_number_integer')}}');
                                         return false;
                                         jc.open(true);
                                     }
@@ -335,7 +335,7 @@ function otp_call(msg,mobileNo,grievance_id,capcha){
                                                 title: 'Error!!',
                                                 type: 'red',
                                                 icon: 'fa fa-warning',
-                                                content: "Please Enter Correct Otp To continue",
+                                                content: "{{__('text.otp_incorrect_msg')}}",
                                                 buttons: {
                                                     Ok: function() {
                                                         jc.open(true);

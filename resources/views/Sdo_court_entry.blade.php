@@ -60,16 +60,16 @@
                 case_number: {
                     validators: {
                         notEmpty: {
-                            message: 'Case Number is required'
+                            message: '{{__('text.case_no_required')}}'
                         },
                         regexp: {
                             regexp: /^[A-Za-z0-9./\-_\s]+$/i,
-                            message: 'Only Alphanumeric Space and (./-_) allowed here'
+                            message: '{{__('text.case_no_regex')}}'
                         },
                         stringLength: {
                             min: 1,
                             max: 40,
-                            message: 'Case Number Must be between 1 to 40 Character'
+                            message: '{{__('text.case_no_stringlenth')}}'
                         }
                     }
                 },
@@ -77,11 +77,11 @@
                 nxt_hearing_date: {
                     validators: {
                         notEmpty: {
-                            message: 'Next Hearing Date is required'
+                            message:  '{{__('text.nxt_hiring_date_required')}}'
                         },
                         date: {
                             format: 'DD/MM/YYYY',
-                            message: 'Next Hearing Date Should be DD/MM/YYYY Format'
+                            message: '{{__('text.nxt_hiring_date_format')}}'
                         }
 
                     }
@@ -89,16 +89,16 @@
                 description: {
                     validators: {
                         notEmpty: {
-                            message: 'Description is required'
+                            message: '{{__('text.sdo_desdcription_required')}}'
                         },
                         regexp: {
                             regexp: /^[A-Za-z0-9./\-_\s]+$/i,
-                            message: 'Only Alphanumeric Space and (./-_) allowed here'
+                            message: '{{__('text.regedx_for_sdo_desdcription')}}'
                         },
                         stringLength: {
                             min: 1,
                             max: 100,
-                            message: 'Description Must be between 1 to 100 Character'
+                            message: '{{__('text.stringlength_for_sdo_desdcription')}}'
                         }
                     }
                 }
@@ -152,7 +152,7 @@ if(data.logout_error==true){
                             title: 'Success!!',
                             type: 'green',
                             icon: 'fa fa-success',
-                            content: "Case Details Added Successfully",
+                            content: "{{__('text.case_details_added')}}",
                             buttons: {
                                 Ok: function () {
                                     $('#sdocourt_entry').get(0).reset();
@@ -168,7 +168,7 @@ if(data.logout_error==true){
                             title: 'Success!!',
                             type: 'green',
                             icon: 'fa fa-success',
-                            content: "Case Details Updated Successfully",
+                            content: "{{__('text.case_details_update')}}",
                             buttons: {
                                 Ok: function () {
                                     window.location.href = "{{route('case_list')}}";

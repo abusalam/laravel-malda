@@ -137,7 +137,7 @@
                     title: 'Error!!',
                     type: 'red',
                     icon: 'fa fa-warning',
-                    content: "Case Number is not valid",
+                    content: "{{__('text.case_not_valid')}}",
                 });
             }
 

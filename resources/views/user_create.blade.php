@@ -67,16 +67,17 @@
                 name: {
                     validators: {
                         notEmpty: {
-                            message: 'Name is Required'
+                            message: '{{__('text.name_required')}}'
+                   
                         },
                         regexp: {
                             regexp: /^[A-Za-z\s]+$/i,
-                            message: 'Only Alphabate and Space allowed here'
+                            message: '{{__('text.regex_for_name')}}'
                         },
                         stringLength: {
                             min: 1,
                             max: 30,
-                            message: 'Name must be between 1 to 30 character '
+                            message: '{{__('text.stringlength_for_name')}}'
                         }
                     }
                 },
@@ -84,31 +85,31 @@
                 mobile_no: {
                     validators: {
                         notEmpty: {
-                            message: 'Mobile Number is Required'
+                            message: '{{__('text.mobile_no_required')}}'
                         },
                         digits: {
-                            message: 'Mobile Number is not valid'
+                            message: '{{__('text.mobile_no_digit')}}'
                         },
                         stringLength: {
                             min: 10,
                             max: 10,
-                            message: 'Mobile Number have 10 digit'
+                            message: '{{__('text.mobile_no_stringlength')}}'
                         }
                     }
                 },
                 designation: {
                     validators: {
                         notEmpty: {
-                            message: 'Designation is Required'
+                            message: '{{__('text.designation_required')}}'
                         },
                         regexp: {
                             regexp: /^[A-Za-z\s]+$/i,
-                            message: 'Only Alphabate and Space allowed here'
+                            message: '{{__('text.regex_for_designation')}}'
                         },
                         stringLength: {
                             min: 1,
                             max: 30,
-                            message: 'Designation Must be between 1 to 30 Character'
+                            message: '{{__('text.stringlength_for_designation')}}'
                         }
                     }
                 }
@@ -162,7 +163,7 @@ if(data.logout_error==true){
                             title: 'Success!!',
                             type: 'green',
                             icon: 'fa fa-success',
-                            content: "User Added Successfully",
+                            content: "{{__('text.user_added')}}",
                             buttons: {
                                 Ok: function () {
 
@@ -181,7 +182,7 @@ if(data.logout_error==true){
                             title: 'Success!!',
                             type: 'green',
                             icon: 'fa fa-success',
-                            content: "User Updated Successfully",
+                            content: "{{__('text.user_update')}}",
                             buttons: {
                                 Ok: function () {
 

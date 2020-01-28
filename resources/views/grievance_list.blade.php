@@ -277,12 +277,12 @@ str += '</table>';
 					f=0;
 			}else if(forwardresolved==0){
 						if(to_forword == ''){
-						msg+= '<li>Please Select User.</li>';
+						msg+= '<li>{{__('text.please_select_user')}}</li>';
 						f=1;
 					}
 					
 			}else{
-				msg+= '<li>Please Choose Resolved or Forward</li>';
+				msg+= '<li>{{__('text.choose_resolved_forward')}}</li>';
 				f=1;
 			}
 			
@@ -318,7 +318,7 @@ str += '</table>';
 													title: 'Success!',
 													type: 'green',
 													icon: 'fa fa-check',
-													content: "Forworded Successfully",
+													content: "{{__('text.forward_successfully')}}",
 													buttons: {
 															ok: function () {
 																	create_table();
@@ -332,7 +332,7 @@ str += '</table>';
 													title: 'Unsuccess!',
 													type: 'red',
 													icon: 'fa fa-check',
-													content: "Already Forwarded this User",
+													content: "{{__('text.already_forward_this_user')}}",
 													buttons: {
 															ok: function () {
 
@@ -350,7 +350,7 @@ str += '</table>';
 													title: 'Success!',
 													type: 'green',
 													icon: 'fa fa-check',
-													content: "Resolved Successfully",
+													content: "{{__('text.resolved_successfully')}}",
 													buttons: {
 															ok: function () {
                                                                 create_table();
