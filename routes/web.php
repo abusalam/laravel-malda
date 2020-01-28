@@ -11,7 +11,12 @@
 |
 */
 
+Route::get('language/{locale}', function ($locale) {
 
+    session(['locale' => $locale]);
+// echo session()->get('locale') ;die;
+  return redirect()->back();
+})->name('change_language');
 
 
 

@@ -73,14 +73,12 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);" class="change-language" aria-label="English" title="English">English</a>
-                                    <div class="socialIcons select-lang">
-                                        <ul>
-                                            <li class="lang-item lang-item-2 lang-item-en lang-item-first current-lang">
-                                                <a lang="en-US" hreflang="en-US" href="/">English</a></li>
-                                            <li class="lang-item lang-item-1300 lang-item-bn"><a lang="bn-BD" hreflang="bn-BD" href="">বাংলা</a></li>
-                                        </ul>
-                                    </div>
+                                    <?php if(session()->get('locale') == "bn") {?>
+                                    <a href="{{route('change_language',['en'])}}" class="change-language" aria-label="English" title="English">English</a>
+                                    <?php } else { ?>
+                                    <a href="{{route('change_language',['bn'])}}" class="change-language" aria-label="English" title="English">বাংলা</a>
+                                   <?php }?>
+                                    
                                 </li>
                             </ul>
                         </div>

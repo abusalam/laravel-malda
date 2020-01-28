@@ -26,17 +26,17 @@ return [
     'logout'=>"প্রস্থান",
     
     //Label
-    'mobile_no'=>"মোবাইল নাম্বার :",
+    'mobile_no'=>"মোবাইল নাম্বার ",
     'name'=>"নাম :",
-    'designation'=>"উপাধি :",
-    'description'=>"বিবরণ :",
-    'case_number'=>"মামলার নম্বর :",
-    'next_hearing_date'=>"পরবর্তী শুনানির তারিখ :",
+    'designation'=>"উপাধি ",
+    'description'=>"বিবরণ ",
+    'case_number'=>"মামলার নম্বর ",
+    'next_hearing_date'=>"পরবর্তী শুনানির তারিখ ",
     
     'email'=>"ই-মেইল :",
-    'complain'=>"অভিযোগ করা :",
-    'attachment'=>"সংযুক্তি :",
-    'grievance_id'=>"অভিযোগ আইডি :",
+    'complain'=>"অভিযোগ করা ",
+    'attachment'=>"সংযুক্তি ",
+    'grievance_id'=>"অভিযোগ আইডি ",
     
     //Place Holder
     
