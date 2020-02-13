@@ -77,6 +77,7 @@ return [
     'forwarded_table_heading'=>"ফরওয়ার্ড করা অভিযোগের তালিকা ",
     'resolved_table_heading'=>"সমাধানের অভিযোগের তালিকা ",
     'closed_table_heading'=>"বন্ধ অভিযোগের তালিকা",
+    'log_details_table_heading'=>"লগ বিশদ তালিকা",
 //Mobile Number Boostrap Validation
 'mobile_no_required'=>"মোবাইল নম্বর প্রয়োজন",
 'mobile_no_digit'=>"মোবাইল নম্বর বৈধ নয়",

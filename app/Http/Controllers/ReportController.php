@@ -99,10 +99,36 @@ $grievance_report=tbl_grievance::join('tbl_grievence_forwored','tbl_grievence_fo
 		$order = $request->order;
 
 		$this->validate($request, [
-			'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
-			], [
-			'search.*.regex' => 'Search value accept only Alphanumeric character',
-		]);
+            'draw'=>'required|digits_between:1,11|not_in:0|regex:/^[0-9]+$/',
+            'start'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
+            'length'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
+            'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
+            'order.*.column' => 'required|digits_between:1,11|regex:/^[0-9]+$/',
+            'order.*.dir' => 'required|in:asc,desc'
+            ], [
+            'draw.required' => 'Something going wrong',
+            'draw.digits_between' => 'Something going wrong',
+            'draw.not_in' => 'Something going wrong',
+            'draw.regex' => 'Something going wrong',
+            'draw.regex' => 'Something going wrong',
+
+            'start.required' => 'Something going wrong', 
+            'start.digits_between' => 'Something going wrong',
+            'start.regex' => 'Something going wrong',
+
+            'length.required' => 'Something going wrong', 
+            'length.digits_between' => 'Something going wrong', 
+            'length.regex' => 'Something going wrong',
+
+            'order.*.column.required' => 'Something going wrong',
+            'order.*.column.digits_between' => 'Something going wrong',
+            'order.*.column.regex' => 'Something going wrong',
+
+            'order.*.dir.required' => 'Something going wrong',
+            'order.*.dir.in' => 'Something going wrong',
+
+            'search.*.regex' => 'Search value accept only Alphanumeric character',
+        ]);
 
 		$data = array();
 

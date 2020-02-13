@@ -2,7 +2,7 @@
 <?php 
 
         header("Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval';  frame-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' 'unsafe-inline' 'unsafe-eval';");
-        //header("X-XSS-Protection 1; mode=block");
+        header("X-XSS-Protection 1; mode=block");
         header("X-Content-Type-Options: nosniff");
         header("X-Frame-Options: SAMEORIGIN");
         header("Set-Cookie: name=value; httpOnly");
@@ -107,7 +107,7 @@
                     <div class="header-right clearfix">
                         <div class="right-content clearfix">
                             <div class="float-element">
-                                <a aria-label="Digital India - External site that opens in a new window" href="http://digitalindia.gov.in/" target="_blank" title="Digital India">
+                                <a  rel="noopener noreferrer" aria-label="Digital India - External site that opens in a new window" href="http://digitalindia.gov.in/" target="_blank" title="Digital India">
                                     <img class="sw-logo" height="95" src="./front/images/tourishm_logo.png" alt="Digital India">
                                 </a>
                             </div>
@@ -227,7 +227,7 @@
                     </div>
                     <div class="col-sm-4 text-center footer-content">
                         <div>Content Owned by District Administration</div>
-                        <p class="text-warning"> Developed and hosted by
+                        <p rel="noopener noreferrer" class="text-warning"> Developed and hosted by
                             <a href="http://www.nic.in/" class=" text-light" target="_blank">National Informatics Centre</a>
                         </p>
                     </div>

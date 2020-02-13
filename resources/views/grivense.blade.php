@@ -221,7 +221,7 @@
                                 var msg='';
                             }else{
 
-                               var msg='{{__('text.configuration_disabled_msg')}} '+data.otp;
+                               var msg='<?php echo __('text.configuration_disabled_msg') ?> '+data.otp;
 
                             }
                             otp_call(msg,mobile_no,fd);

@@ -6,7 +6,7 @@
     <div class="col-12">                        
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">{{__('text.case_list')}}</h3>
+                <h3 class="card-title">{{__('text.log_details_table_heading')}}</h3>
                 
 
                 <div class="datatbl  " style="width: 96%;margin-left: 20px;">

@@ -52,9 +52,9 @@
                                         <ul>
                                             <li class="ico-social">
                                                 <ul>
-                                                    <li><a href="#" target="_blank" aria-label="Facebook | External site that opens in a new window"><img src="./front/images/icon/ico-facebook.png" title="Facebook | External site that opens in a new window" alt="Facebook | External site that opens in a new window"></a></li>
-                                                    <li><a href="#" target="_blank" aria-label="Twitter | External site that opens in a new window"><img src="./front/images/icon/ico-twitter.png" title="Twitter | External site that opens in a new window" alt="Twitter | External site that opens in a new window"></a></li>
-                                                    <li><a href="#" target="_blank" aria-label="Youtube | External site that opens in a new window"><img src="./front/images/icon/ico-youtube.png" title="Youtube | External site that opens in a new window" alt="Youtube | External site that opens in a new window"></a></li>
+                                                    <li><a href="#" rel="noopener noreferrer" target="_blank" aria-label="Facebook | External site that opens in a new window"><img src="./front/images/icon/ico-facebook.png" title="Facebook | External site that opens in a new window" alt="Facebook | External site that opens in a new window"></a></li>
+                                                    <li><a href="#" rel="noopener noreferrer" target="_blank" aria-label="Twitter | External site that opens in a new window"><img src="./front/images/icon/ico-twitter.png" title="Twitter | External site that opens in a new window" alt="Twitter | External site that opens in a new window"></a></li>
+                                                    <li><a href="#" rel="noopener noreferrer" target="_blank" aria-label="Youtube | External site that opens in a new window"><img src="./front/images/icon/ico-youtube.png" title="Youtube | External site that opens in a new window" alt="Youtube | External site that opens in a new window"></a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -117,7 +117,7 @@
                     <div class="header-right clearfix">
                         <div class="right-content clearfix">
                             <div class="float-element">
-                                <a aria-label="Digital India - External site that opens in a new window" href="http://digitalindia.gov.in/" target="_blank" title="Digital India">
+                                <a rel="noopener noreferrer" aria-label="Digital India - External site that opens in a new window" href="http://digitalindia.gov.in/" target="_blank" title="Digital India">
                                     <img class="sw-logo" height="95" src="./front/images/tourishm_logo.png" alt="Digital India">
                                 </a>
                             </div>
@@ -421,7 +421,7 @@
                     <div class="col-sm-4 text-center footer-content">
                         <div>Content Owned by District Administration</div>
                         <p class="text-warning"> Developed and hosted by
-                            <a href="http://www.nic.in/" class=" text-light" target="_blank">National Informatics Centre</a>
+                            <a rel="noopener noreferrer" href="http://www.nic.in/" class=" text-light" target="_blank">National Informatics Centre</a>
                         </p>
                     </div>
                     <div class="col-sm-2">

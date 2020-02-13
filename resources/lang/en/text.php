@@ -81,6 +81,7 @@ return [
 'forwarded_table_heading'=>"Forwarded Grievance List",
 'resolved_table_heading'=>"Resolved Grievance List",
 'closed_table_heading'=>"Closed Grievance List",
+'log_details_table_heading'=>"Log Details List",
 
 //Mobile Number Boostrap Validation
 'mobile_no_required'=>"Mobile Number Is Required",
