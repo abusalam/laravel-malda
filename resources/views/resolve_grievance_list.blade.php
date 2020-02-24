@@ -215,6 +215,7 @@ close.close();
             bServerSide: true,
             bjQueryUI: true,
             "bInfo": false,
+            
             "ajax": {
                 url: "resolve_grievance_datatable",
                 type: "post",

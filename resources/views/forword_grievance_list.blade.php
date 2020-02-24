@@ -212,6 +212,8 @@ if(data.logout_error==true){
             bServerSide: true,
             bjQueryUI: true,
             "bInfo": false,
+            
+            
             "ajax": {
                 url: "forwored_grievance_datatable",
                 type: "post",
@@ -231,6 +233,7 @@ if(data.logout_error==true){
                         } else {
                             msg += "Error(s):<strong><ul>";
                             $.each(jqXHR.responseJSON['errors'], function (key, value) {
+                             
                                 msg += "<li>" + value + "</li>";
                             });
                             msg += "</ul></strong>";

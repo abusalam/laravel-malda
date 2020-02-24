@@ -25,22 +25,26 @@ class LoginController extends Controller {
     //echo config('app.captcha');die;
   if(config('app.captcha')==0){ 
         $this->validate($request, [
-            'username' => "required|digits:10",
+            'username' => "required|alpha_num|max:10|min:10",
             'captcha' => 'required|captcha'
                 ], [
             'username.required' => 'Mobile Number is Required',
-            'username.digits' => 'Mobile Number Should be 10 Digits',
+            'username.alpha_num' => 'Mobile Number Should be Digits',
+            'username.max' => 'Mobile Number must be 10 Digits',
+            'username.min' => 'Mobile Number must be 10 Digits',
             'captcha.required' => 'Captcha is Required', 
             'captcha.captcha' => 'Captcha Missmatch',       
         ]);
     }else{
 
         $this->validate($request, [
-            'username' => "required|digits:10",
+            'username' => "required|alpha_num|max:10|min:10",
             
                 ], [
             'username.required' => 'Mobile Number is Required',
-            'username.digits' => 'Mobile Number Should be 10 Digits',
+            'username.alpha_num' => 'Mobile Number Should be Digits',
+            'username.max' => 'Mobile Number must be 10 Digits',
+            'username.min' => 'Mobile Number must be 10 Digits',
                    
         ]);
 
@@ -80,7 +84,7 @@ class LoginController extends Controller {
         if ($request->edit_code == '') {
                 $this->validate($request, [
                     'name' => "required|regex:/^[A-Za-z\s]+$/i|min:1|max:30",
-                    'mobile_no' => "required|digits:10|unique:tbl_user,mobile_no",
+                    'mobile_no' => "required|alpha_num|max:10|min:10|unique:tbl_user,mobile_no",
                     'designation' => "required|regex:/^[A-Za-z\s]+$/i|min:1|max:30",
                         ], [
                     'name.required' => 'Name is Required',
@@ -88,7 +92,9 @@ class LoginController extends Controller {
                     'name.min' => 'Name must be between 1 to 30 character',
                     'name.max' => 'Name must be between 1 to 30 character',
                     'mobile_no.required' => 'Moibile No is Required',
-                    'mobile_no.digits' => 'Moibile No must be 10 Digits',
+                    'mobile_no.alpha_num' => 'Mobile Number Should be Digits',
+                    'mobile_no.max' => 'Mobile Number must be 10 Digits',
+                    'mobile_no.min' => 'Mobile Number must be 10 Digits',
                     'mobile_no.unique' => 'Moibile No is Already Exist',
                     'designation.required' => 'Designation is required',
                     'designation.regex' => 'Only Alphabate and Space allowed Designation',
@@ -99,7 +105,7 @@ class LoginController extends Controller {
 
                 $this->validate($request, [
                     'name' => "required|regex:/^[A-Za-z\s]+$/i|min:1|max:30",
-                    'mobile_no' => "required|digits:10|unique:tbl_user,mobile_no," . $edit_code . ",code",
+                    'mobile_no' => "required|alpha_num|max:10|min:10|unique:tbl_user,mobile_no," . $edit_code . ",code",
                     'designation' => "required|regex:/^[A-Za-z\s]+$/i|min:1|max:30",
                         ], [
                     'name.required' => 'Name is Required',
@@ -107,7 +113,9 @@ class LoginController extends Controller {
                     'name.min' => 'Name must be between 1 to 30 character',
                     'name.max' => 'Name must be between 1 to 30 character',
                     'mobile_no.required' => 'Moibile No is Required',
-                    'mobile_no.digits' => 'Moibile No must be 10 Digits',
+                    'mobile_no.alpha_num' => 'Mobile Number Should be Digits',
+                    'mobile_no.max' => 'Mobile Number must be 10 Digits',
+                    'mobile_no.min' => 'Mobile Number must be 10 Digits',
                     'mobile_no.unique' => 'Moibile No is Already Exist',
                     'designation.required' => 'Designation is required',
                     'designation.regex' => 'Only Alphabate and Space allowed Designation',

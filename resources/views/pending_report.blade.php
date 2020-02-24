@@ -126,6 +126,7 @@ function create_table() {
         bServerSide: true,
         bjQueryUI: true,
         "bInfo": false,
+        
 
         "ajax": {
             url: "pending_grievance_datatable",
@@ -206,9 +207,7 @@ function create_table() {
 
         ],
 
-        "order": [
-            [1, 'asc']
-        ]
+       "order": [[1, 'asc']]
     });
     table.on('order.dt search.dt draw.dt', function() {
         $('[data-toggle="tooltip"]').tooltip();

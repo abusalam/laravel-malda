@@ -73,10 +73,8 @@ class SDOCourtController extends Controller
             $case_number=$request->case_number;
             $nxt_hearing_date=$request->nxt_hearing_date;
             $description=$request->description;
-           
-
             $date = str_replace('/', '-', $nxt_hearing_date );
-           $newDate = date("Y-m-d", strtotime($date));
+            $newDate = date("Y-m-d", strtotime($date));
 
 
 
@@ -124,46 +122,53 @@ class SDOCourtController extends Controller
     }
 
     public function caselist_datatable(Request $request){
-        $case_data=$request->case_data;
 
+
+       $this->validate($request, [
+            'draw'=>'required|integer|between:0,9999999999',
+            'start'=>'required|integer|between:0,999999999',
+            'length'=>'required|integer|between:0,100',
+            'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
+            'order' => 'array',
+            'order.*.column' => 'required|integer|between:0,5',
+            'order.*.dir' => 'required|in:asc,desc',
+            'case_data' => 'nullable|alpha_num',
+            ], [
+            'draw.required' => 'Invalid Input',
+            'draw.between' => 'Invalid Input',
+            'draw.integer' => 'Invalid Input',
+
+            'start.required' => 'Invalid Input', 
+            'start.between' => 'Invalid Input',
+            'start.integer' => 'Invalid Input',
+
+            'length.required' => 'Invalid Input', 
+            'length.between' => 'Invalid Input', 
+            'length.integer' => 'Invalid Input',
+
+            'order.*.column.required' => 'Invalid Input',
+            'order.*.column.integer' => 'Invalid Input',
+            'order.*.column.between' => 'Invalid Input',
+
+            'order.array' => 'Invalid Input',
+
+            'order.*.dir.required' => 'Invalid Input',
+            'order.*.dir.in' => 'Invalid Input',
+
+            'search.*.regex' => 'Invalid Input',
+
+            'case_data.alpha_num' => 'Case Number should be Alpha Numeric',
+
+
+        ]);
+
+       $case_data=$request->case_data;
 
         $draw = $request->draw;
         $offset = $request->start;
         $length = $request->length;
-        $search = $request->search ["value"];
+        $search=  isset($request->search["value"]) ? $request->search["value"] :'';
         $order = $request->order;
-
-        $this->validate($request, [
-            'draw'=>'required|digits_between:1,11|not_in:0|regex:/^[0-9]+$/',
-            'start'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'length'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
-            'order.*.column' => 'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'order.*.dir' => 'required|in:asc,desc'
-            ], [
-            'draw.required' => 'Something going wrong',
-            'draw.digits_between' => 'Something going wrong',
-            'draw.not_in' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
-
-            'start.required' => 'Something going wrong', 
-            'start.digits_between' => 'Something going wrong',
-            'start.regex' => 'Something going wrong',
-
-            'length.required' => 'Something going wrong', 
-            'length.digits_between' => 'Something going wrong', 
-            'length.regex' => 'Something going wrong',
-
-            'order.*.column.required' => 'Something going wrong',
-            'order.*.column.digits_between' => 'Something going wrong',
-            'order.*.column.regex' => 'Something going wrong',
-
-            'order.*.dir.required' => 'Something going wrong',
-            'order.*.dir.in' => 'Something going wrong',
-
-            'search.*.regex' => 'Search value accept only Alphanumeric character',
-        ]);
 
         $data = array();
         $record = tbl_case_details::select('*',DB::raw('DATE_FORMAT(nxt_hearing_date, "%d/%m/%Y") as nxt_hearing_date '))
@@ -361,44 +366,47 @@ class SDOCourtController extends Controller
     }
 
     public function caselist_datatable_for_todays_hearing(Request $request){
+     
+        
+
+        $this->validate($request, [
+            'draw'=>'required|integer|between:0,9999999999',
+            'start'=>'required|integer|between:0,999999999',
+            'length'=>'required|integer|between:0,100',
+            'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
+            'order' => 'array',
+            'order.*.column' => 'required||integer|between:0,6',
+            'order.*.dir' => 'required|in:asc,desc'
+            ], [
+            'draw.required' => 'Invalid Input',
+            'draw.between' => 'Invalid Input',
+            'draw.integer' => 'Invalid Input',
+
+            'start.required' => 'Invalid Input', 
+            'start.between' => 'Invalid Input',
+            'start.integer' => 'Invalid Input',
+
+            'length.required' => 'Invalid Input', 
+            'length.between' => 'Invalid Input', 
+            'length.integer' => 'Invalid Input',
+
+            'order.*.column.required' => 'Invalid Input',
+            'order.*.column.integer' => 'Invalid Input',
+            'order.*.column.between' => 'Invalid Input',
+
+            'order.array' => 'Invalid Input',
+
+            'order.*.dir.required' => 'Invalid Input',
+            'order.*.dir.in' => 'Invalid Input',
+
+            'search.*.regex' => 'Invalid Input',
+        ]);
 
         $draw = $request->draw;
         $offset = $request->start;
         $length = $request->length;
-        $search = $request->search ["value"];
+        $search=  isset($request->search["value"]) ? $request->search["value"] :'';
         $order = $request->order;
-
-        $this->validate($request, [
-            'draw'=>'required|digits_between:1,11|not_in:0|regex:/^[0-9]+$/',
-            'start'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'length'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
-            'order.*.column' => 'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'order.*.dir' => 'required|in:asc,desc'
-            ], [
-            'draw.required' => 'Something going wrong',
-            'draw.digits_between' => 'Something going wrong',
-            'draw.not_in' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
-
-            'start.required' => 'Something going wrong', 
-            'start.digits_between' => 'Something going wrong',
-            'start.regex' => 'Something going wrong',
-
-            'length.required' => 'Something going wrong', 
-            'length.digits_between' => 'Something going wrong', 
-            'length.regex' => 'Something going wrong',
-
-            'order.*.column.required' => 'Something going wrong',
-            'order.*.column.digits_between' => 'Something going wrong',
-            'order.*.column.regex' => 'Something going wrong',
-
-            'order.*.dir.required' => 'Something going wrong',
-            'order.*.dir.in' => 'Something going wrong',
-
-            'search.*.regex' => 'Search value accept only Alphanumeric character',
-        ]);
 
          $date=Date("Y-m-d");
          

@@ -15,43 +15,44 @@ class registrationController extends Controller {
 
     public function userlist_datatable(Request $request){
 
+        $this->validate($request, [
+            'draw'=>'required|integer|between:0,9999999999',
+            'start'=>'required|integer|between:0,999999999',
+            'length'=>'required|integer|between:0,100',
+            'order' => 'array',
+            'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
+            'order.*.column' => 'required|integer|between:0,4',
+            'order.*.dir' => 'required|in:asc,desc'
+            ], [
+            'draw.required' => 'Invalid Input',
+            'draw.between' => 'Invalid Input',
+            'draw.integer' => 'Invalid Input',
+
+            'start.required' => 'Invalid Input', 
+            'start.between' => 'Invalid Input',
+            'start.integer' => 'Invalid Input',
+
+            'length.required' => 'Invalid Input', 
+            'length.between' => 'Invalid Input', 
+            'length.integer' => 'Invalid Input',
+
+            'order.*.column.required' => 'Invalid Input',
+            'order.*.column.integer' => 'Invalid Input',
+            'order.*.column.between' => 'Invalid Input',
+
+            'order.array' => 'Invalid Input',
+
+            'order.*.dir.required' => 'Invalid Input',
+            'order.*.dir.in' => 'Invalid Input',
+
+            'search.*.regex' => 'Invalid Input',
+        ]);
+
         $draw = $request->draw;
         $offset = $request->start;
         $length = $request->length;
-        $search = $request->search ["value"];
+        $search=  isset($request->search["value"]) ? $request->search["value"] :'';
         $order = $request->order;
-
-        $this->validate($request, [
-            'draw'=>'required|digits_between:1,11|not_in:0|regex:/^[0-9]+$/',
-            'start'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'length'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
-            'order.*.column' => 'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'order.*.dir' => 'required|in:asc,desc'
-            ], [
-            'draw.required' => 'Something going wrong',
-            'draw.digits_between' => 'Something going wrong',
-            'draw.not_in' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
-
-            'start.required' => 'Something going wrong', 
-            'start.digits_between' => 'Something going wrong',
-            'start.regex' => 'Something going wrong',
-
-            'length.required' => 'Something going wrong', 
-            'length.digits_between' => 'Something going wrong', 
-            'length.regex' => 'Something going wrong',
-
-            'order.*.column.required' => 'Something going wrong',
-            'order.*.column.digits_between' => 'Something going wrong',
-            'order.*.column.regex' => 'Something going wrong',
-
-            'order.*.dir.required' => 'Something going wrong',
-            'order.*.dir.in' => 'Something going wrong',
-
-            'search.*.regex' => 'Search value accept only Alphanumeric character',
-        ]);
 
         $data = array();
         $record = tbl_user::select('*')->where('user_type','<>',0)
@@ -64,9 +65,7 @@ class registrationController extends Controller {
 
         $filtered_count = $record->count();
 
-        for ($i = 0; $i < count($order); $i ++) {
-               $record = $record->orderBy($request->columns [$order [$i] ['column']] ['data'], strtoupper($order [$i] ['dir']));
-           }
+       
 
            
         $page_displayed = $record->offset($offset)->limit($length)->get();
@@ -188,10 +187,12 @@ class registrationController extends Controller {
         }
         $this->validate($request, [
             
-            'mobile_no' => 'required|digits:10',
+            'mobile_no' => "required|alpha_num|max:10|min:10",
             ], [
             'mobile_no.required' => 'Mobile Number is required',
-           'mobile_no.digits' => 'Mobile Number must be 10 Digits',
+            'mobile_no.alpha_num' => 'Mobile Number Should be Digits',
+            'mobile_no.max' => 'Mobile Number must be 10 Digits',
+            'mobile_no.min' => 'Mobile Number must be 10 Digits',
   
         ]);
 
@@ -334,12 +335,14 @@ class registrationController extends Controller {
 //$before = $dt->subYears(13)->format('Y-m-d');
         $this->validate($request, [
             'otp' => 'required|integer',
-            'mob' => 'required|digits:10',
+            'mob' => "required|alpha_num|max:10|min:10",
                 ], [
             'otp.required' => 'OTP is required',
             'otp.integer' => ' OTP must be an integer',
             'mob.required' => 'Mobile No is required',
-            'mob.digits' => ' Mobile no. must be 10 digit',
+            'mob.alpha_num' => 'Mobile Number Should be Digits',
+            'mob.max' => 'Mobile Number must be 10 Digits',
+            'mob.min' => 'Mobile Number must be 10 Digits',
            
         ]);
         try {

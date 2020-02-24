@@ -113,45 +113,45 @@ class GrievanceStatusController extends Controller {
 	}
 
 	public function resolve_grievance_datatable(Request $request){
-
-
-		$draw = $request->draw;
-		$offset = $request->start;
-		$length = $request->length;
-		$search = $request->search ["value"];
-		$order = $request->order;
-
+    
 		$this->validate($request, [
-            'draw'=>'required|digits_between:1,11|not_in:0|regex:/^[0-9]+$/',
-            'start'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'length'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
+            'draw'=>'required|integer|between:0,9999999999',
+            'start'=>'required|integer|between:0,999999999',
+            'length'=>'required|integer|between:0,100',
+            'order' => 'array',
             'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
-            'order.*.column' => 'required|digits_between:1,11|regex:/^[0-9]+$/',
+            'order.*.column' => 'required|integer|between:0,6',
             'order.*.dir' => 'required|in:asc,desc'
             ], [
-            'draw.required' => 'Something going wrong',
-            'draw.digits_between' => 'Something going wrong',
-            'draw.not_in' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
+            'draw.required' => 'Invalid Input',
+            'draw.between' => 'Invalid Input',
+            'draw.integer' => 'Invalid Input',
 
-            'start.required' => 'Something going wrong', 
-            'start.digits_between' => 'Something going wrong',
-            'start.regex' => 'Something going wrong',
+            'start.required' => 'Invalid Input', 
+            'start.between' => 'Invalid Input',
+            'start.integer' => 'Invalid Input',
 
-            'length.required' => 'Something going wrong', 
-            'length.digits_between' => 'Something going wrong', 
-            'length.regex' => 'Something going wrong',
+            'length.required' => 'Invalid Input', 
+            'length.between' => 'Invalid Input', 
+            'length.integer' => 'Invalid Input',
 
-            'order.*.column.required' => 'Something going wrong',
-            'order.*.column.digits_between' => 'Something going wrong',
-            'order.*.column.regex' => 'Something going wrong',
+            'order.*.column.required' => 'Invalid Input',
+            'order.*.column.integer' => 'Invalid Input',
+            'order.*.column.between' => 'Invalid Input',
 
-            'order.*.dir.required' => 'Something going wrong',
-            'order.*.dir.in' => 'Something going wrong',
+            'order.array' => 'Invalid Input',
 
-            'search.*.regex' => 'Search value accept only Alphanumeric character',
+            'order.*.dir.required' => 'Invalid Input',
+            'order.*.dir.in' => 'Invalid Input',
+
+            'search.*.regex' => 'Invalid Input',
         ]);
+
+        $draw = $request->draw;
+        $offset = $request->start;
+        $length = $request->length;
+        $search=  isset($request->search["value"]) ? $request->search["value"] :'';
+        $order = $request->order;
 
 		$data = array();
 
@@ -234,10 +234,12 @@ class GrievanceStatusController extends Controller {
 
         $this->validate($request, [
             
-            'mobile_no' => 'required|digits:10',
+            'mobile_no' => "required|alpha_num|max:10|min:10",
             ], [
             'mobile_no.required' => 'Mobile Number is required',
-           'mobile_no.digits' => 'Mobile Number must be 10 Digits',
+            'mobile_no.alpha_num' => 'Mobile Number Should be Digits',
+            'mobile_no.max' => 'Mobile Number must be 10 Digits',
+            'mobile_no.min' => 'Mobile Number must be 10 Digits',
   
         ]);
 		$response = [
@@ -301,12 +303,14 @@ class GrievanceStatusController extends Controller {
 //$before = $dt->subYears(13)->format('Y-m-d');
 		$this->validate($request, [
 			'otp' => 'required|integer',
-			'mob' => 'required|digits:10',
+			'mob' => "required|alpha_num|max:10|min:10",
 			], [
 			'otp.required' => 'OTP is required',
 			'otp.integer' => ' OTP must be an integer',
 			'mob.required' => 'Mobile No is required',
-			'mob.digits' => ' Mobile no. must be 10 digit',
+			'mob.alpha_num' => 'Mobile Number Should be Digits',
+            'mob.max' => 'Mobile Number must be 10 Digits',
+            'mob.min' => 'Mobile Number must be 10 Digits',
 		]);
 
 		try {

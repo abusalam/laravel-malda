@@ -7,6 +7,12 @@
         header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
+        
+        /**Header("always set X-Frame-Options: sameorigin")
+        Header ("setIfEmpty X-Content-Type-Options: nosniff")
+        Header ("setIfEmpty X-XSS-Protection 1; mode=block")
+        Header ("setIfEmpty Strict-Transport-Security max-age=31536001; includeSubDomains")
+        Header ("setIfEmpty Content-Security-Policy default-src 'self'; frame-ancestors 'none';")**/
 
     ?>
 <!DOCTYPE html>
@@ -221,8 +227,8 @@
                     </div>
                     <div class="col-sm-4 text-center footer-content">
                         <div>Content Owned by District Administration</div>
-                        <p rel="noopener noreferrer" class="text-warning"> Developed and hosted by
-                            <a href="http://www.nic.in/" class=" text-light" target="_blank">National Informatics Centre</a>
+                        <p class="text-warning"> Developed and hosted by
+                            <a rel="noopener noreferrer" href="http://www.nic.in/" class=" text-light" target="_blank">National Informatics Centre</a>
                         </p>
                     </div>
                     <div class="col-sm-2">

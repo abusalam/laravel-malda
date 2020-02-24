@@ -42,6 +42,8 @@ $(document).ready(function() {
             $.ajax({
                 url: "view_user_for_forward",
                 method: 'POST',
+                "processing": true,
+                "serverSide": true,
                 type: 'json',
                 data: { 'grievance_code': grievance_code, _token: token },
                 success: function(data) {
@@ -214,10 +216,8 @@ function create_table() {
 
 
         ],
-
-        "order": [
-            [1, 'asc']
-        ]
+        "order": [[1, 'asc']]
+        
     });
     table.on('order.dt search.dt draw.dt', function() {
         $('[data-toggle="tooltip"]').tooltip();

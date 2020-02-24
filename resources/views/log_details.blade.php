@@ -154,6 +154,7 @@
             bServerSide: true,
             bjQueryUI: true,
             "bInfo": false,
+            
 
             "ajax": {
                 url: "logdetails",
@@ -238,8 +239,8 @@
                             }
                         }
                     ],
-
-            "order": [[1, 'asc']]
+                 "order": [[1, 'asc']]
+           
         });
         table.on('order.dt search.dt draw.dt', function () {
             $('[data-toggle="tooltip"]').tooltip();

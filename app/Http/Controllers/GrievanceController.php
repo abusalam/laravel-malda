@@ -31,7 +31,7 @@ class GrievanceController extends Controller {
         if(config('app.captcha')==0){ 
         $this->validate($request, [
                 'grivense_name' => "required|regex:/^[\pL\s]+$/u",
-                'mobile_no' => "required|digits:10",
+                'mobile_no' => "required|alpha_num|max:10|min:10",
                 'grivense_email' => 'required|email',
                 'grivense_complain' => 'required|regex:/^[A-Za-z0-9\/.,\s()-]+$/i',
                 'captcha' => 'required|captcha',
@@ -41,7 +41,9 @@ class GrievanceController extends Controller {
                 'grivense_name.required' => 'Name is Required',
                 'grivense_name.regex' => 'Name consist of alphabatical characters and spaces only',
                 'mobile_no.required' => 'Moibile No is Required',
-                'mobile_no.digits' => 'Moibile No should be 10 digits',
+                'mobile_no.alpha_num' => 'Mobile Number Should be Digits',
+                'mobile_no.max' => 'Mobile Number must be 10 Digits',
+                'mobile_no.min' => 'Mobile Number must be 10 Digits',
                 'grivense_email.required' => 'Email Id Is Required',
                 'grivense_email.email' => 'Enter correct email Format',
                 'grivense_complain.required' => 'Please enter complain',
@@ -55,7 +57,7 @@ class GrievanceController extends Controller {
 
          $this->validate($request, [
                 'grivense_name' => "required|regex:/^[\pL\s]+$/u",
-                'mobile_no' => "required|digits:10",
+                'mobile_no' => "required|alpha_num|max:10|min:10",
                 'grivense_email' => 'required|email',
                 'grivense_complain' => 'required|regex:/^[A-Za-z0-9\/.,\s()-]+$/i',
                 //'attatchment' => 'nullable|mimes:pdf| max:1024',
@@ -64,7 +66,9 @@ class GrievanceController extends Controller {
                 'grivense_name.required' => 'Name is Required',
                 'grivense_name.regex' => 'Name consist of alphabatical characters and spaces only',
                 'mobile_no.required' => 'Moibile No is Required',
-                'mobile_no.digits' => 'Moibile No should be 10 digits',
+                'mobile_no.alpha_num' => 'Mobile Number Should be Digits',
+                'mobile_no.max' => 'Mobile Number must be 10 Digits',
+                'mobile_no.min' => 'Mobile Number must be 10 Digits',
                 'grivense_email.required' => 'Email Id Is Required',
                 'grivense_email.email' => 'Enter correct email Format',
                 'grivense_complain.required' => 'Please enter complain',
@@ -149,47 +153,46 @@ class GrievanceController extends Controller {
 
 	public function grievance_datatable(Request $request) {
 
-		//$case_data=$request->case_data;
-
-
-		$draw = $request->draw;
-		$offset = $request->start;
-		$length = $request->length;
-		$search = $request->search ["value"];
-		$order = $request->order;
-		$user_cd = session()->get('user_code');
-
 		$this->validate($request, [
-            'draw'=>'required|digits_between:1,11|not_in:0|regex:/^[0-9]+$/',
-            'start'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'length'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
+            'draw'=>'required|integer|between:0,9999999999',
+            'start'=>'required|integer|between:0,999999999',
+            'length'=>'required|integer|between:0,100',
             'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
-            'order.*.column' => 'required|digits_between:1,11|regex:/^[0-9]+$/',
+            'order' => 'array',
+            'order.*.column' => 'required|integer|between:0,5',
             'order.*.dir' => 'required|in:asc,desc'
             ], [
-            'draw.required' => 'Something going wrong',
-            'draw.digits_between' => 'Something going wrong',
-            'draw.not_in' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
+            'draw.required' => 'Invalid Input',
+            'draw.between' => 'Invalid Input',
+            'draw.integer' => 'Invalid Input',
 
-            'start.required' => 'Something going wrong', 
-            'start.digits_between' => 'Something going wrong',
-            'start.regex' => 'Something going wrong',
+            'start.required' => 'Invalid Input', 
+            'start.between' => 'Invalid Input',
+            'start.integer' => 'Invalid Input',
 
-            'length.required' => 'Something going wrong', 
-            'length.digits_between' => 'Something going wrong', 
-            'length.regex' => 'Something going wrong',
+            'length.required' => 'Invalid Input', 
+            'length.between' => 'Invalid Input', 
+            'length.integer' => 'Invalid Input',
 
-            'order.*.column.required' => 'Something going wrong',
-            'order.*.column.digits_between' => 'Something going wrong',
-            'order.*.column.regex' => 'Something going wrong',
+            'order.array' => 'Invalid Input',
 
-            'order.*.dir.required' => 'Something going wrong',
-            'order.*.dir.in' => 'Something going wrong',
+            'order.*.column.required' => 'Invalid Input',
+            'order.*.column.integer' => 'Invalid Input',
+            'order.*.column.between' => 'Invalid Input',
 
-            'search.*.regex' => 'Search value accept only Alphanumeric character',
+            'order.*.dir.required' => 'Invalid Input',
+            'order.*.dir.in' => 'Invalid Input',
+
+            'search.*.regex' => 'Invalid Input',
+            
         ]);
+
+        $draw = $request->draw;
+        $offset = $request->start;
+        $length = $request->length;
+        $search=  isset($request->search["value"]) ? $request->search["value"] :'';
+        $order = $request->order;
+        $user_cd = session()->get('user_code');
 
 		$data = array();
 
@@ -233,9 +236,7 @@ class GrievanceController extends Controller {
 		$filtered_count = $record->count();
 
 
-		for ($i = 0; $i < count($order); $i ++) {
-               $record = $record->orderBy($request->columns [$order [$i] ['column']] ['data'], strtoupper($order [$i] ['dir']));
-           }
+		
 
 
 		$page_displayed = $all_record->offset($offset)->limit($length)->get();
@@ -282,10 +283,12 @@ class GrievanceController extends Controller {
 
         $this->validate($request, [
             
-            'mobile_no' => 'required|digits:10',
+            'mobile_no' => "required|alpha_num|max:10|min:10",
             ], [
             'mobile_no.required' => 'Mobile Number is required',
-           'mobile_no.digits' => 'Mobile Number must be 10 Digits',
+            'mobile_no.alpha_num' => 'Mobile Number Should be Digits',
+            'mobile_no.max' => 'Mobile Number must be 10 Digits',
+            'mobile_no.min' => 'Mobile Number must be 10 Digits',
   
         ]);
 		$response = [
@@ -352,12 +355,14 @@ class GrievanceController extends Controller {
 //$before = $dt->subYears(13)->format('Y-m-d');
 		$this->validate($request, [
 			'otp' => 'required|integer',
-			'mob' => 'required|digits:10',
+			'mob' => "required|alpha_num|max:10|min:10",
 			], [
 			'otp.required' => 'OTP is required',
 			'otp.integer' => ' OTP must be an integer',
 			'mob.required' => 'Mobile No is required',
-			'mob.digits' => ' Mobile no. must be 10 digit',
+			'mob.alpha_num' => 'Mobile Number Should be Digits',
+            'mob.max' => 'Mobile Number must be 10 Digits',
+            'mob.min' => 'Mobile Number must be 10 Digits',
 		]);
 		try {
 			$mobile_no = $request->mob;
@@ -492,7 +497,7 @@ return response()->json($response, $statusCode);
 $this->validate($request, [
 'grievance_code' => "required|integer",
 'to_forword' => "nullable|integer",
-'remark' => "nullable",
+'remark' => "required",
 //'attatchment' => 'nullable|mimes:pdf|max:1024',
 'forwardresolved' => 'required|integer',
 ], [
@@ -598,51 +603,78 @@ return $res;
 	public function forwored_grievance_datatable(Request $request) {
 
 
+      // if(is_array($request->search) =='' || is_array($request->order) =='' || is_array($request->draw) ==1 || is_array($request->start) ==1 || is_array($request->length) ==1 ){
+      //       $statusCode = 400;
+      //       $response = array('errors' => 'Invalid Input');
+      //       return response()->json($response, $statusCode);
 
-		$draw = $request->draw;
-		$offset = $request->start;
-		$length = $request->length;
-		$search = $request->search ["value"];
-		$order = $request->order;
+      // }
 
-		$from_date = $request->from_date;
+       //$result1 = isset($request->search["value"]) ? $request->search["value"] :'';
+      // $result2 = isset($request->search["regex"]) ? $request->search["regex"] :'';
+       //$result2 = isset($request->search) ? $request->search :'';
 
+       // if( $result2 == ''){
+
+       //       $statusCode = 400;
+       //       $response = array('errors' => 'Invalid Input');
+       //       return response()->json($response, $statusCode);
+  
+
+       // }
+
+
+		$this->validate($request, [
+            'draw'=>'required|integer|between:0,9999999999',
+            'start'=>'required|integer|between:0,999999999',
+            'length'=>'required|integer|between:0,100',
+            'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
+            'order' => 'array',
+            'order.*.column' => 'required|integer|between:0,7',
+            'order.*.dir' => 'required|in:asc,desc',
+            'from_date' => 'nullable|date_format:d/m/Y',
+            'to_date' => 'nullable|date_format:d/m/Y',
+            ], [
+            'draw.required' => 'Invalid Input',
+            'draw.between' => 'Invalid Input',
+            'draw.integer' => 'Invalid Input',
+
+            'start.required' => 'Invalid Input', 
+            'start.between' => 'Invalid Input',
+            'start.integer' => 'Invalid Input',
+
+            'length.required' => 'Invalid Input', 
+            'length.between' => 'Invalid Input', 
+            'length.integer' => 'Invalid Input',
+
+            'order.array' => 'Invalid Input',
+
+            'order.*.column.required' => 'Invalid Input',
+            'order.*.column.integer' => 'Invalid Input',
+            'order.*.column.between' => 'Invalid Input',
+
+            'order.*.dir.required' => 'Invalid Input',
+            'order.*.dir.in' => 'Invalid Input',
+            'search.*.regex' => 'Invalid Input',
+
+            'from_date.date_format' => 'Invalid Input',
+            'to_date.date_format' => 'Invalid Input',
+           
+        ]);
+
+
+        $draw = $request->draw;
+        $offset = $request->start;
+        $length = $request->length;
+        $order = $request->order;
+        $search=  isset($request->search["value"]) ? $request->search["value"] :'';
+        $from_date = $request->from_date;
         $to_date = $request->to_date;
 
         $from_dt = date('Y-m-d', strtotime(trim(str_replace('/', '-', $from_date))));
         $to_dt = date('Y-m-d', strtotime(trim(str_replace('/', '-', $to_date))));
 
-		$this->validate($request, [
-            'draw'=>'required|digits_between:1,11|not_in:0|regex:/^[0-9]+$/',
-            'start'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'length'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
-            'order.*.column' => 'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'order.*.dir' => 'required|in:asc,desc'
-            ], [
-            'draw.required' => 'Something going wrong',
-            'draw.digits_between' => 'Something going wrong',
-            'draw.not_in' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
 
-            'start.required' => 'Something going wrong', 
-            'start.digits_between' => 'Something going wrong',
-            'start.regex' => 'Something going wrong',
-
-            'length.required' => 'Something going wrong', 
-            'length.digits_between' => 'Something going wrong', 
-            'length.regex' => 'Something going wrong',
-
-            'order.*.column.required' => 'Something going wrong',
-            'order.*.column.digits_between' => 'Something going wrong',
-            'order.*.column.regex' => 'Something going wrong',
-
-            'order.*.dir.required' => 'Something going wrong',
-            'order.*.dir.in' => 'Something going wrong',
-
-            'search.*.regex' => 'Search value accept only Alphanumeric character',
-        ]);
 
 		$data = array();
 		$record = tbl_grievance::leftjoin('tbl_grievence_forwored', 'tbl_grievence_forwored.griv_code', 'tbl_grivense.code')
@@ -668,10 +700,6 @@ return $res;
          $all_record = $record;
 		$filtered_count = $record->count();
 
-
-		for ($i = 0; $i < count($order); $i ++) {
-               $record = $record->orderBy($request->columns [$order [$i] ['column']] ['data'], strtoupper($order [$i] ['dir']));
-           }
 
 		
 		$page_displayed = $all_record->offset($offset)->limit($length)->get();
@@ -814,49 +842,45 @@ return $res;
 	}
 
 	public function closed_grievance_datatable(Request $request){
-      // dd($request->all());
-
-		$draw = $request->draw;
-       
-		$offset = $request->start;
-        
-		$length = $request->length;
-		$search = $request->search ["value"];
-		$order = $request->order;
-         
-       
+       //dd($request->all());
 
 		$this->validate($request, [
-            'draw'=>'required|digits_between:1,11|not_in:0|regex:/^[0-9]+$/',
-            'start'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-            'length'=>'required|digits_between:1,11|regex:/^[0-9]+$/',
-			'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
-            'order.*.column' => 'required|digits_between:1,11|regex:/^[0-9]+$/',
+            'draw'=>'required|integer|between:0,9999999999',
+            'start'=>'required|integer|between:0,999999999',
+            'length'=>'required|integer|between:0,100',
+            'search.*' => 'nullable|regex:/^[A-Za-z0-9\s]+$/i',
+            'order' => 'array',
+            'order.*.column' => 'required|integer|between:0,6',
             'order.*.dir' => 'required|in:asc,desc'
-			], [
-            'draw.required' => 'Something going wrong',
-            'draw.digits_between' => 'Something going wrong',
-            'draw.not_in' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
-            'draw.regex' => 'Something going wrong',
+            ], [
+            'draw.required' => 'Invalid Input',
+            'draw.between' => 'Invalid Input',
+            'draw.integer' => 'Invalid Input',
 
-            'start.required' => 'Something going wrong', 
-            'start.digits_between' => 'Something going wrong',
-            'start.regex' => 'Something going wrong',
+            'start.required' => 'Invalid Input', 
+            'start.between' => 'Invalid Input',
+            'start.integer' => 'Invalid Input',
 
-            'length.required' => 'Something going wrong', 
-            'length.digits_between' => 'Something going wrong', 
-            'length.regex' => 'Something going wrong',
+            'length.required' => 'Invalid Input', 
+            'length.between' => 'Invalid Input', 
+            'length.integer' => 'Invalid Input',
 
-            'order.*.column.required' => 'Something going wrong',
-            'order.*.column.digits_between' => 'Something going wrong',
-            'order.*.column.regex' => 'Something going wrong',
+            'order.array' => 'Invalid Input',
 
-            'order.*.dir.required' => 'Something going wrong',
-            'order.*.dir.in' => 'Something going wrong',
+            'order.*.column.required' => 'Invalid Input',
+            'order.*.column.integer' => 'Invalid Input',
+            'order.*.column.between' => 'Invalid Input',
 
-			'search.*.regex' => 'Search value accept only Alphanumeric character',
-		]);
+            'order.*.dir.required' => 'Invalid Input',
+            'order.*.dir.in' => 'Invalid Input',
+
+            'search.*.regex' => 'Invalid Input',
+        ]);
+        $draw = $request->draw;
+        $offset = $request->start;
+        $length = $request->length;
+        $search=  isset($request->search["value"]) ? $request->search["value"] :'';
+        $order = $request->order;
 
 		$data = array();
 
@@ -897,11 +921,6 @@ return $res;
 
        $all_record = $record;
 		$filtered_count = $record->count();
-
-
-		for ($i = 0; $i < count($order); $i ++) {
-               $record = $record->orderBy($request->columns [$order [$i] ['column']] ['data'], strtoupper($order [$i] ['dir']));
-           }
 
 
 		$page_displayed = $all_record->offset($offset)->limit($length)->get();

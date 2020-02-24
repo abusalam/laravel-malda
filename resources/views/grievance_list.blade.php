@@ -149,7 +149,6 @@ str += '</table>';
             bServerSide: true,
             bjQueryUI: true,
             "bInfo": false,
-
             
             "ajax": {
             url: "grievance_datatable",
@@ -227,8 +226,8 @@ str += '</table>';
     }
 
     ],
+   
     "order": [[1, 'asc']]
-
            
     });
 
