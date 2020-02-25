@@ -28,7 +28,7 @@ Route::group(['middleware' => ['sessioncheking','disablepreventback','userlogdet
   Route::get('/case_entry','SDOCourtController@case_entry')->name('case_entry');
   Route::get('/case_list','SDOCourtController@case_list')->name('case_list');
   Route::get('/grievance_list', 'GrievanceController@grievance_list')->name('grievance_list');
-  Route::get('forworded_grievance_list', 'GrievanceController@forworded_grievance_list')->name('forworded_grievance_list');
+  Route::get('/forwarded_grievance_list', 'GrievanceController@forwarded_grievance_list')->name('forwarded_grievance_list');
   Route::post('logdetails','LogdetailsController@logdetails');
   Route::post('logview','LogdetailsController@logview');
   //Route::get('/home', 'HomeController@index');

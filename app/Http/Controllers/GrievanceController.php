@@ -596,7 +596,7 @@ $statusCode = 400;
 return $res;
 }
 
-	public function forworded_grievance_list() {
+	public function forwarded_grievance_list() {
 		return view("forword_grievance_list");
 	}
 

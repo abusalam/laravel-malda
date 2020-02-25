@@ -160,7 +160,7 @@
                                     <li><a href="#">{{__('text.grievance')}}</a>
                                         <ul>
                                             <li><a href="{{route('grievance_list')}}">{{__('text.recieved')}}</a></li>
-                                            <li><a href="{{route('forworded_grievance_list')}}">{{__('text.forwarded')}}</a></li>
+                                            <li><a href="{{route('forwarded_grievance_list')}}">{{__('text.forwarded')}}</a></li>
                                             <li><a href="{{route('resolve_grievance_list')}}">{{__('text.resolved')}}</a></li>
                                             <li><a href="{{route('close_grievance_list')}}">{{__('text.closed')}}</a></li>
                                         </ul>
