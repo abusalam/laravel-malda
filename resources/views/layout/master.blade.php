@@ -1,7 +1,8 @@
 
 <?php 
 
-        header("Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval';  frame-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' 'unsafe-inline' 'unsafe-eval';");
+         //header("Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval';  frame-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' 'unsafe-inline' 'unsafe-eval';");
+
         header("X-XSS-Protection 1; mode=block");
         header("X-Content-Type-Options: nosniff");
         header("X-Frame-Options: SAMEORIGIN");
@@ -9,6 +10,10 @@
         header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
+
+        session_set_cookie_params(0,"","",true,true);
+        header ("Content-Security-Policy: default-src 'self' blob: data: 'unsafe-inline' 'unsafe-eval' Trusted_IP ; " );
+        header('Expires','Sun, 02 Jan 1990 00:00:00 GMT');
 
        /** Header("always set X-Frame-Options: sameorigin");
         Header ("setIfEmpty X-Content-Type-Options: nosniff");
@@ -122,6 +127,8 @@
                 </div>
             </section>
             <div class="header" id="header">
+                {!! Form::open(['url' => '', 'name' => 'logout', 'class' =>'', 'id' => 'logout', 'method' => 'post','role'=>'','enctype'=>'multipart/form-data']) !!}
+                 {!! Form::close() !!} 
                 <div class="container">
                     <div id="cssmenu">
                         <ul>
