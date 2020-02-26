@@ -48,7 +48,7 @@ Route::group(['middleware' => 'userlogdetails'],function(){
   Route::post('/user_delete','registrationController@user_delete')->name('user_delete');
 
 
-  Route::get('/log-out','LoginController@logout')->name('logout');
+  Route::post('/logout','LoginController@logout');
 
 
 

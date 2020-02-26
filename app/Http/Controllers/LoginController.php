@@ -164,7 +164,9 @@ class LoginController extends Controller {
         return $res;
     }
 
-    public function logout() {
+    public function logout(Request $request) {
+        
+     
         session()->flush();
         Cache::flush();
         

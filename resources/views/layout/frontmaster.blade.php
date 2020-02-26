@@ -172,7 +172,7 @@
                                         </ul>
                                     </li>
                                     <?php }?>
-                                    <li><a href="{{route('logout')}}">{{__('text.logout')}}</a></li>
+                                    <li id="logout_user"><a>{{__('text.logout')}}</a></li>
                                 </ul>
                             </li>
                             <?php }?>
@@ -260,6 +260,38 @@
     <script src="{{asset('lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js')}}"></script>
     <script src="{{asset('/js/bootstrap-datepicker.js')}}"></script>
     @yield('script')
+    <script type="text/javascript">
+        $("#logout_user").click(function(){
+
+               var token = $('input[name="_token"]').val();
+             if(token != '' ){
+      
+                var datas = {'_token': encodeURI($('input[name="_token"]').val())};
+                redirectPost('{{url("logout")}}', datas);
+            }else{
+                location.reload();
+             }
+
+      });
+
+      function redirectPost(url, data1) {
+        var $form = $("<form />");
+        $form.attr("action", url);
+        $form.attr("method", "post");
+        //         $form.attr("target", "_blank");
+        for (var data in data1)
+            $form.append('<input type="hidden" name="' + data + '"  id="' + data + '" value="' + data1[data] + '" />');
+        $("body").append($form);
+                
+        var token = encodeURI($('#_token').val());
+        if( token != '' ){              
+            $form.submit();               
+        }else{
+            location.reload();
+        }  
+        
+    }
+    </script>
 </body>
 
 </html>
