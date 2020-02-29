@@ -8,23 +8,23 @@
                 <div class="col-sm-2">&nbsp;</div>
                 <div class="col-sm-8 mt-5">
                     {{Form::open(['name'=>'sdocourt_entry','id'=>'sdocourt_entry','url' => '', 'method' => 'post'])}}
-                    {!! Form::hidden('edit_code',null,['id'=>'edit_code']) !!}
+                    {!! Form::hidden('edit_code',isset($case_details)?$case_details->code:'',['id'=>'edit_code']) !!}
                     <div class="form-group row ">
                         <div class="col-sm-4 mg-t-10">{{Form::label('case_number', __('text.case_number'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
                         <div class="col-sm-8">
-                            {{Form::text('case_number', '', ['id'=>'case_number','placeholder'=>__('text.enter_case_number'),'autocomplete'=>'off', 'class' => 'form-control','maxlength'=>'40']) }}
+                            {{Form::text('case_number', isset($case_details)?$case_details->case_no:'', ['id'=>'case_number','placeholder'=>__('text.enter_case_number'),'autocomplete'=>'off', 'class' => 'form-control','maxlength'=>'40']) }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-4 mg-t-10">{{Form::label('nxt_hearing_date', __('text.next_hearing_date'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
                         <div class="col-sm-8">
-                            {{Form::text('nxt_hearing_date', '', ['id'=>'nxt_hearing_date','placeholder'=>__('text.enter_next_hearing_date'),'autocomplete'=>'off','class' => 'form-control']) }}
+                            {{Form::text('nxt_hearing_date', isset($case_details)?$case_details->nxt_hearing_date:'', ['id'=>'nxt_hearing_date','placeholder'=>__('text.enter_next_hearing_date'),'autocomplete'=>'off','class' => 'form-control']) }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-4 mg-t-10">{{Form::label('description',__('text.description'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
                         <div class="col-sm-8">
-                            {{Form::textarea('description', '', ['id'=>'description','placeholder'=>__('text.enter_description'),'autocomplete'=>'off','class' => 'form-control','rows'=>'5','maxlength'=>'100']) }}
+                            {{Form::textarea('description', isset($case_details)?$case_details->description:'', ['id'=>'description','placeholder'=>__('text.enter_description'),'autocomplete'=>'off','class' => 'form-control','rows'=>'5','maxlength'=>'100']) }}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -42,173 +42,5 @@
 </div>
 @endsection
 @section('script')
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#nxt_hearing_date').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true,
-            // endDate: "today",
-            todayHighlight: true,
-        }).on('change', function(e) {
-            // Revalidate the date field
-            $('#sdocourt_entry').bootstrapValidator('revalidateField', 'nxt_hearing_date');
-        });
-       
-        $('#sdocourt_entry').bootstrapValidator({
-            message: 'This value is not valid',
-            fields: {
-                case_number: {
-                    validators: {
-                        notEmpty: {
-                            message: '{{__('text.case_no_required')}}'
-                        },
-                        regexp: {
-                            regexp: /^[A-Za-z0-9./\-_\s]+$/i,
-                            message: '{{__('text.case_no_regex')}}'
-                        },
-                        stringLength: {
-                            min: 1,
-                            max: 40,
-                            message: '{{__('text.case_no_stringlenth')}}'
-                        }
-                    }
-                },
-
-                nxt_hearing_date: {
-                    validators: {
-                        notEmpty: {
-                            message:  '{{__('text.nxt_hiring_date_required')}}'
-                        },
-                        date: {
-                            format: 'DD/MM/YYYY',
-                            message: '{{__('text.nxt_hiring_date_format')}}'
-                        }
-
-                    }
-                },
-                description: {
-                    validators: {
-                        notEmpty: {
-                            message: '{{__('text.sdo_desdcription_required')}}'
-                        },
-                        regexp: {
-                            regexp: /^[A-Za-z0-9./\-_\s]+$/i,
-                            message: '{{__('text.regedx_for_sdo_desdcription')}}'
-                        },
-                        stringLength: {
-                            min: 1,
-                            max: 100,
-                            message: '{{__('text.stringlength_for_sdo_desdcription')}}'
-                        }
-                    }
-                }
-
-
-            }
-        }).on('success.form.bv', function (e) {
-            e.preventDefault();
-            caseEntry();
-        });
-
-<?php if (isset($case_details)) { ?>
-            $('#login').val('Update');
-
-            $("#edit_code").val("<?php echo $case_details->code ?>");
-            $("#description").val("<?php echo $case_details->description ?>");
-            $("#nxt_hearing_date").val("<?php echo $case_details->nxt_hearing_date ?>");
-            $("#case_number").val("<?php echo $case_details->case_no ?>");
-<?php } ?>
-
-        function caseEntry() {
-            var case_number = $('#case_number').val();
-            var nxt_hearing_date = $('#nxt_hearing_date').val();
-            var description = $('#description').val();
-            var edit_code = $('#edit_code').val();
-
-
-
-            var fd = new FormData();
-            fd.append('case_number', case_number);
-            fd.append('nxt_hearing_date', nxt_hearing_date);
-            fd.append('description', description);
-            fd.append('edit_code', edit_code);
-            fd.append('_token', '{{ csrf_token() }}');
-
-
-            $.ajax({
-                type: 'POST',
-                url: "{{route('save_case')}}",
-                data: fd,
-                processData: false,
-                contentType: false,
-                dataType: "json",
-                success: function (data) {
-if(data.logout_error==true){
-                  logout_error();
-                }
-                    if (data.status == 1) {
-
-                        $.confirm({
-                            title: 'Success!!',
-                            type: 'green',
-                            icon: 'fa fa-success',
-                            content: "{{__('text.case_details_added')}}",
-                            buttons: {
-                                Ok: function () {
-                                    $('#sdocourt_entry').get(0).reset();
-                                    $('#sdocourt_entry').bootstrapValidator('resetForm', true);
-                                }
-                            }
-                        });
-
-
-                    } else if (data.status == 2) {
-
-                        $.confirm({
-                            title: 'Success!!',
-                            type: 'green',
-                            icon: 'fa fa-success',
-                            content: "{{__('text.case_details_update')}}",
-                            buttons: {
-                                Ok: function () {
-                                    window.location.href = "{{route('case_list')}}";
-                                }
-                            }
-                        });
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $(".se-pre-con").fadeOut("slow");
-                    var msg = "";
-                    if (jqXHR.status !== 422 && jqXHR.status !== 400) {
-                        msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
-                    } else {
-                        if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                            msg += "Server Error";
-                        } else {
-                            msg += "Error(s):<strong><ul>";
-                            $.each(jqXHR.responseJSON['errors'], function (key, value) {
-                                msg += "<li>" + value + "</li>";
-                            });
-                            msg += "</ul></strong>";
-                        }
-                    }
-                    $.alert({
-                        title: 'Error!!',
-                        type: 'red',
-                        icon: 'fa fa-warning',
-                        content: msg,
-                    });
-                    //$("#save_app").attr('disabled',false);
-                }
-            });
-        }
-    });
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-        return true;
-    }
-</script>
+<script src="{{asset('/app/js/sdo_court_entry.js')}}"></script>
 @endsection 

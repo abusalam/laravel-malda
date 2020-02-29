@@ -9,23 +9,23 @@
                     <div class="col-sm-2 ">&nbsp</div>
                     <div class="col-sm-8 mt-5">
                         {{Form::open(['name'=>'userCreate','id'=>'userCreate','url' => '', 'method' => 'post'])}}
-                        {!! Form::hidden('edit_code',null,['id'=>'edit_code']) !!}
+                        {!! Form::hidden('edit_code',isset($user_details)?$user_details->code:'',['id'=>'edit_code']) !!}
                         <div class="form-group row">
                             <div class="col-sm-4 mg-t-10">{{Form::label('name', __('text.name'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
                             <div class="col-sm-8">
-                                {{Form::text('name', '', ['id'=>'name','placeholder'=>__('text.enter_name'),'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'30']) }}
+                                {{Form::text('name', isset($user_details)?$user_details->name:'', ['id'=>'name','placeholder'=>__('text.enter_name'),'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'30']) }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-4 mg-t-10">{{Form::label('mobile_no',__('text.mobile_no'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
                             <div class="col-sm-8">
-                                {{Form::text('mobile_no', '', ['id'=>'mobile_no','placeholder'=>__('text.enter_mobile_number'),'autocomplete'=>'off','class' => 'form-control','pattern'=>'[0-9]*', 'inputmode'=>'numeric','onkeypress'=>'return isNumberKey(event)','maxlength'=>'10']) }}
+                                {{Form::text('mobile_no', isset($user_details)?$user_details->mobile_no:'', ['id'=>'mobile_no','placeholder'=>__('text.enter_mobile_number'),'autocomplete'=>'off','class' => 'form-control','pattern'=>'[0-9]*', 'inputmode'=>'numeric','onkeypress'=>'return isNumberKey(event)','maxlength'=>'10']) }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-4 mg-t-10">{{Form::label('designation', __('text.designation'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
                             <div class="col-sm-8">
-                                {{Form::text('designation', '', ['id'=>'designation','placeholder'=>__('text.enter_designation'),'autocomplete'=>'off','class' => 'form-control', 'maxlength'=>'30']) }}
+                                {{Form::text('designation', isset($user_details)?$user_details->designation:'', ['id'=>'designation','placeholder'=>__('text.enter_designation'),'autocomplete'=>'off','class' => 'form-control', 'maxlength'=>'30']) }}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -47,204 +47,16 @@
 </div>
 </div>
 </div>
-
-
-
-
-
+ <?php if (isset($user_details)) { ?>
+ 
+ <input name="edit_data" type="hidden" value="1" id="edit_data">
+ <?php } ?>
 
 
 @endsection
 
-
 @section('script')
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#userCreate').bootstrapValidator({
-            message: 'This value is not valid',
-            fields: {
-                name: {
-                    validators: {
-                        notEmpty: {
-                            message: '{{__('text.name_required')}}'
-                   
-                        },
-                        regexp: {
-                            regexp: /^[A-Za-z\s]+$/i,
-                            message: '{{__('text.regex_for_name')}}'
-                        },
-                        stringLength: {
-                            min: 1,
-                            max: 30,
-                            message: '{{__('text.stringlength_for_name')}}'
-                        }
-                    }
-                },
-
-                mobile_no: {
-                    validators: {
-                        notEmpty: {
-                            message: '{{__('text.mobile_no_required')}}'
-                        },
-                        digits: {
-                            message: '{{__('text.mobile_no_digit')}}'
-                        },
-                        stringLength: {
-                            min: 10,
-                            max: 10,
-                            message: '{{__('text.mobile_no_stringlength')}}'
-                        }
-                    }
-                },
-                designation: {
-                    validators: {
-                        notEmpty: {
-                            message: '{{__('text.designation_required')}}'
-                        },
-                        regexp: {
-                            regexp: /^[A-Za-z\s]+$/i,
-                            message: '{{__('text.regex_for_designation')}}'
-                        },
-                        stringLength: {
-                            min: 1,
-                            max: 30,
-                            message: '{{__('text.stringlength_for_designation')}}'
-                        }
-                    }
-                }
-
-
-            }
-        }).on('success.form.bv', function (e) {
-            e.preventDefault();
-            userCreation();
-        });
-
-<?php if (isset($user_details)) { ?>
-            $('#login').val('Update');
-
-            $("#edit_code").val("<?php echo $user_details->code ?>");
-            $("#designation").val("<?php echo $user_details->designation ?>");
-            $("#name").val("<?php echo $user_details->name ?>");
-            $("#mobile_no").val("<?php echo $user_details->mobile_no ?>");
-<?php } ?>
-
-        function userCreation() {
-            var name = $('#name').val();
-            var mobile_no = $('#mobile_no').val();
-            var designation = $('#designation').val();
-            var edit_code = $('#edit_code').val();
-
-
-
-            var fd = new FormData();
-            fd.append('name', name);
-            fd.append('mobile_no', mobile_no);
-            fd.append('designation', designation);
-            fd.append('edit_code', edit_code);
-            fd.append('_token', '{{ csrf_token() }}');
-
-
-            $.ajax({
-                type: 'POST',
-                url: "{{route('userRegistrationAction')}}",
-                data: fd,
-                processData: false,
-                contentType: false,
-                dataType: "json",
-                success: function (data) {
-if(data.logout_error==true){
-                  logout_error();
-                }
-                    if (data.status == 1) {
-
-                        $.confirm({
-                            title: 'Success!!',
-                            type: 'green',
-                            icon: 'fa fa-success',
-                            content: "{{__('text.user_added')}}",
-                            buttons: {
-                                Ok: function () {
-
-                                    $('#userCreate').get(0).reset();
-
-                                    $('#userCreate').bootstrapValidator('resetForm', true);
-
-                                }
-                            }
-                        });
-
-
-                    } else if (data.status == 2) {
-
-                        $.confirm({
-                            title: 'Success!!',
-                            type: 'green',
-                            icon: 'fa fa-success',
-                            content: "{{__('text.user_update')}}",
-                            buttons: {
-                                Ok: function () {
-
-                                    window.location.href = "{{route('userList')}}";
-
-                                }
-                            }
-                        });
-
-
-                    }
-
-
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $(".se-pre-con").fadeOut("slow");
-                    var msg = "";
-                    if (jqXHR.status !== 422 && jqXHR.status !== 400) {
-                        msg += "<strong>" + jqXHR.status + ": " + errorThrown + "</strong>";
-                    } else {
-                        if (jqXHR.responseJSON.hasOwnProperty('exception')) {
-                            msg += "Server Error";
-                        } else {
-                            msg += "Error(s):<strong><ul>";
-                            $.each(jqXHR.responseJSON['errors'], function (key, value) {
-                                msg += "<li>" + value + "</li>";
-                            });
-                            msg += "</ul></strong>";
-                        }
-                    }
-                    $.alert({
-                        title: 'Error!!',
-                        type: 'red',
-                        icon: 'fa fa-warning',
-                        content: msg,
-                    });
-                    //$("#save_app").attr('disabled',false);
-                }
-            });
-
-
-
-
-
-        }
-
-
-
-
-    });
-
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-        return true;
-    }
-</script>
-
-
-
-
+<script src="{{asset('/app/js/user_create.js')}}"></script>
 
 @endsection 

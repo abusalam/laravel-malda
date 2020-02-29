@@ -1,5 +1,5 @@
 <?php 
-        //header("Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval';  frame-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' 'unsafe-inline' 'unsafe-eval';");
+       
         header("X-XSS-Protection 1; mode=block");
         header("X-Content-Type-Options: nosniff");
         header("X-Frame-Options: SAMEORIGIN");
@@ -9,14 +9,9 @@
         header("Pragma: no-cache");
 
         session_set_cookie_params(0,"","",true,true);
-        header ( "Content-Security-Policy: default-src 'self' blob: data: 'unsafe-inline' 'unsafe-eval' Trusted_IP ; " );
+        header ( "Content-Security-Policy: default-src 'self' blob: data: ; " );
         header('Expires','Sun, 02 Jan 1990 00:00:00 GMT');
-        
-        /**Header("always set X-Frame-Options: sameorigin")
-        Header ("setIfEmpty X-Content-Type-Options: nosniff")
-        Header ("setIfEmpty X-XSS-Protection 1; mode=block")
-        Header ("setIfEmpty Strict-Transport-Security max-age=31536001; includeSubDomains")
-        Header ("setIfEmpty Content-Security-Policy default-src 'self'; frame-ancestors 'none';")**/
+       
 
     ?>
 <!DOCTYPE html>
@@ -126,13 +121,15 @@
                 <div class="container">
                     <div id="cssmenu">
                         <ul>
+                            
                             <li><a href="/">{{__('text.home')}}</a></li>
-                            <li><a href="{{route('grievance')}}">{{__('text.grievance')}}</a></li>
-                            <li><a href="{{route('grievance_status')}}">{{__('text.grievance_status')}}</a></li>
-                            <li><a href="{{route('search_case')}}">{{__('text.case_search')}}</a></li>
-                            <li><a href="{{route('todays_hearing')}}">{{__('text.todays_hearing')}}</a></li>
+
+                            <li><a href="grievance">{{__('text.grievance')}}</a></li>
+                            <li><a href="grievance_status">{{__('text.grievance_status')}}</a></li>
+                            <li><a href="search_case">{{__('text.case_search')}}</a></li>
+                            <li><a href="todays_hearing">{{__('text.todays_hearing')}}</a></li>
                             <?php if (session()->has('user_code') == false) { ?>
-                            <li class="pull-right"><a id="loginn" href="{{route('login')}}">{{__('text.login')}}</a></li>
+                            <li class="pull-right"><a id="loginn" href="login">{{__('text.login')}}</a></li>
                             <?php }else{?>
                             <li class="pull-right">
                                 <a href="#">
@@ -141,36 +138,37 @@
                                     echo " Admin ";
                                 }else{echo " User ";}  ?>)</a>
                                 <ul>
-                                    <?php if (session()->get('user_type') == 0) { ?>
                                     <li><a href="/">{{__('text.dashboard')}}</a></li>
+                                    <?php if (session()->get('user_type') == 0) { ?>
                                     <li><a href="#">{{__('text.user')}}</a>
                                         <ul>
-                                            <li><a href="{{route('userRegisration')}}">{{__('text.user_create')}}</a></li>
-                                            <li><a href="{{route('userList')}}">{{__('text.user_list')}}</a></li>
+                                            <li><a href="userRegisration">{{__('text.user_create')}}</a></li>
+                                            <li><a href="userList">{{__('text.user_list')}}</a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <a href="#">{{__('text.case')}}</a>
                                         <ul>
-                                            <li><a href="{{route('case_entry')}}">{{__('text.case_entry')}}</a></li>
-                                            <li><a href="{{route('case_list')}}">{{__('text.case_list')}}</a></li>
+                                            <li><a href="case_entry">{{__('text.case_entry')}}</a></li>
+                                            <li><a href="case_list">{{__('text.case_list')}}</a></li>
                                         </ul>
                                     </li>
                                     <?php } ?>
                                     <li><a href="#">{{__('text.grievance')}}</a>
                                         <ul>
-                                            <li><a href="{{route('grievance_list')}}">{{__('text.recieved')}}</a></li>
-                                            <li><a href="{{route('forwarded_grievance_list')}}">{{__('text.forwarded')}}</a></li>
-                                            <li><a href="{{route('resolve_grievance_list')}}">{{__('text.resolved')}}</a></li>
-                                            <li><a href="{{route('close_grievance_list')}}">{{__('text.closed')}}</a></li>
+                                            <li><a href="grievance_list">{{__('text.recieved')}}</a></li>
+                                            <li><a href="forwarded_grievance_list">{{__('text.forwarded')}}</a></li>
+                                            <li><a href="resolve_grievance_list">{{__('text.resolved')}}</a></li>
+                                            <li><a href="close_grievance_list">{{__('text.closed')}}</a></li>
                                         </ul>
                                     </li>
                                     <?php if (session()->get('user_type') == 0) { ?>
                                     <li><a href="#">{{__('text.report')}}</a>
                                         <ul>
-                                            <li><a href="{{route('pending_report')}}">{{__('text.pending_grievance_report')}}</a></li>
+                                            <li><a href="pending_report">{{__('text.pending_grievance_report')}}</a></li>
                                         </ul>
                                     </li>
+                                    <li><a href="log_details">{{__('text.user_log_details')}}</a></li>
                                     <?php }?>
                                     <li id="logout_user"><a>{{__('text.logout')}}</a></li>
                                 </ul>
@@ -259,39 +257,9 @@
     <script src="{{asset('lib/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js')}}"></script>
     <script src="{{asset('/js/bootstrap-datepicker.js')}}"></script>
+    <script src="{{asset('/app/js/frontmaster.js')}}"></script>
     @yield('script')
-    <script type="text/javascript">
-        $("#logout_user").click(function(){
-
-               var token = $('input[name="_token"]').val();
-             if(token != '' ){
-      
-                var datas = {'_token': encodeURI($('input[name="_token"]').val())};
-                redirectPost('{{url("logout")}}', datas);
-            }else{
-                location.reload();
-             }
-
-      });
-
-      function redirectPost(url, data1) {
-        var $form = $("<form />");
-        $form.attr("action", url);
-        $form.attr("method", "post");
-        //         $form.attr("target", "_blank");
-        for (var data in data1)
-            $form.append('<input type="hidden" name="' + data + '"  id="' + data + '" value="' + data1[data] + '" />');
-        $("body").append($form);
-                
-        var token = encodeURI($('#_token').val());
-        if( token != '' ){              
-            $form.submit();               
-        }else{
-            location.reload();
-        }  
-        
-    }
-    </script>
+   
 </body>
 
 </html>

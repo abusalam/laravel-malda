@@ -170,7 +170,7 @@ class LoginController extends Controller {
         session()->flush();
         Cache::flush();
         
-        return redirect()->route('login');
+        return redirect('login');
     }
 
 }
