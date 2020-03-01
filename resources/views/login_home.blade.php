@@ -6,71 +6,54 @@
   use App\Http\Controllers\ReportController;
 
   $grievance_report = ReportController::grievance_report();
- 
- 
+
+
  ?>
- <style type="text/css">
 
- .box-element{
-
- }
-
- .block{
-  background: #5391af;
-  min-height: 100px;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid black;
- }
-
-
- </style>
-     
 
 <div class="row" id="row-content">
-    <div class="col-12">                        
+    <div class="col-12">
         <div class="card">
 
-          <div class="card-body" style="min-height: 200px;"> 
-  
+          <div class="card-body" >
+
        <div class="row">
           <div class="col-md-1"></div>
           <div class="col-md-2 text-center box-element">
-            
+
                  <div class="block">
                    <div class="ssb-title">{{__('text.total_grievances')}}</div>
-                 <h2 class="ssb-icon">{{$grievance_report['total_griv']}}</h2>  
+                 <h2 class="ssb-icon">{{$grievance_report['total_griv']}}</h2>
                  </div>
-               
+
           </div>
           <div class="col-md-2 text-center box-element">
               <div class="block">
                  <div class="ssb-title">{{__('text.pending_grievances')}}</div>
-                 <h2 class="ssb-icon">{{$grievance_report['pending_griv']}}</h2>  
+                 <h2 class="ssb-icon">{{$grievance_report['pending_griv']}}</h2>
                </div>
           </div>
           <div class="col-md-2 text-center box-element">
              <div class="block">
                  <div class="ssb-title">{{__('text.forwarded_grievances')}}</div>
-                 <h2 class="ssb-icon">{{$grievance_report['forward_griv']}}</h2>  
+                 <h2 class="ssb-icon">{{$grievance_report['forward_griv']}}</h2>
               </div>
           </div>
-      
+
           <div class="col-md-2 text-center box-element">
               <div class="block">
                  <div class="ssb-title">{{__('text.resolved_grievances')}}</div>
-                 <h2 class="ssb-icon">{{$grievance_report['resolve_griv']}}</h2>  
+                 <h2 class="ssb-icon">{{$grievance_report['resolve_griv']}}</h2>
                </div>
           </div>
           <div class="col-md-2 text-center box-element">
               <div class="block">
                  <div class="ssb-title">{{__('text.closed_grievances')}}</div>
-                 <h2 class="ssb-icon">{{$grievance_report['close_griv']}}</h2>  
+                 <h2 class="ssb-icon">{{$grievance_report['close_griv']}}</h2>
               </div>
           </div>
           <div class="col-md-1"></div>
-  
+
         </div>
       </div>
             {{-- <div class="card-body" style="min-height: 400px;">
@@ -88,9 +71,9 @@
 
                 </tbody>
             </table>
-                    
+
             </div> --}}
-            
+
 
         </div>
     </div>
@@ -98,6 +81,6 @@
 @endsection
 @section('script')
 
-@endsection 
+@endsection
 
 

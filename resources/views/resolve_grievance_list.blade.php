@@ -1,23 +1,23 @@
 @extends('layout.master')
 @section('content')
 <div class="row" id="row-content">
-    <div class="col-12">                        
+    <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title"> {{__('text.resolved_table_heading')}}</h3>
                 {{csrf_field()}}
-                <div class="datatbl  " style="width: 96%;margin-left: 20px;">
-                    <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_grievance_list" style="width: 100%">
+                <div class="datatbl  " >
+                    <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_grievance_list">
                         <thead>
                             <tr>
-                                <th style="width: 5%;">#</th>
-                                <th style="width: 10%;"> ID</th>
-                                <th style="width: 15%;">Grievance Date</th>
-                                <th style="width: 20%;">Name</th>              
-                                <th style="width: 20%;">Mobile No</th> 
-                                                               
-                                 <th style="width: 15%;">Action</th>
-                               
+                                <th width="5%">#</th>
+                                <th width="10%"> ID</th>
+                                <th width="15%">Grievance Date</th>
+                                <th width="20%">Name</th>
+                                <th width="20%">Mobile No</th>
+
+                                 <th width="15%">Action</th>
+
                             </tr>
 
                         </thead>

@@ -18,12 +18,13 @@
     <link rel='stylesheet' id='custom-flexslider-css' href='./front/css/custom-flexslider.css' media='all' />
     <link rel='stylesheet' id='footer-style-css' href='./front/css/footer-logo-carousel.css' media='all' />
     <link rel="stylesheet" href="{{ asset('/lib/fontawesome/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
     <link rel='stylesheet' href='./front/css/design.css' media='all' />
 </head>
 
 <body>
     <div class="main-body">
-        <a href="#" title="sroll" class="scrollToTop" style="display: inline;"><i class="fa fa-angle-up"></i></a>
+        <a href="#" title="sroll" class="scrollToTop"><i class="fa fa-angle-up"></i></a>
         <header>
             <section id="topBar1" class="wrapper">
                 <div class="container">
@@ -230,8 +231,7 @@
                     </div>
                 </div>
             </div>
-            <style>
-            </style>
+
             <div class="row p-5 text-center">
                 <div class="col-sm-3">
                     <span class="icon-ngo-2 highlight"></span>
@@ -263,7 +263,7 @@
                         <button class="tablinks" onclick="openTab(event, 'Paris')">Event</button>
                         <button class="tablinks" onclick="openTab(event, 'Tokyo')">Tender</button>
                     </div>
-                    <div id="London" class="tabcontent bg-light" style="display:block">
+                    <div id="London" class="tabcontent bg-light d-block">
                         <!--  <marquee behavior="scroll" direction="up">-->
                         <ul>
                             <li>First Elemement</li>
@@ -345,22 +345,22 @@
                     <h4>Public Utilities</h4>
                     <div class="row">
                         <div class="col-sm-5 public_utils">
-                            <span class="public_util_name">Banks</span><span class="counter bg-success pull-right p-2 w-25" style="color: white">18</span>
+                            <span class="public_util_name">Banks</span><span class="counter bg-success pull-right p-2 w-25" >18</span>
                         </div>
                         <div class="col-sm-5 public_utils">
-                            <span class="public_util_name">University</span><span class="counter bg-secondary pull-right p-2 w-25" style="color: white">50</span>
+                            <span class="public_util_name">University</span><span class="counter bg-secondary pull-right p-2 w-25" >50</span>
                         </div>
                         <div class="col-sm-5 public_utils">
-                            <span class="public_util_name">Hospital</span><span class="counter bg-primary pull-right p-2 w-25" style="color: white">23</span>
+                            <span class="public_util_name">Hospital</span><span class="counter bg-primary pull-right p-2 w-25" >23</span>
                         </div>
                         <div class="col-sm-5 public_utils">
-                            <span class="public_util_name">School</span><span class="counter bg-danger pull-right p-2 w-25" style="color: white">15</span>
+                            <span class="public_util_name">School</span><span class="counter bg-danger pull-right p-2 w-25" >15</span>
                         </div>
                         <div class="col-sm-5 public_utils">
-                            <span class="public_util_name">Postal</span><span class="counter bg-warning pull-right p-2 w-25" style="color: white">17</span>
+                            <span class="public_util_name">Postal</span><span class="counter bg-warning pull-right p-2 w-25" >17</span>
                         </div>
                         <div class="col-sm-5 public_utils">
-                            <span class="public_util_name">Electricity</span><span class="counter bg-success pull-right p-2 w-25" style="color: white">0</span>
+                            <span class="public_util_name">Electricity</span><span class="counter bg-success pull-right p-2 w-25" >0</span>
                         </div>
                     </div>
                 </div>
@@ -399,8 +399,8 @@
             </div>
         </div>
         <img src="./front/images/footer_top_bg.gif" alt="Biswa Bangla" width="100%">
-        
-        <footer id="footer2" class="footer-home pt-2" style="background:black">
+
+        <footer id="footer2" class="footer-home pt-2">
             <div class="container-fluid">
                 <div class="row text-white p-3">
                     <div class="col-sm-4 text-sm-left text-center">
@@ -413,7 +413,7 @@
                         <span class="visitor_count">Visitor Count <strong>1000</strong></span>
                     </div>
                 </div>
-               
+
                 <div class="row text-white p-3">
                     <div class="col-sm-2 offset-2">
                         <a href="http://www.nic.in/"><img src="./front/images/icon/nicLogo.png" alt="National Informatics Centre"></a>

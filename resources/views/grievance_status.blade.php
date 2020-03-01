@@ -6,11 +6,11 @@
             <div class="card-body">
                 <h3 class="card-title">{{__('text.grievance_status')}}</h3>
                 <div id="search_data">
-                    <div class="alert error" style="display: none"></div>
+                    <div class="alert error"></div>
                     {{Form::open(['name'=>'grievance_status','id'=>'grievance_status','url' => '', 'method' => 'post'])}}
                     <div class="form-group row">
                         <div class="col-sm-2">&nbsp;</div>
-                        <div class="col-sm-2 mg-t-10">{{Form::label('grievance_id', __('text.grievance_id'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
+                        <div class="col-sm-2 mg-t-10">{{Form::label('grievance_id', __('text.grievance_id'), ['class' => 'form-label mg-b-0 required']) }}</div>
                         <div class="col-sm-4">
                             {{Form::text('grievance_id', '', ['id'=>'grievance_id','placeholder'=>__('text.enter_grievance_id'),'autocomplete'=>'off', 'class' => 'form-control']) }}
                         </div>
@@ -18,7 +18,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">&nbsp;</div>
-                        <div class="col-sm-2 mg-t-10">{{Form::label('mobileNo', __('text.mobile_no'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
+                        <div class="col-sm-2 mg-t-10">{{Form::label('mobileNo', __('text.mobile_no'), ['class' => 'form-label mg-b-0 required']) }}</div>
                         <div class="col-sm-4">
                             {{Form::text('mobileNo', '', ['id'=>'mobileNo','placeholder'=>__('text.enter_mobile_number'),'autocomplete'=>'off', 'class' => 'form-control','maxLength'=>10, 'onkeypress'=>'return isNumberKey(event)']) }}
                         </div>
@@ -41,7 +41,7 @@
                             <div class="col-md-4"></div>
                     </div>
                     <?php } ?>
-                    
+
                         <div class="row form-group">
                             <div class="col-sm-4">
                                 &nbsp;
@@ -50,10 +50,10 @@
                                 {{Form::button( __('text.search'), ['type'=>'button','id'=>'Search','class' => 'btn btn-primary btn-block']) }}
                             </div>
                         </div>
-                  
+
                     {!! Form::close() !!}
                 </div>
-                <div id="tbl_t" style="padding-left: 10px;">
+                <div id="tbl_t">
                 </div>
             </div>
         </div>

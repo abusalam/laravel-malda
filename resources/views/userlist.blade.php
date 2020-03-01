@@ -12,15 +12,15 @@
                 <div class="form-horizontal">
                     <div class="form-group row">
                         {{csrf_field()}}
-                         
-                        <div class="datatbl " style="width: 96%;margin: 20px;">
-                            <table class="table table-striped table-bordered table-hover" id="tbl_user_list" style="width: 100%">
+
+                        <div class="datatbl ">
+                            <table class="table table-striped table-bordered table-hover" id="tbl_user_list">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>              
-                                        <th>Mobile Number</th> 
-                                        <th>Designation</th>   
+                                        <th>Name</th>
+                                        <th>Mobile Number</th>
+                                        <th>Designation</th>
                                         <th>Action</th>
                                     </tr>
 
@@ -33,8 +33,8 @@
                     </div>
                 </div>
             </div>
-        </div>    
-    </div> 
+        </div>
+    </div>
 </div>
 
 
@@ -46,4 +46,4 @@
 <script src="{{asset('/app/js/user_list.js')}}"></script>
 
 
-@endsection 
+@endsection

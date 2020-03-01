@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 
         header("X-XSS-Protection 1; mode=block");
         header("X-Content-Type-Options: nosniff");
@@ -12,7 +12,7 @@
         header ("Content-Security-Policy: default-src 'self' blob: data: ; " );
         header('Expires','Sun, 02 Jan 1990 00:00:00 GMT');
 
-      
+
 
     ?>
 <!DOCTYPE html>
@@ -37,19 +37,20 @@
     <link rel="stylesheet" href="{{ asset('/css/bootstrapValidator.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/jquery-confirm.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/lib/fontawesome/css/font-awesome.css') }}">
-    
+    <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+
     <link rel='stylesheet' href='./front/css/design.css' media='all' />
     <link href="{{ asset('/lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('/css/bootstrap-datepicker.css') }}" rel="stylesheet">
-  
+
 </head>
 
 <body>
-    <div class="loader" style="display:none">Loading&#8230;</div>
+    <div class="loader">Loading&#8230;</div>
     <div class="main-body">
-        <a href="#" title="sroll" class="scrollToTop" style="display: inline;"><i class="fa fa-angle-up"></i></a>
+        <a href="#" title="sroll" class="scrollToTop"><i class="fa fa-angle-up"></i></a>
         <header>
             <section id="topBar1" class="wrapper">
                 <div class="container">
@@ -57,9 +58,9 @@
                         <div id="accessibility">
                             <ul id="accessibilityMenu">
                                 <li><a href="#SkipContent" class="skip-to-content" title="Skip to main content"><span class="icon-skip-to-main responsive-show"></span><strong class="responsive-hide">SKIP TO MAIN CONTENT</strong></a></li>
-                                
-                                
-                                
+
+
+
                                 <li>
                                     <a href="javascript:void(0);" title="Accessibility Links" aria-label="Accessibility Links" class="mobile-show accessible-icon"><span class="off-css">Accessibility Links</span><span class="icon-accessibility" aria-hidden="true"></span></a>
                                     <div class="accessiblelinks textSizing">
@@ -82,7 +83,7 @@
                                     <?php } else { ?>
                                     <a href="{{route('change_language',['bn'])}}" class="change-language" aria-label="English" title="English">বাংলা</a>
                                    <?php }?>
-                                    
+
                                 </li>
                             </ul>
                         </div>
@@ -121,11 +122,11 @@
             </section>
             <div class="header" id="header">
                 {!! Form::open(['url' => '', 'name' => 'logout', 'class' =>'', 'id' => 'logout', 'method' => 'post','role'=>'','enctype'=>'multipart/form-data']) !!}
-                 {!! Form::close() !!} 
+                 {!! Form::close() !!}
                 <div class="container">
                     <div id="cssmenu">
                         <ul>
-                            
+
                             <li><a href="/">{{__('text.home')}}</a></li>
 
                             <li><a href="grievance">{{__('text.grievance')}}</a></li>
@@ -202,9 +203,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
-                            
+
                             @yield('content')
                         </div>
                     </div>
@@ -212,8 +213,8 @@
             </div>
         </div>
         <img src="front/images/footer_top_bg.gif" alt="Biswa Bangla" width="100%">
-        
-        <footer id="footer2" class="footer-home pt-2" style="background:black">
+
+        <footer id="footer2" class="footer-home pt-2">
             <div class="container-fluid">
                 <div class="row text-white p-3">
                     <div class="col-sm-4 text-sm-left text-center">
@@ -226,7 +227,7 @@
                         <span class="visitor_count">Visitor Count <strong>1000</strong></span>
                     </div>
                 </div>
-                
+
                 <div class="row text-white p-3">
                     <div class="col-sm-2 offset-2">
                         <a href="http://www.nic.in/"><img src="./front/images/icon/nicLogo.png" alt="National Informatics Centre"></a>
@@ -262,7 +263,7 @@
     <script src="{{asset('/lib/fontawesome-free/js/fontawesome.min.js')}}"></script>
     <script src="{{asset('/app/js/master.js')}}"></script>
     @yield('script')
-    
+
 </body>
 
 </html>

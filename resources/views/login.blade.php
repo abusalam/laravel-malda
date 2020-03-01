@@ -3,16 +3,16 @@
 <div class="row" id="row-content">
     <div class="col-sm-8 offset-sm-2">
         <div class="card">
-            <div class="card-body" style="min-height: 250px;">
+            <div class="card-body">
                 <div class="card-title text-center">
                     <h3>{{__('text.login')}}</h3>
                 </div>
-               
+
                 <div class="col-sm-10 offset-sm-1 mt-5">
-                    <div class="alert alert-danger" style="display: none" id="error"></div>
+                    <div class="alert alert-danger" id="error"></div>
                     {{Form::open(['name'=>'userlogin','id'=>'userlogin','url' => '', 'method' => 'post'])}}
                     <div class="form-group row">
-                        <div class="col-sm-3" style="font-weight: bold; font-size: 17px;">
+                        <div class="col-sm-3 mobile_no">
                             {{Form::label('username', __('text.mobile_no'), ['class' => 'form-label mg-b-0 required']) }}
                         </div>
                         <div class="col-sm-9">

@@ -11,19 +11,19 @@
                         {{Form::open(['name'=>'userCreate','id'=>'userCreate','url' => '', 'method' => 'post'])}}
                         {!! Form::hidden('edit_code',isset($user_details)?$user_details->code:'',['id'=>'edit_code']) !!}
                         <div class="form-group row">
-                            <div class="col-sm-4 mg-t-10">{{Form::label('name', __('text.name'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
+                            <div class="col-sm-4 mg-t-10">{{Form::label('name', __('text.name'), ['class' => 'form-label mg-b-0 required']) }}</div>
                             <div class="col-sm-8">
                                 {{Form::text('name', isset($user_details)?$user_details->name:'', ['id'=>'name','placeholder'=>__('text.enter_name'),'autocomplete'=>'off', 'class' => 'form-control', 'maxlength'=>'30']) }}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-4 mg-t-10">{{Form::label('mobile_no',__('text.mobile_no'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
+                            <div class="col-sm-4 mg-t-10">{{Form::label('mobile_no',__('text.mobile_no'), ['class' => 'form-label mg-b-0 required']) }}</div>
                             <div class="col-sm-8">
                                 {{Form::text('mobile_no', isset($user_details)?$user_details->mobile_no:'', ['id'=>'mobile_no','placeholder'=>__('text.enter_mobile_number'),'autocomplete'=>'off','class' => 'form-control','pattern'=>'[0-9]*', 'inputmode'=>'numeric','onkeypress'=>'return isNumberKey(event)','maxlength'=>'10']) }}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-4 mg-t-10">{{Form::label('designation', __('text.designation'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
+                            <div class="col-sm-4 mg-t-10">{{Form::label('designation', __('text.designation'), ['class' => 'form-label mg-b-0 required']) }}</div>
                             <div class="col-sm-8">
                                 {{Form::text('designation', isset($user_details)?$user_details->designation:'', ['id'=>'designation','placeholder'=>__('text.enter_designation'),'autocomplete'=>'off','class' => 'form-control', 'maxlength'=>'30']) }}
                             </div>
@@ -48,7 +48,7 @@
 </div>
 </div>
  <?php if (isset($user_details)) { ?>
- 
+
  <input name="edit_data" type="hidden" value="1" id="edit_data">
  <?php } ?>
 
@@ -59,4 +59,4 @@
 
 <script src="{{asset('/app/js/user_create.js')}}"></script>
 
-@endsection 
+@endsection

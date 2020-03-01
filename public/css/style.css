@@ -1,0 +1,82 @@
+.brik>tbody>tr>td {
+  padding: 5px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.card-body-index {
+  min-height: 400px;
+}
+
+.table-title {
+  font-size: 50px;
+}
+
+.scrollToTop {
+  display: inline;
+}
+
+#footer2 {
+  background: black;
+}
+
+.loader {
+  display: none;
+}
+
+.alert-title {
+  color: red"
+
+}
+
+.alert-body {
+  color: green;
+}
+
+.datatbl {
+  width: 96%;
+  margin-left: 20px;
+}
+
+.tbl_t {
+  padding-left: 10px;
+}
+
+.table {
+  width: 100%;
+}
+
+.mobile_no {
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.form-label {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.counter {
+  color: white;
+}
+
+.footer-home {
+  background: black;
+}
+
+.block {
+  background: #5391af;
+  min-height: 100px;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.push-right {
+  margin-bottom: 20px;
+}
+
+.push-left {
+  margin-bottom: 20px;
+}

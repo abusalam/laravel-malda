@@ -6,15 +6,15 @@
             <div class="card-body">
                 <h3 class="card-title">Pending Grievance</h3>
                 {{csrf_field()}}
-                <div class="datatbl  " style="width: 96%;margin-left: 20px;">
-                    <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_grievance_list" style="width: 100%">
+                <div class="datatbl  ">
+                    <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_grievance_list" >
                         <thead>
                             <tr>
-                                <th style="width: 5%;">#</th>
-                                <th style="width: 40%;">User</th>
-                                <th style="width: 40%;">Designation</th>
-                                <th style="width: 40%;">No of Grievance</th>
-                                <th style="width: 15%;">Action</th>
+                                <th width="5%">#</th>
+                                <th width="40%">User</th>
+                                <th width="40%">Designation</th>
+                                <th width="40%">No of Grievance</th>
+                                <th width="15%">Action</th>
                             </tr>
                         </thead>
                         <tbody></tbody>

@@ -3,24 +3,24 @@
 
 
 <div class="row" id="row-content">
-    <div class="col-12">                        
+    <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">{{__('text.log_details_table_heading')}}</h3>
-                
 
-                <div class="datatbl  " style="width: 96%;margin-left: 20px;">
-                    <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_log_details" style="width: 100%">
+
+                <div class="datatbl  ">
+                    <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_log_details" >
                         <thead>
                             <tr>
-                                <th style="width: 5%;">Sl No</th>
-                                <th style="width: 15%;">Name</th>              
-                                {{-- <th style="width: 20%;">Session Id</th>  --}}
-                                <th style="width: 10%;">User Ip</th>   
-                                <th style="width: 15%;">Visited Page</th>
-                                {{-- <th style="width: 15%;">Description</th> --}}
-                                <th style="width: 20%;">Created at</th>
-                                <th style="width: 20%;">Action</th>
+                                <th width="5%">Sl No</th>
+                                <th width="15%">Name</th>
+                                {{-- <th width="20%">Session Id</th>  --}}
+                                <th width="10%">User Ip</th>
+                                <th width="15%">Visited Page</th>
+                                {{-- <th width="15%">Description</th> --}}
+                                <th width="20%">Created at</th>
+                                <th width="20%">Action</th>
                             </tr>
 
                         </thead>
@@ -29,7 +29,7 @@
                     </table>
                 </div>
             </div>
-       
+
     </div>
 </div>
 </div>
@@ -45,7 +45,7 @@
         <div class="modal-body">
           <div id="view_log_details"></div>
         </div>
-      
+
       </div>
     </div>
   </div>
@@ -60,4 +60,4 @@
 
 
 
-@endsection 
+@endsection

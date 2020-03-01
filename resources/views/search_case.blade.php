@@ -3,7 +3,7 @@
 
 
 <div class="row" id="row-content">
-    <div class="col-12">                        
+    <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">{{__('text.case_search')}}</h3>
@@ -11,7 +11,7 @@
                     {{Form::open(['name'=>'case_search','id'=>'case_search','url' => '', 'method' => 'post'])}}
                     <div class="form-group row">
                         <div class="col-sm-2">&nbsp;</div>
-                        <div class="col-sm-2 mg-t-10">{{Form::label('case_number',  __('text.case_number'), ['class' => 'form-label mg-b-0 required','style'=>'font-weight:800; font-size:16px;']) }}</div>
+                        <div class="col-sm-2 mg-t-10">{{Form::label('case_number',  __('text.case_number'), ['class' => 'form-label mg-b-0 required']) }}</div>
                         <div class="col-sm-4">
                             {{Form::text('case_number', '', ['id'=>'case_number','placeholder'=> __('text.enter_case_number'),'autocomplete'=>'off', 'class' => 'form-control']) }}
                         </div>
@@ -45,12 +45,12 @@
                     </div>
                     {!! Form::close() !!}
                 </div>
-                <div id="tbl_t" style="padding-left: 10px;">
-                </div> 
-            </div> 
-        </div> 
-    </div> 
-</div> 
+                <div id="tbl_t">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
