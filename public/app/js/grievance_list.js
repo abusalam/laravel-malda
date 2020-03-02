@@ -1,6 +1,29 @@
 
 	var forward ;
     $(document).ready(function () {
+        var lang_en_bn=$("#language_en_bn").val();
+          if(lang_en_bn == "en" || lang_en_bn == ""){
+         
+            var please_select_user="Please Select User.";
+            var choose_resolved_forward="Please Choose Resolved or Forward";
+            var forward_successfully="Forworded Successfully";
+            var already_forward_this_user="Already Forwarded this User";
+            var resolved_successfully="Resolved Successfully";
+           
+           
+   }else if(lang_en_bn == "bn"){
+
+           
+            var please_select_user="ব্যবহারকারী নির্বাচন করুন।";
+            var choose_resolved_forward="সমাধান বা এগিয়ে বেছে নিন";
+            var forward_successfully="সফলভাবে ফরওয়ার্ড করা হয়েছে";
+            var already_forward_this_user="ইতিমধ্যে এই ব্যবহারকারী ফরওয়ার্ড করা হয়েছে";
+            var resolved_successfully="সাফল্যের সাথে সমাধান হয়েছে";
+           
+           
+
+
+   }
         //alert();
          
 			 
@@ -93,7 +116,7 @@ str += '</table>';
                              $("#submit_grievance").click(function(){
 
                                var submit_data=  $("#submit_grievance").val();
-                                  submitForward(submit_data);
+                                  submitForward(submit_data,please_select_user,choose_resolved_forward,forward_successfully,already_forward_this_user,resolved_successfully);
 
                              });
             //                  if(code == 0){
@@ -253,7 +276,7 @@ str += '</table>';
 			}
 		}
 		
-		function submitForward(grievance_code){
+		function submitForward(grievance_code,please_select_user,choose_resolved_forward,forward_successfully,already_forward_this_user,resolved_successfully){
            
 			var forwardresolved = $("input[name='forwardresolved']:checked").val();
 			var token = $("input[name='_token']").val();
@@ -280,12 +303,12 @@ str += '</table>';
 					f=0;
 			}else if(forwardresolved==0){
 						if(to_forword == ''){
-						msg+= '<li>Please Select User</li>';
+						msg+= please_select_user;
 						f=1;
 					}
 					
 			}else{
-				msg+= '<li>Please Choose Forward or Resolve</li>';
+				msg+= choose_resolved_forward;
 				f=1;
 			}
 			
@@ -321,7 +344,7 @@ str += '</table>';
 													title: 'Success!',
 													type: 'green',
 													icon: 'fa fa-check',
-													content: "Grievance Forwarded Successfully",
+													content: forward_successfully,
 													buttons: {
 															ok: function () {
 																	create_table();
@@ -335,7 +358,7 @@ str += '</table>';
 													title: 'Unsuccess!',
 													type: 'red',
 													icon: 'fa fa-check',
-													content: "Already forwarded this User",
+													content: already_forward_this_user,
 													buttons: {
 															ok: function () {
 
@@ -353,7 +376,7 @@ str += '</table>';
 													title: 'Success!',
 													type: 'green',
 													icon: 'fa fa-check',
-													content: "Grievance Resolved Successfully",
+													content: resolved_successfully,
 													buttons: {
 															ok: function () {
                                                                 create_table();

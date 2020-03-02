@@ -1,22 +1,67 @@
 
  $(document).ready(function () {
+
+    var lang_en_bn=$("#language_en_bn").val();
+   
+   if(lang_en_bn == "en" || lang_en_bn == ""){
+         
+            var name_required ="Name is Required";
+            var regex_for_name="Only Alphabate and Space allowed here";
+            var stringlength_for_name="Name must be between 1 to 30 character";
+            
+            var mobile_no_required="Mobile Number Is Required";
+            var mobile_no_digit="Mobile Number is not valid";
+            var mobile_no_stringlength="Mobile Number have 10 digit";
+
+            var designation_required="Designation is Required";
+            var regex_for_designation="Only Alphabate and Space allowed here";
+            var stringlength_for_designation="Designation Must be between 1 to 30 Character";
+            var user_added="User Added Successfully";
+            var user_update="User Updated Successfully";
+
+
+           
+           
+   }else if(lang_en_bn == "bn"){
+
+           
+            var name_required ="নাম আবশ্যক";
+            var regex_for_name="এখানে কেবলমাত্র বর্ণমালা এবং স্পেস অনুমোদিত";
+            var stringlength_for_name="নামটি ১ থেকে ৩0 অক্ষরের মধ্যে হওয়া আবশ্যক";   
+            
+            var mobile_no_required="মোবাইল নম্বর প্রয়োজন";
+            var mobile_no_digit="মোবাইল নম্বর বৈধ নয়";
+            var mobile_no_stringlength="মোবাইল নম্বরটির ১0 টি সংখ্যা প্রয়োজন";
+
+            var designation_required="পদবী আবশ্যক";
+            var regex_for_designation="এখানে কেবলমাত্র বর্ণমালা এবং স্পেস অনুমোদিত";
+            var stringlength_for_designation="পদবী  ১ থেকে ৩0 অক্ষরের মধ্যে হওয়া আবশ্যক";
+            var user_added="ব্যবহারকারী সফলভাবে যুক্ত হয়েছে";
+            var user_update="ব্যবহারকারী সফলভাবে আপডেট হয়েছে";
+           
+           
+
+
+   }
+
+
         $('#userCreate').bootstrapValidator({
             message: 'This value is not valid',
             fields: {
                 name: {
                     validators: {
                         notEmpty: {
-                            message: 'Name is Required'
+                            message: name_required
                    
                         },
                         regexp: {
                             regexp: /^[A-Za-z\s]+$/i,
-                            message: 'Only Alphanumeric Allowed Here'
+                            message: regex_for_name
                         },
                         stringLength: {
                             min: 1,
                             max: 30,
-                            message: 'Length Should be between 1 to 30'
+                            message: stringlength_for_name
                         }
                     }
                 },
@@ -24,31 +69,31 @@
                 mobile_no: {
                     validators: {
                         notEmpty: {
-                            message: 'Mobile Number is Required'
+                            message: mobile_no_required
                         },
                         digits: {
-                            message: 'Mobile Number should be in Digits'
+                            message: mobile_no_digit
                         },
                         stringLength: {
                             min: 10,
                             max: 10,
-                            message: 'Mobile Number Should be in 10 Digits'
+                            message: mobile_no_stringlength
                         }
                     }
                 },
                 designation: {
                     validators: {
                         notEmpty: {
-                            message: 'Designation is Required'
+                            message: designation_required
                         },
                         regexp: {
                             regexp: /^[A-Za-z\s]+$/i,
-                            message: 'Only Alphabate allowed here '
+                            message: regex_for_designation
                         },
                         stringLength: {
                             min: 1,
                             max: 30,
-                            message: 'Length Should be between 1 to 30'
+                            message: stringlength_for_designation
                         }
                     }
                 }
@@ -101,7 +146,7 @@ if(data.logout_error==true){
                             title: 'Success!!',
                             type: 'green',
                             icon: 'fa fa-success',
-                            content: "User Added Successfully",
+                            content: user_added,
                             buttons: {
                                 Ok: function () {
 
@@ -120,7 +165,7 @@ if(data.logout_error==true){
                             title: 'Success!!',
                             type: 'green',
                             icon: 'fa fa-success',
-                            content: "User Update Successfully",
+                            content: user_update,
                             buttons: {
                                 Ok: function () {
 

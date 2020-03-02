@@ -198,7 +198,7 @@
                                     <div class="left-content pull-left">
                                         <div id="breadcam" role="navigation" aria-label="breadcrumb">
                                             <ul class="breadcrumbs">
-                                                <li><a href="./" class="home"><span>{{__('home')}}</span></a></li>
+                                                <li><a href="./" class="home"><span>{{__('text.home')}}</span></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -246,6 +246,7 @@
                 </div>
             </div>
         </footer>
+        <input type="hidden" id="language_en_bn" name="language_en_bn" value={{session()->get('locale')}}>
     </div>
     <script src="{{ asset('/lib/jquery/jquery.min.js') }}"></script>
     <script src="./front/js/menumaker.js"></script>

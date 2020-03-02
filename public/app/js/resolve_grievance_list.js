@@ -2,6 +2,24 @@
 
     var close;
     $(document).ready(function () {
+
+        var lang_en_bn=$("#language_en_bn").val();
+          if(lang_en_bn == "en" || lang_en_bn == ""){
+         
+            var grievance_closed_successfully="Grievance saved successfully.";
+            var check_confirmation_for_close="Please Check confirmation for Close the Grievance";
+           
+           
+   }else if(lang_en_bn == "bn"){
+
+           
+            var grievance_closed_successfully="অভিযোগ সফলভাবে সংরক্ষণ করা হয়েছে।";
+            var check_confirmation_for_close="অভিযোগ বন্ধ করার জন্য দয়া করে নিশ্চিতকরণ পরীক্ষা করুন";
+           
+
+
+   }
+
         create_table();
 
           var table = $('#tbl_grievance_list').DataTable();
@@ -104,7 +122,7 @@ if(data.logout_error==true){
                       $("#closed_submit").click(function(){
 
                         var closed_data = $("#closed_submit").val();
-                        close_grievance(closed_data);
+                        close_grievance(closed_data,grievance_closed_successfully,check_confirmation_for_close);
 
 
                       });
@@ -121,7 +139,7 @@ if(data.logout_error==true){
 
     });
 
-    function close_grievance(grievance_code){
+    function close_grievance(grievance_code,grievance_closed_successfully,check_confirmation_for_close){
     if($("#check").prop('checked') == true){
 
         var token = $("input[name='_token']").val();
@@ -142,7 +160,7 @@ if(data.logout_error==true){
                                                         title: 'Success!',
                                                         type: 'green',
                                                         icon: 'fa fa-check',
-                                                        content: "Grievance Closed Successfully",
+                                                        content: grievance_closed_successfully,
                                                         buttons: {
                                                             ok: function () {
 
@@ -160,7 +178,7 @@ if(data.logout_error==true){
 
 $.confirm({
         title: 'Unsuccess !!',
-        content: "Please Check confirmation for Close the Grievance",
+        content: check_confirmation_for_close,
         boxWidth: '20%',
         useBootstrap: false,
         buttons: {

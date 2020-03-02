@@ -16,6 +16,22 @@
         });
     });
 
+    var lang_en_bn=$("#language_en_bn").val();
+   
+   if(lang_en_bn == "en" || lang_en_bn == "" ){
+
+         var case_not_valid="Case Number is not valid";
+            
+           
+           
+   }else if(lang_en_bn == "bn"){
+
+           var case_not_valid="কেস নম্বর বৈধ নয়";
+           
+
+
+   }
+
     $("#Search").click(function () {
 
         var case_number = $("#case_number").val();
@@ -74,7 +90,7 @@
                     title: 'Error!!',
                     type: 'red',
                     icon: 'fa fa-warning',
-                    content: "Case Number is not Valid",
+                    content: case_not_valid,
                 });
             }
 

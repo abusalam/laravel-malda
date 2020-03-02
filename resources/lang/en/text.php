@@ -1,7 +1,6 @@
 <?php
 
-
-return [
+ return [
 
 //Menu Name
 

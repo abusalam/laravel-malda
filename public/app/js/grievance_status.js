@@ -14,6 +14,45 @@ $('#refresh').click(function() {
   });
 });
 
+ var lang_en_bn=$("#language_en_bn").val();
+   
+   if(lang_en_bn == "en" || lang_en_bn == ""){
+         
+            
+            var enter_captcha="Enter Captcha";
+            var mobile_no_required="Mobile Number Is Required";
+            var mobile_no_digit="Mobile Number is not valid";
+            var mobile_no_stringlength="Mobile Number have 10 digit";
+            var configuration_disabled_msg="SMS Disabled in Configuration.<br/>Your OTP is ";
+            var enter_otp_to_continue="Please enter OTP to continue";
+            var otp_integer="Otp must be an Integer";
+            var mobile_number_integer="Mobile No must be an Integer";
+            var otp_incorrect_msg="Please Enter Correct Otp To continue";
+            var mobile_no_not_register="Mobile Number is not register with us.";
+            var enter_mobile_number_grievance_id="Enter Mobile Number and Grievance ID";
+            var mobile_no_is_already_registered="Mobile no is already register";
+           
+   }else if(lang_en_bn == "bn"){
+
+           
+                
+            var enter_captcha="ক্যাপচা প্রয়োজনীয়";
+            var mobile_no_required="মোবাইল নম্বর প্রয়োজন";
+            var mobile_no_digit="মোবাইল নম্বর বৈধ নয়";
+            var mobile_no_stringlength="মোবাইল নম্বরটির ১0 টি সংখ্যা প্রয়োজন";
+            var configuration_disabled_msg="এসএমএস কনফিগারেশনে অক্ষম। <br/> আপনার ওটিপি হয় ";
+            var enter_otp_to_continue="চালিয়ে যেতে ওটিপি প্রবেশ করুন";
+            var otp_integer="Otp অবশ্যই একটি পূর্ণসংখ্যা হতে হবে";
+            var mobile_number_integer="মোবাইল নম্বর অবশ্যই একটি পূর্ণসংখ্যার হতে হবে";
+            var otp_incorrect_msg="চালিয়ে যাওয়ার জন্য দয়া করে সঠিক ওটিপি প্রবেশ করুন";
+            var mobile_no_not_register="মোবাইল নম্বর আমাদের সাথে নিবন্ধভুক্ত নয়।";
+            var enter_mobile_number_grievance_id="মোবাইল নম্বর এবং অভিযোগ আইডি প্রবেশ করান";
+            var mobile_no_is_already_registered="মোবাইল নং ইতিমধ্যে নিবন্ধভুক্ত";
+           
+
+
+   }
+
 $("#Search").click(function() {
 
   var grievance_id = $("#grievance_id").val();
@@ -24,7 +63,7 @@ $("#Search").click(function() {
       title: 'Error!!',
       type: 'red',
       icon: 'fa fa-warning',
-      content: "Enter Mobile Number and Grievance ID",
+      content: enter_mobile_number_grievance_id,
     });
 
 
@@ -42,13 +81,13 @@ $("#Search").click(function() {
             var msg = '';
           } else {
 
-            var msg = 'SMS Disabled in Configuration.<br/>Your OTP is' + data.otp;
+            var msg = configuration_disabled_msg + data.otp;
           }
-          otp_call(msg, mobileNo, grievance_id, capcha);
+          otp_call(msg, mobileNo, grievance_id, capcha,configuration_disabled_msg,enter_otp_to_continue,otp_integer,mobile_number_integer,otp_incorrect_msg);
         } else {
 
           $('#error').html('');
-          $('#error').append('Mobile Number is not register with us.');
+          $('#error').append(mobile_no_not_register);
           $('#error').show();
 
         }
@@ -88,11 +127,11 @@ $("#Search").click(function() {
 
 });
 
-function otp_call(msg, mobileNo, grievance_id, capcha) {
+function otp_call(msg, mobileNo, grievance_id, capcha,configuration_disabled_msg,enter_otp_to_continue,otp_integer,mobile_number_integer,otp_incorrect_msg) {
 
   var jc = $.confirm({
-    title: 'Please enter OTP to continue',
-    content: msg + '<input type="text" style="display:none" class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + mobileNo + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
+    title: enter_otp_to_continue,
+    content: msg + '<input type="hidden"  class="form-control" id="mob_no_new" name="mob_no_new"  autocomplete="off" value="' + mobileNo + '"><br><input type="text" class="form-control" id="otp" name="otp"  autocomplete="off" placeholder="OTP">',
     type: 'green',
     typeAnimated: true,
     buttons: {
@@ -109,9 +148,9 @@ function otp_call(msg, mobileNo, grievance_id, capcha) {
                 var msg = '';
               } else {
 
-                var msg = 'SMS Disabled in Configuration.<br/>Your OTP is ' + data.otp;
+                var msg = configuration_disabled_msg + data.otp;
               }
-              otp_call(msg, mobileNo, grievance_id, capcha);
+              otp_call(msg, mobileNo, grievance_id, capcha,configuration_disabled_msg,enter_otp_to_continue,otp_integer,mobile_number_integer,otp_incorrect_msg);
             },
             error: function(jqXHR, textStatus, errorThrown) {
               $(".se-pre-con").fadeOut("slow");
@@ -151,13 +190,13 @@ function otp_call(msg, mobileNo, grievance_id, capcha) {
           var otp = $("#otp").val();
           if (isNaN(otp)) {
             jc.hideLoading(true);
-            $.alert('OTP should be Integer');
+            $.alert(otp_integer);
             return false;
             jc.open(true);
           }
           if (isNaN(mob_no_new)) {
             jc.hideLoading(true);
-            $.alert('Mobile Number Should be Integer');
+            $.alert(mobile_number_integer);
             return false;
             jc.open(true);
           }
@@ -273,7 +312,7 @@ function otp_call(msg, mobileNo, grievance_id, capcha) {
                 title: 'Error!!',
                 type: 'red',
                 icon: 'fa fa-warning',
-                content: "{{__('text.otp_incorrect_msg')}}",
+                content: otp_incorrect_msg,
                 buttons: {
                   Ok: function() {
                     jc.open(true);

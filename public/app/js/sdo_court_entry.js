@@ -1,5 +1,46 @@
 
     $(document).ready(function () {
+
+        var lang_en_bn=$("#language_en_bn").val();
+
+        if(lang_en_bn == "en" || lang_en_bn == ""){
+         
+        var case_no_required="Case Number is required";
+        var case_no_regex="Only Alphanumeric Space and (./-_) allowed here";
+        var case_no_stringlenth="Case Number Must be between 1 to 40 Character";
+        //next hiring date bootstrap validation
+        var nxt_hiring_date_required="Next Hearing Date is required";
+        var nxt_hiring_date_format="Next Hearing Date Should be DD/MM/YYYY Format";
+        //sdo court description Bootstrap Validation
+        var sdo_desdcription_required="Description is required";
+        var regedx_for_sdo_desdcription="Only Alphanumeric Space and (./-_) allowed here";
+        var stringlength_for_sdo_desdcription="Description Must be between 1 to 100 Character";
+        var case_details_added="Case Details Added Successfully";
+        var case_details_update="Case Details Updated Successfully";
+           
+   }else if(lang_en_bn == "bn"){
+
+        var case_no_required="কেস নম্বর প্রয়োজন";
+        var case_no_regex="এখানে কেবলমাত্র আলফানামুরিক স্পেস এবং (./-_) অনুমোদিত";
+        var case_no_stringlenth="কেস নম্বর  ১ থেকে ৪0 অক্ষরের মধ্যে হওয়া আবশ্যক";
+        //next hiring date bootstrap validation
+        var nxt_hiring_date_required="পরবর্তী শুনানির তারিখ প্রয়োজন";
+        var nxt_hiring_date_format="পরবর্তী শুনানির তারিখটি dd/mm/yyyy ফর্ম্যাট হওয়া উচিত";
+        //sdo court description Bootstrap Validation
+        var sdo_desdcription_required="বিবরণ প্রয়োজন";
+        var regedx_for_sdo_desdcription="এখানে কেবলমাত্র আলফানামুরিক স্পেস এবং (./-_) অনুমোদিত";
+        var stringlength_for_sdo_desdcription="বিবরণ ১ থেকে ১00 চরিত্রের মধ্যে হওয়া আবশ্যক";
+        var case_details_added="মামলার বিবরণ সফলভাবে যুক্ত হয়েছে";
+        var case_details_update="মামলার বিবরণ সফলভাবে আপডেট হয়েছে";
+
+     
+
+   }
+
+
+       
+
+
         $('#nxt_hearing_date').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
@@ -16,16 +57,16 @@
                 case_number: {
                     validators: {
                         notEmpty: {
-                            message: 'Case Number is Required'
+                            message: case_no_required
                         },
                         regexp: {
                             regexp: /^[A-Za-z0-9./\-_\s]+$/i,
-                            message: 'Only Alphanumeric Space and (./-_) allowed here'
+                            message: case_no_regex
                         },
                         stringLength: {
                             min: 1,
                             max: 40,
-                            message: 'Case Number Must be between 1 to 40 Character'
+                            message: case_no_stringlenth
                         }
                     }
                 },
@@ -33,11 +74,11 @@
                 nxt_hearing_date: {
                     validators: {
                         notEmpty: {
-                            message:  'Next hearing date is required'
+                            message:  nxt_hiring_date_required
                         },
                         date: {
                             format: 'DD/MM/YYYY',
-                            message: 'Next Hearing Date Should be DD/MM/YYYY Format'
+                            message: nxt_hiring_date_format
                         }
 
                     }
@@ -45,16 +86,16 @@
                 description: {
                     validators: {
                         notEmpty: {
-                            message: 'Description is Required'
+                            message: sdo_desdcription_required
                         },
                         regexp: {
                             regexp: /^[A-Za-z0-9./\-_\s]+$/i,
-                            message: 'Only Alphanumeric Space and (./-_) allowed here'
+                            message: regedx_for_sdo_desdcription
                         },
                         stringLength: {
                             min: 1,
                             max: 100,
-                            message: 'Description Must be between 1 to 100 Character'
+                            message: stringlength_for_sdo_desdcription
                         }
                     }
                 }
@@ -108,7 +149,7 @@ if(data.logout_error==true){
                             title: 'Success!!',
                             type: 'green',
                             icon: 'fa fa-success',
-                            content: "Case details Added Successfully",
+                            content: case_details_added,
                             buttons: {
                                 Ok: function () {
                                     $('#sdocourt_entry').get(0).reset();
@@ -124,7 +165,7 @@ if(data.logout_error==true){
                             title: 'Success!!',
                             type: 'green',
                             icon: 'fa fa-success',
-                            content: "Case details Updated Successfully",
+                            content: case_details_update,
                             buttons: {
                                 Ok: function () {
                                     window.location.href = "case_list";

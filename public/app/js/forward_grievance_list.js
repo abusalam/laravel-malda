@@ -1,6 +1,25 @@
 
     $(document).ready(function () {
 
+         var lang_en_bn=$("#language_en_bn").val();
+          if(lang_en_bn == "en" || lang_en_bn == ""){
+         
+            var to_date_should_be_greater_than_from_date="To date should be greater than from date";
+            var from_date_should_be_lesser_than_to_date="From date should be lesser than to date";
+           
+           
+   }else if(lang_en_bn == "bn"){
+
+           var to_date_should_be_greater_than_from_date="To Date , From Date চেয়ে বেশি হওয়া উচিত";
+           var from_date_should_be_lesser_than_to_date="From Date , To Date চেয়ে কম হওয়া উচিত";
+           
+           
+
+
+   }
+
+        
+
 
 
          $("#to_date").datepicker({
@@ -30,7 +49,7 @@
             var date2 = new Date(arrEndDate[2], arrEndDate[1], arrEndDate[0]);
 
             if ((Date.parse(date2) < Date.parse(date1))) {
-                alert("To date should be greater than from date");
+                alert(to_date_should_be_greater_than_from_date);
                 document.getElementById("to_date").value = "";
                 $('.has-error').addClass('has-error');
                 $('#case_search').data('bootstrapValidator').updateStatus('to_date', 'INVALID', null)
@@ -50,7 +69,7 @@
             //alert(date2);
             if ((Date.parse(date2) < Date.parse(date1))) {
 
-                alert("From date should be lesser than to date");
+                alert(from_date_should_be_lesser_than_to_date);
                 document.getElementById("from_date").value = "";
                 $('.has-error').addClass('has-error');
                 $('#case_search').data('bootstrapValidator').updateStatus('from_date', 'INVALID', null)

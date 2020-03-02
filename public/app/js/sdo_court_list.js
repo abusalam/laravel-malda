@@ -1,6 +1,24 @@
 
     $(document).ready(function () {
 
+         var lang_en_bn=$("#language_en_bn").val();
+   
+   if(lang_en_bn == "en" || lang_en_bn == ""){
+         
+          var want_to_delete="Are you sure to delete the record?";
+          var case_delete="Case deleted successfully.";
+          var failed_to_delete_data="failed to Delete data. Try again";
+           
+   }else if(lang_en_bn == "bn"){
+
+          var want_to_delete="আপনি কি রেকর্ডটি মোছার বিষয়ে নিশ্চিত?";
+          var case_delete="কেস সফলভাবে মোছা হয়েছে।";
+          var failed_to_delete_data="ডেটা মুছতে ব্যর্থ। আবার চেষ্টা কর";
+
+     
+
+   }
+
 
         create_table();
 
@@ -31,7 +49,7 @@
 
             $('.delete-button').click(function () {
 
-                var reply = confirm('Are you want to delete this record');
+                var reply = confirm(want_to_delete);
                 if (!reply) {
                     return false;
                 }
@@ -52,14 +70,14 @@
                                 type: 'green',
                                 icon: 'fa fa-check',
                                 title: 'Success!!',
-                                content: 'Record deleted Successfully'
+                                content: case_delete
                             });
                         } else {
                             $.alert({
                                 type: 'red',
                                 icon: 'fa fa-warning',
                                 title: 'Error!!',
-                                content: 'Failed to delete data'
+                                content: failed_to_delete_data
                             });
                         }
                     },

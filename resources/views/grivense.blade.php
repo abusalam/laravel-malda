@@ -56,7 +56,7 @@
                 <div class="form-group row">
                     <div class="col-sm-2">&nbsp;</div>
                     <div class="col-sm-2 mg-t-10">
-                        {!! Form::label('attatchment', __('text.attachment'), ['class'=>' mg-b-0 required']) !!}
+                        {!! Form::label('attatchment', __('text.attachment'), ['class'=>'form-label mg-b-0 required']) !!}
                     </div>
                     <div class="col-sm-4">
                         {!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}

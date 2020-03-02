@@ -245,6 +245,7 @@
                 </div>
             </div>
         </footer>
+        <input type="hidden" id="language_en_bn" name="language_en_bn" value={{session()->get('locale')}}>
     </div>
     <script src="{{ asset('./front/js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('./front/js/menumaker.js') }}"></script>

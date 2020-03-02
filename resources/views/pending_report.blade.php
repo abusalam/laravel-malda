@@ -4,7 +4,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">Pending Grievance</h3>
+                <h3 class="card-title">{{__('text.pending_grievance_report')}}</h3>
                 {{csrf_field()}}
                 <div class="datatbl  ">
                     <table class="table table-striped table-bordered table-hover notice-types-table" id="tbl_grievance_list" >
