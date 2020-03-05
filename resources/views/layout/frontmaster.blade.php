@@ -9,7 +9,7 @@
         header("Pragma: no-cache");
 
         session_set_cookie_params(0,"","",true,true);
-        header ( "Content-Security-Policy: default-src 'self' blob: data: ; " );
+        header ("Content-Security-Policy: default-src 'self'; frame-ancestors 'none';"  );
         header('Expires','Sun, 02 Jan 1990 00:00:00 GMT');
 
 
