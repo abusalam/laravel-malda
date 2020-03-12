@@ -7,11 +7,10 @@
      $.ajax({
        type: 'POST',
        url: 'refreshcaptcha',
-       data: { _token: '{{csrf_token()}}' },
+       data: { _token: $("input[name='_token']").val() },
        dataType: 'json',
        success: function(data) {
          $(".captcha span").html(data.captcha);
-         $("#case_number").val('');
          $("#captcha").val('');
        }
      });

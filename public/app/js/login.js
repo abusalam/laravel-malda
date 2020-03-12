@@ -11,7 +11,6 @@ $(document).ready(function() {
       dataType: 'json',
       success: function(data) {
         $(".captcha span").html(data.captcha);
-        $("#username").val('');
         $("#captcha").val('');
       }
     });

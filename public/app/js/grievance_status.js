@@ -8,7 +8,6 @@ $('#refresh').click(function() {
     dataType: 'json',
     success: function(data) {
       $(".captcha span").html(data.captcha);
-      $("#grievance_id").val('');
       $("#captcha").val('');
     }
   });

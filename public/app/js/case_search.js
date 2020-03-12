@@ -10,7 +10,6 @@
                   logout_error();
                 }
                 $(".captcha span").html(data.captcha);
-                $("#case_number").val('');
                 $("#captcha").val('');
             }
         });
