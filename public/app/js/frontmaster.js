@@ -5,14 +5,14 @@
              if(token != '' ){
       
                 var datas = {'_token': encodeURI($('input[name="_token"]').val())};
-                redirectPost('logout', datas);
+                fun_logout('logout', datas);
             }else{
                 location.reload();
              }
 
       });
 
-      function redirectPost(url, data1) {
+      function fun_logout(url, data1) {
         var $form = $("<form />");
         $form.attr("action", url);
         $form.attr("method", "post");
