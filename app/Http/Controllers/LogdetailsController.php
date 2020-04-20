@@ -52,12 +52,13 @@ class LogdetailsController extends Controller
 
         $data = array();
         $record = tbl_user_log_details::leftjoin('tbl_user','tbl_user.code','tbl_user_log_details.userCode')
-        ->select('tbl_user_log_details.code','tbl_user.name','userCode','userIp','visitedPage','tbl_user_log_details.created_at')
+        ->select('tbl_user_log_details.code','tbl_user.name','userCode','userIp','visitedPage','tbl_user_log_details.created_at','tbl_user_log_details.browser')
                 ->orderby('tbl_user_log_details.code', 'desc')
         ->where(function($q) use ($search) {
         $q->orwhere('tbl_user.name', 'like', '%' . $search . '%');
         $q->orwhere('userIp', 'like', '%' . $search . '%');
         $q->orwhere('visitedPage', 'like', '%' . $search . '%');
+        $q->orwhere('browser', 'like', '%' . $search . '%');
         });
 
       
@@ -75,6 +76,7 @@ class LogdetailsController extends Controller
             }
             $nestedData['userIp'] = $row->userIp;
             $nestedData['visitedPage'] = $row->visitedPage;
+            $nestedData['browser'] = $row->browser;
             $nestedData['created_at'] = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $row->created_at)->format('d/m/Y H:i:s');
             $view_button = $row->code;
             $nestedData['action'] = array('v' => $view_button);
@@ -93,7 +95,7 @@ class LogdetailsController extends Controller
     public function logview(Request $request){
         //  dd($request->all());
         $view = tbl_user_log_details::leftjoin('tbl_user','tbl_user.code','tbl_user_log_details.userCode')
-        ->select('tbl_user_log_details.*','tbl_user.name','tbl_user.mobile_no','tbl_user.designation','tbl_user.user_type',DB::raw('DATE_FORMAT(tbl_user_log_details.created_at, "%d/%m/%Y") as created'),DB::raw('DATE_FORMAT(tbl_user_log_details.created_at, "%d/%m/%Y") as updated'))
+        ->select('tbl_user_log_details.*','tbl_user.name','tbl_user.mobile_no','tbl_user.designation','tbl_user.user_type',DB::raw('DATE_FORMAT(tbl_user_log_details.created_at, "%d/%m/%Y") as created'),DB::raw('DATE_FORMAT(tbl_user_log_details.created_at, "%d/%m/%Y") as updated','tbl_user_log_details.browser'))
         ->where('tbl_user_log_details.code',$request->code)
         ->first();
 

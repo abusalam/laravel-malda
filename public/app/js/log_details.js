@@ -51,6 +51,7 @@
                                 str += '<tr><td>  Session Id : </td><td>' + datas.options.sessionId + '</td></tr>';
                                 str += '<tr><td>  User Ip : </td><td>' + datas.options.userIp + '</td></tr>';
                                 str += '<tr><td>  Visited Page : </td><td>' + datas.options.visitedPage + '</td></tr>';
+                                str += '<tr><td>  Browser : </td><td>' + datas.options.browser + '</td></tr>';
                                 str += '<tr><td>  Description : </td><td>' + datas.options.description + '</td></tr>';
                                 str += '<tr><td>  Created At : </td><td>' + datas.options.created + '</td></tr>';
                                 str += '<tr><td>  Updated At : </td><td>' + datas.options.updated + '</td></tr>';
@@ -146,9 +147,14 @@
                             "data": "visitedPage",
 
                         },
-                       
                         {
                             "targets": 4,
+                            "data": "browser",
+
+                        },
+                       
+                        {
+                            "targets": 5,
                             "data": "created_at",
 
                         },

@@ -18,7 +18,7 @@
                                 {{-- <th width="20%">Session Id</th>  --}}
                                 <th width="10%">User Ip</th>
                                 <th width="15%">Visited Page</th>
-                                {{-- <th width="15%">Description</th> --}}
+                                <th width="15%">Browser</th>
                                 <th width="20%">Created at</th>
                                 <th width="20%">Action</th>
                             </tr>
