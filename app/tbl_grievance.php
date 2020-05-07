@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class tbl_grievance extends Model
 {
-    protected $table="tbl_grivense";
+    protected $table = 'tbl_grivense';
 }

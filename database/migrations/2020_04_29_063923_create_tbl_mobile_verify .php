@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTblMobileVerify extends Migration
 {
@@ -15,10 +15,10 @@ class CreateTblMobileVerify extends Migration
     {
         Schema::create('tbl_mobile_verify', function (Blueprint $table) {
             $table->increments('code');
-            $table->string('mobile_no','20')->collate('latin1_swedish_ci');
-            $table->string('otp','30')->collate('latin1_swedish_ci');
+            $table->string('mobile_no', '20')->collate('latin1_swedish_ci');
+            $table->string('otp', '30')->collate('latin1_swedish_ci');
             $table->integer('status_otp')->default(0);
-            $table->timestamp('otp_creation_time',0)->nullable();
+            $table->timestamp('otp_creation_time', 0)->nullable();
             $table->timestamps();
         });
     }

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTblUserLogDetails extends Migration
 {
@@ -14,7 +14,8 @@ class CreateTblUserLogDetails extends Migration
     public function up()
     {
         Schema::create(
-            'tbl_user_log_details', function (Blueprint $table) {
+            'tbl_user_log_details',
+            function (Blueprint $table) {
                 $table->increments('code')->unsigned();
                 $table->integer('userCode');
                 $table->string('sessionId', '100')->collate('utf8mb4_unicode_ci');
@@ -26,7 +27,7 @@ class CreateTblUserLogDetails extends Migration
             }
         );
     }
-    
+
     /**
      * Reverse the migrations.
      *
