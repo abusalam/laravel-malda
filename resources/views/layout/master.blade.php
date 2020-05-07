@@ -225,10 +225,10 @@
             <div class="container-fluid">
                 <div class="row text-white p-3">
                     <div class="col-sm-4 text-sm-left text-center">
-                        <span class="version">Version: <strong>1.0.0</strong></span>
+                        <span class="version">Version: <strong><?php echo config('app.version'); ?></strong></span>
                     </div>
                     <div class="col-sm-4 text-sm-center text-center">
-                        <span class="last_update">Last Updated: <strong>Sep 06, 2019</strong></span>
+                        <span class="last_update">Last Updated: <strong><?php echo str_replace("_"," ",config('app.lastupdate'));?></strong></span>
                     </div>
                     <div class="col-sm-4 text-sm-right text-center">
                         <span class="visitor_count">Visitor Count: <strong><?php echo $data_visitor_count ?></strong></span>
