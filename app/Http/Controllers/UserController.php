@@ -6,15 +6,18 @@ use Illuminate\Http\Request;
 use App\tbl_user;
 use DB;
 
-class UserController extends Controller {
+class UserController extends Controller
+{
 
-    public function index() {
+    public function index() 
+    {
         
 
         return view('index');
     }
 
-     public function home() {
+    public function home() 
+    {
         
 
         return view('login_home');

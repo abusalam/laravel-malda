@@ -13,13 +13,15 @@ class CreateTblCaseDetails extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_case_details', function (Blueprint $table) {
-            $table->increments('code');
-            $table->string('case_no','11')->collate('latin1_swedish_ci');
-            $table->date('nxt_hearing_date');
-            $table->string('description','200')->collate('latin1_swedish_ci');
-            $table->timestamps();
-        });
+        Schema::create(
+            'tbl_case_details', function (Blueprint $table) {
+                $table->increments('code');
+                $table->string('case_no', '11')->collate('latin1_swedish_ci');
+                $table->date('nxt_hearing_date');
+                $table->string('description', '200')->collate('latin1_swedish_ci');
+                $table->timestamps();
+            }
+        );
     }
 
     /**

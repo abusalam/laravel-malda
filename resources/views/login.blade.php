@@ -19,7 +19,7 @@
                             {{Form::text('username', '', ['id'=>'username','autocomplete'=>'off','placeholder'=>__('text.enter_mobile_number'),'class' => 'form-control','maxlength'=>'10', 'onkeypress'=>'return isNumberKey(event)']) }}
                         </div>
                     </div>
-                    <?php if(config('app.captcha')==0){  ?>
+                    <?php if(config('app.captcha')==0) {  ?>
                     <div class="row">
                         <div class="col-md-3"></div>
                         <div class="form-group col-md-7">

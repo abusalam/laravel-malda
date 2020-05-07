@@ -4,7 +4,7 @@
  <?php
   use App\Http\Controllers\ReportController;
   $grievance_report = ReportController::grievance_report();
- ?>
+    ?>
 
 <div class="row" id="row-content">
     <div class="col-12">

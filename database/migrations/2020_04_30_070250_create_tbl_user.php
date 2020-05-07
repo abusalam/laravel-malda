@@ -13,14 +13,16 @@ class CreateTblUser extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_user', function (Blueprint $table) {
-            $table->increments('code');
-            $table->string('mobile_no','20');
-            $table->string('name','100');
-            $table->string('designation');
-            $table->integer('user_type')->default(1)->comment('0->admin,1->user');
-            $table->timestamps();
-        });
+        Schema::create(
+            'tbl_user', function (Blueprint $table) {
+                $table->increments('code');
+                $table->string('mobile_no', '20');
+                $table->string('name', '100');
+                $table->string('designation');
+                $table->integer('user_type')->default(1)->comment('0->admin,1->user');
+                $table->timestamps();
+            }
+        );
     }
 
     /**

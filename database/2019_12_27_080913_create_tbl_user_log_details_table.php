@@ -13,10 +13,12 @@ class CreateTblUserLogDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_user_log_details', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
-        });
+        Schema::create(
+            'tbl_user_log_details', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->timestamps();
+            }
+        );
     }
 
     /**

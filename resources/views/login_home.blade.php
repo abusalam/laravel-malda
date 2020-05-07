@@ -8,7 +8,7 @@
   $grievance_report = ReportController::grievance_report();
 
 
- ?>
+    ?>
 
 
 <div class="row" id="row-content">

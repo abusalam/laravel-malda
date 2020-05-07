@@ -65,7 +65,7 @@
                 </div>
 
 
-                <?php if(config('app.captcha')==0){  ?>
+                <?php if(config('app.captcha')==0) {  ?>
 
                 <div class="row">
                     <div class="col-md-4"></div>

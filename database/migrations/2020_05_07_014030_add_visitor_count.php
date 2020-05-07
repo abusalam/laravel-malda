@@ -13,9 +13,11 @@ class AddVisitorCount extends Migration
      */
     public function up()
     {
-        Schema::table('tbl_user_log_details', function (Blueprint $table) {
-            $table->integer('visitor_count')->after('browser')->default(0);
-        });
+        Schema::table(
+            'tbl_user_log_details', function (Blueprint $table) {
+                $table->integer('visitor_count')->after('browser')->default(1);
+            }
+        );
     }
 
     /**
@@ -25,8 +27,10 @@ class AddVisitorCount extends Migration
      */
     public function down()
     {
-        Schema::table('tbl_user_log_details', function (Blueprint $table) {
-    	    $table->dropColumn('visitor_count');
-	});
+        Schema::table(
+            'tbl_user_log_details', function (Blueprint $table) {
+                $table->dropColumn('visitor_count');
+            }
+        );
     }
 }

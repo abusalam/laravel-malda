@@ -141,9 +141,10 @@
                             <li class="pull-right">
                                 <a href="#">
                                     <?php echo session()->get('user_name') ?>(
-                                    <?php if(session()->get('user_type')==0){
-                                    echo " Admin ";
-                                }else{echo " User ";}  ?>)</a>
+                                    <?php if(session()->get('user_type')==0) {
+                                        echo " Admin ";
+                                    }else{echo " User ";
+}  ?>)</a>
                                 <ul>
                                     <?php if (session()->get('user_type') == 0) { ?>
                                     <li><a href="{{route('index')}}">Dashboard</a></li>

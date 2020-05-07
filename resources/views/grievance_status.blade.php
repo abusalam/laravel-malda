@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-sm-1">&nbsp;</div>
                     </div>
-                    <?php if(config('app.captcha')==0){  ?>
+                    <?php if(config('app.captcha')==0) {  ?>
                     <div class="row">
                         <div class="col-md-4"></div>
                         <div class="form-group col-md-7">

@@ -25,9 +25,9 @@ return [
     |
     */
     'captcha' => env('CAPTCHA', '0'),
-    'otp' => env('OTP','0'),
-    'version' => env('VERSION','1.0.0'),
-    'lastupdate' => env('LASTUPDATE','may 06,2020'),
+    'otp' => env('OTP', '0'),
+    'version' => env('VERSION', '1.0.0'),
+    'lastupdate' => env('LASTUPDATE', 'may 06,2020'),
 
     /*
     |--------------------------------------------------------------------------

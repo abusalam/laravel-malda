@@ -8,9 +8,9 @@
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
 
-        session_set_cookie_params(0,"","",true,true);
-        header ("Content-Security-Policy: default-src 'self'; frame-ancestors 'none';"  );
-        header('Expires','Sun, 02 Jan 1990 00:00:00 GMT');
+        session_set_cookie_params(0, "", "", true, true);
+        header("Content-Security-Policy: default-src 'self'; frame-ancestors 'none';");
+        header('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT');
 
 
     ?>
@@ -19,7 +19,7 @@
     use App\Http\Controllers\LogdetailsController;
     $data_visitor_count = LogdetailsController::get_visitor_count();
 
-      ?>
+        ?>
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -61,15 +61,24 @@
                     <div class="push-right" role="navigation" aria-label="Primary">
                         <div id="accessibility">
                             <ul id="accessibilityMenu">
-                                <li><a href="#SkipContent" class="skip-to-content" title="Skip to main content"><span class="icon-skip-to-main responsive-show"></span><strong class="responsive-hide">SKIP TO MAIN CONTENT</strong></a></li>
-
-
-
                                 <li>
-                                    <a href="javascript:void(0);" title="Accessibility Links" aria-label="Accessibility Links" class="mobile-show accessible-icon"><span class="off-css">Accessibility Links</span><span class="icon-accessibility" aria-hidden="true"></span></a>
+                                <a href="#SkipContent" class="skip-to-content" title="Skip to main content">
+                                <span class="icon-skip-to-main responsive-show"></span>
+                                <strong class="responsive-hide">SKIP TO MAIN CONTENT</strong>
+                                </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" title="Accessibility Links" aria-label="Accessibility Links" class="mobile-show accessible-icon">
+                                    <span class="off-css">Accessibility Links</span><span class="icon-accessibility" aria-hidden="true"></span>
+                                    </a>
                                     <div class="accessiblelinks textSizing">
                                         <ul>
-                                            <li><a href="javascript:void(0);" aria-label="Font Size Increase" title="Font Size Increase"><span aria-hidden="true">A+</span><span class="off-css"> Font Size Increase</span></a></li>
+                                            <li>
+                                            <a href="javascript:void(0);" aria-label="Font Size Increase" title="Font Size Increase">
+                                            <span aria-hidden="true">A+</span>
+                                            <span class="off-css"> Font Size Increase</span>
+                                            </a>
+                                            </li>
                                             <li><a href="javascript:void(0);" aria-label="Normal Font" title="Normal Font"><span aria-hidden="true">A</span><span class="off-css"> Normal Font</span></a></li>
                                             <li><a href="javascript:void(0);" aria-label="Font Size Decrease" title="Font Size Decrease"><span aria-hidden="true">A-</span><span class="off-css"> Font Size Decrease</span></a></li>
                                             <li class="highContrast dark tog-con">
@@ -86,7 +95,7 @@
                                     <a href="{{route('change_language',['en'])}}" class="change-language" aria-label="English" title="English">English</a>
                                     <?php } else { ?>
                                     <a href="{{route('change_language',['bn'])}}" class="change-language" aria-label="English" title="English">বাংলা</a>
-                                   <?php }?>
+                                    <?php }?>
                                 </li>
                             </ul>
                         </div>
@@ -142,9 +151,10 @@
                             <li class="pull-right">
                                 <a href="#">
                                     <?php echo session()->get('user_name') ?>(
-                                    <?php if(session()->get('user_type')==0){
-                                    echo " Admin ";
-                                }else{echo " User ";}  ?>)</a>
+                                    <?php if(session()->get('user_type')==0) {
+                                        echo " Admin ";
+                                    }else{echo " User ";
+}  ?>)</a>
                                 <ul>
                                     <li><a href="/">{{__('text.dashboard')}}</a></li>
                                     <?php if (session()->get('user_type') == 0) { ?>
@@ -226,7 +236,7 @@
                         <span class="version">Version: <strong><?php echo config('app.version'); ?></strong></span>
                     </div>
                     <div class="col-sm-4 text-sm-center text-center">
-                        <span class="last_update">Last Updated: <strong><?php echo str_replace("_"," ",config('app.lastupdate'));?></strong></span>
+                        <span class="last_update">Last Updated: <strong><?php echo str_replace("_", " ", config('app.lastupdate'));?></strong></span>
                     </div>
                     <div class="col-sm-4 text-sm-right text-center">
                         <span class="visitor_count">Visitor Count: <strong><?php echo $data_visitor_count ?></strong></span>

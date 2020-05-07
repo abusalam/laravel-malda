@@ -7,15 +7,19 @@ use App\tbl_user;
 use App\tbl_mobile_verify;
 use DB;
 
-class registrationController extends Controller {
+class registrationController extends Controller
+{
 
-    public function userList(){
+    public function userList()
+    {
         return view("userlist");
     }
 
-    public function userlist_datatable(Request $request){
+    public function userlist_datatable(Request $request)
+    {
 
-        $this->validate($request, [
+        $this->validate(
+            $request, [
             'draw'=>'required|integer|between:0,9999999999',
             'start'=>'required|integer|between:0,999999999',
             'length'=>'required|integer|between:0,100',
@@ -46,7 +50,8 @@ class registrationController extends Controller {
             'order.*.dir.in' => 'Invalid Input',
 
             'search.*.regex' => 'Invalid Input',
-        ]);
+            ]
+        );
 
         $draw = $request->draw;
         $offset = $request->start;
@@ -55,13 +60,15 @@ class registrationController extends Controller {
         $order = $request->order;
 
         $data = array();
-        $record = tbl_user::select('*')->where('user_type','<>',0)
+        $record = tbl_user::select('*')->where('user_type', '<>', 0)
                 ->orderby('code', 'desc')
-        ->where(function($q) use ($search) {
-        $q->orwhere('name', 'like', '%' . $search . '%');
-        $q->orwhere('designation', 'like', '%' . $search . '%');
-        $q->orwhere('mobile_no', 'like', '%' . $search . '%');
-        });
+        ->where(
+            function ($q) use ($search) {
+                $q->orwhere('name', 'like', '%' . $search . '%');
+                $q->orwhere('designation', 'like', '%' . $search . '%');
+                $q->orwhere('mobile_no', 'like', '%' . $search . '%');
+            }
+        );
 
         $filtered_count = $record->count();
 
@@ -94,16 +101,19 @@ class registrationController extends Controller {
 
     }
 
-    public function user_edit(Request $request){
+    public function user_edit(Request $request)
+    {
             $statusCode = 200;
         $response = array();
 
-        $this->validate($request, [
+        $this->validate(
+            $request, [
             'user_code' => 'required|integer',
                 ], [
             'user_code.required' => 'User Code is required',
             'user_code.integer' => 'User Code Accepted Only Integer',
-        ]);
+                ]
+        );
 
 
         try {
@@ -128,7 +138,8 @@ class registrationController extends Controller {
 
     }
 
-    public function user_delete(Request $request){
+    public function user_delete(Request $request)
+    {
 
              $statusCode = 200;
         $response = [
@@ -140,12 +151,14 @@ class registrationController extends Controller {
             return response()->json($response, $statusCode);
         }
 
-        $this->validate($request, [
+        $this->validate(
+            $request, [
             'user_code' => 'required|integer',
                 ], [
             'user_code.required' => 'User Code is required',
             'user_code.integer' => 'User Code Accepted Only Integer',
-        ]);
+                ]
+        );
 
 
         try {
@@ -172,20 +185,23 @@ class registrationController extends Controller {
 
     
          
-         public function forgotPassword(){
-             return view('forgotPassword');
-         }
+    public function forgotPassword()
+    {
+        return view('forgotPassword');
+    }
          
-         public function saveOtpForLogin(request $request){
+    public function saveOtpForLogin(request $request)
+    {
 
-             $statusCode = 200;
+        $statusCode = 200;
         $mobile_verification = null;
         if (!$request->ajax()) {
             $statusCode = 400;
             $response = array('error' => 'Error occured in form submit.');
             return response()->json($response, $statusCode);
         }
-        $this->validate($request, [
+        $this->validate(
+            $request, [
             
             'mobile_no' => "required|alpha_num|max:10|min:10",
             ], [
@@ -194,117 +210,118 @@ class registrationController extends Controller {
             'mobile_no.max' => 'Mobile Number must be 10 Digits',
             'mobile_no.min' => 'Mobile Number must be 10 Digits',
   
-        ]);
+            ]
+        );
 
-       $response = [
-            'mobile_verification' => [] //Should be changed #9
+        $response = [
+        'mobile_verification' => [] //Should be changed #9
         ];
 
         try {
-         $cenvertedTime=0;
-         $date_time=0;
-         $mobile_no = $request->mobile_no;
+            $cenvertedTime=0;
+            $date_time=0;
+            $mobile_no = $request->mobile_no;
             $mobile_no_checking = tbl_user::select('*')->where('mobile_no', '=', $mobile_no)->get();
 
             $mobile_no_verify = tbl_mobile_verify::select('*')->where('mobile_no', '=', $mobile_no)->get();
 
 
-            if(count($mobile_no_verify) >0){
+            if(count($mobile_no_verify) >0) {
 
-            $maxValue = tbl_mobile_verify::select('otp_creation_time','otp')->where('code', DB::raw("(select max(code) from tbl_mobile_verify where mobile_no=$mobile_no)"))->first();
-           // echo $maxValue->created_at;die;
+                $maxValue = tbl_mobile_verify::select('otp_creation_time', 'otp')->where('code', DB::raw("(select max(code) from tbl_mobile_verify where mobile_no=$mobile_no)"))->first();
+                // echo $maxValue->created_at;die;
 
-            $cenvertedTime = date('Y-m-d H:i:s',strtotime('+12 hour',strtotime($maxValue->otp_creation_time)));
+                $cenvertedTime = date('Y-m-d H:i:s', strtotime('+12 hour', strtotime($maxValue->otp_creation_time)));
 
-           // echo $cenvertedTime;die;
+                // echo $cenvertedTime;die;
              
 
-            date_default_timezone_set('Asia/Kolkata');
-            $date_time=date('Y-m-d H:i:s');
-            //echo $date_time;die;
-        }
+                date_default_timezone_set('Asia/Kolkata');
+                $date_time=date('Y-m-d H:i:s');
+                //echo $date_time;die;
+            }
 
-        if($request->data!=1){
+            if($request->data!=1) {
 
 
 
-          if(count($mobile_no_verify)==0 || $cenvertedTime < $date_time ){
+                if(count($mobile_no_verify)==0 || $cenvertedTime < $date_time ) {
 
-            if (count($mobile_no_checking) > 0 ) {
-                date_default_timezone_set('Asia/Kolkata'); 
+                    if (count($mobile_no_checking) > 0 ) {
+                        date_default_timezone_set('Asia/Kolkata'); 
                
                 
-                $mobile_verification = new tbl_mobile_verify();
-                $mobile_verification->mobile_no = $mobile_no;
-                $mobile_verification->otp = random_int ( 1000 , 9999 );
-                $mobile_verification->otp_creation_time = date('Y-m-d H:i:s');
+                        $mobile_verification = new tbl_mobile_verify();
+                        $mobile_verification->mobile_no = $mobile_no;
+                        $mobile_verification->otp = random_int(1000, 9999);
+                        $mobile_verification->otp_creation_time = date('Y-m-d H:i:s');
 
-                $mobile_verification->save();
-                if(config('app.otp')==0){
-                if ($mobile_no != '') {
-                    $Destination = $mobile_no;
-                    $Message = 'Your OTP  is:' . $mobile_verification->otp;
-                    $SEND_SMS = 'TRUE';
-                    $mobile_no = $Destination;
+                        $mobile_verification->save();
+                        if(config('app.otp')==0) {
+                            if ($mobile_no != '') {
+                                $Destination = $mobile_no;
+                                $Message = 'Your OTP  is:' . $mobile_verification->otp;
+                                $SEND_SMS = 'TRUE';
+                                $mobile_no = $Destination;
 
-                      include_once("sms/test_sms.php");
-                       $response = array(
-                    'status' => 1,'otp'=>1
-                );
+                                  include_once "sms/test_sms.php";
+                                   $response = array(
+                                'status' => 1,'otp'=>1
+                                );
+                            }
+                        }else{
+                            $response = array(
+                                'status' => 1,'otp'=>$mobile_verification->otp
+                            );
+
+                        }
+
+               
+                
+                    }
+                    else{
+                          $response = array(
+                          'status' => 2
+                          );
+                    }
+                }else{
+                    if(config('app.otp')==0) {
+                        $response = array(
+                          'status' => 1,'otp'=>1
+                        );
+                    }else{
+
+
+                        $mobile_verification = new tbl_mobile_verify();
+                        $mobile_verification->mobile_no = $mobile_no;
+                        $mobile_verification->otp = random_int(1000, 9999);
+                        $mobile_verification->otp_creation_time = date('Y-m-d H:i:s');
+
+                        $mobile_verification->save();
+
+
+                        $response = array(
+                        'status' => 1,'otp'=>$mobile_verification->otp
+                        );
+
+                    }
+
                 }
+
             }else{
-                $response = array(
-                    'status' => 1,'otp'=>$mobile_verification->otp
-                );
-
-            }
-
-               
-                
-            }
-            else{
-                $response = array(
-                    'status' => 2
-                );
-            }
-        }else{
-             if(config('app.otp')==0){
-            $response = array(
-                    'status' => 1,'otp'=>1
-                );
-           }else{
-
-
-                $mobile_verification = new tbl_mobile_verify();
-                $mobile_verification->mobile_no = $mobile_no;
-                $mobile_verification->otp = random_int ( 1000 , 9999 );
-                $mobile_verification->otp_creation_time = date('Y-m-d H:i:s');
-
-                $mobile_verification->save();
-
-
-            $response = array(
-                    'status' => 1,'otp'=>$mobile_verification->otp
-                );
-
-           }
-
-        }
-
-    }else{
 
                     $Destination = $mobile_no;
                     $Message = 'Your OTP  is:' . $maxValue->otp;
                     $SEND_SMS = 'TRUE';
                     $mobile_no = $Destination;
 
-                      include_once("sms/test_sms.php");
+                      include_once "sms/test_sms.php";
                     $response = array(
                     'status' => 1
                 );
 
 
-    }
+            }
                 
            
         } catch (\Exception $e) {
@@ -318,10 +335,11 @@ class registrationController extends Controller {
         }
         return $res;
 
-         }
+    }
          
-         public function checkOtpForLogin(Request $request){
-                 $statusCode = 200;
+    public function checkOtpForLogin(Request $request)
+    {
+        $statusCode = 200;
         $mobile_verification = null;
         if (!$request->ajax()) {
             $statusCode = 400;
@@ -329,14 +347,15 @@ class registrationController extends Controller {
             return response()->json($response, $statusCode);
         }
         $response = [
-            'mobile_verification' => [] //Should be changed #9
+        'mobile_verification' => [] //Should be changed #9
         ];
-//$dt = new Carbon\Carbon();
-//$before = $dt->subYears(13)->format('Y-m-d');
-        $this->validate($request, [
+        //$dt = new Carbon\Carbon();
+        //$before = $dt->subYears(13)->format('Y-m-d');
+        $this->validate(
+            $request, [
             'otp' => 'required|integer',
             'mob' => "required|alpha_num|max:10|min:10",
-                ], [
+            ], [
             'otp.required' => 'OTP is required',
             'otp.integer' => ' OTP must be an integer',
             'mob.required' => 'Mobile No is required',
@@ -344,7 +363,8 @@ class registrationController extends Controller {
             'mob.max' => 'Mobile Number must be 10 Digits',
             'mob.min' => 'Mobile Number must be 10 Digits',
            
-        ]);
+            ]
+        );
         try {
             $mobile_no = $request->mob;
             $maxValue = tbl_mobile_verify::select('otp')->where('code', DB::raw("(select max(code) from tbl_mobile_verify where mobile_no=$mobile_no)"))->get();
@@ -354,7 +374,7 @@ class registrationController extends Controller {
                     'status' => 1
                 );
 
-                $result=tbl_user::where('mobile_no',$mobile_no)->select('code','mobile_no','name','designation','user_type')->first();
+                $result=tbl_user::where('mobile_no', $mobile_no)->select('code', 'mobile_no', 'name', 'designation', 'user_type')->first();
 
                 session(['user_code' =>  $result->code]);
                 session(['user_mobile_no' =>  $result->mobile_no]);
@@ -378,7 +398,7 @@ class registrationController extends Controller {
              $res= response()->json($response, $statusCode);
         }
         return $res;
-         }
+    }
 
         
          
