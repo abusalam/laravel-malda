@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTblUser extends Migration
 {
@@ -14,7 +14,8 @@ class CreateTblUser extends Migration
     public function up()
     {
         Schema::create(
-            'tbl_user', function (Blueprint $table) {
+            'tbl_user',
+            function (Blueprint $table) {
                 $table->increments('code');
                 $table->string('mobile_no', '20');
                 $table->string('name', '100');

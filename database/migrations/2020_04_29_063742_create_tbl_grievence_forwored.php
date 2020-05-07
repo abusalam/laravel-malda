@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTblGrievenceForwored extends Migration
 {
@@ -14,7 +14,8 @@ class CreateTblGrievenceForwored extends Migration
     public function up()
     {
         Schema::create(
-            'tbl_grievence_forwored', function (Blueprint $table) {
+            'tbl_grievence_forwored',
+            function (Blueprint $table) {
                 $table->increments('code');
                 $table->integer('griv_code');
                 $table->integer('to_forword')->nullable();

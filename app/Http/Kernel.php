@@ -52,18 +52,18 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'auth'               => \App\Http\Middleware\Authenticate::class,
+        'auth.basic'         => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings'           => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'cache.headers'      => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can'                => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest'              => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'signed'             => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'throttle'           => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified'           => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'disablepreventback' => \App\Http\Middleware\DisablePreventBack::class,
-        'sessioncheking' => \App\Http\Middleware\SessionChecking::class,
-        'userlogdetails' => \App\Http\Middleware\UserLogDetails::class,
+        'sessioncheking'     => \App\Http\Middleware\SessionChecking::class,
+        'userlogdetails'     => \App\Http\Middleware\UserLogDetails::class,
     ];
 
     /**
