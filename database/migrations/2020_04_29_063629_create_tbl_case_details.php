@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTblCaseDetails extends Migration
 {
@@ -14,7 +14,8 @@ class CreateTblCaseDetails extends Migration
     public function up()
     {
         Schema::create(
-            'tbl_case_details', function (Blueprint $table) {
+            'tbl_case_details',
+            function (Blueprint $table) {
                 $table->increments('code');
                 $table->string('case_no', '11')->collate('latin1_swedish_ci');
                 $table->date('nxt_hearing_date');

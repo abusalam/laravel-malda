@@ -12,18 +12,17 @@
 */
 
 Route::get(
-    'language/{locale}', function ($locale) {
-
+    'language/{locale}',
+    function ($locale) {
         session(['locale' => $locale]);
         // echo session()->get('locale') ;die;
         return redirect()->back();
     }
 )->name('change_language');
 
-
-
 Route::group(
-    ['middleware' => ['sessioncheking','disablepreventback','userlogdetails']], function () {
+    ['middleware' => ['sessioncheking', 'disablepreventback', 'userlogdetails']],
+    function () {
         Auth::routes();
         Route::get('/index', 'UserController@index');
         Route::get('/userRegisration', 'LoginController@userRegisration');
@@ -39,29 +38,20 @@ Route::group(
 );
 
 Route::group(
-    ['middleware' => 'userlogdetails'], function () {
+    ['middleware' => 'userlogdetails'],
+    function () {
         Route::get('/', 'UserController@home');
         Route::get('/login', 'LoginController@login');
         Route::post('/login-action', 'LoginController@loginAction');
 
         Route::post('/userRegistrationAction', 'LoginController@userRegistrationAction');
 
-
         Route::post('/userlist_datatable', 'registrationController@userlist_datatable');
 
         Route::post('/user_edit', 'registrationController@user_edit');
         Route::post('/user_delete', 'registrationController@user_delete');
 
-
         Route::post('/logout', 'LoginController@logout');
-
-
-
-
-
-
-
-
 
         /****************************SDO Court*******************/
 
@@ -71,14 +61,10 @@ Route::group(
         Route::post('/case_edit', 'SDOCourtController@case_edit');
         Route::post('/case_delete', 'SDOCourtController@case_delete');
 
-
-
-
         /*********************************************************/
 
         Route::post('/save_otp', 'registrationController@save_otp');
         Route::post('/check_otp', 'registrationController@check_otp');
-
 
         /****************************Change Password*******************/
         Route::get('/change_pin', 'LoginController@change_pin');
@@ -86,25 +72,15 @@ Route::group(
         Route::get('/edit_profile', 'LoginController@edit_profile');
         Route::post('/user_name_change', 'LoginController@user_name_change');
 
-
-
         Route::get('/forgotPassword', 'registrationController@forgotPassword');
 
         Route::post('/saveOtpForLogin', 'registrationController@saveOtpForLogin');
         Route::post('/checkOtpForLogin', 'registrationController@checkOtpForLogin');
         Route::post('/passwordChange', 'registrationController@passwordChange');
 
-
-
-
-
         Route::get('/search_case', 'SDOCourtController@search_case');
         Route::post('refreshcaptcha', 'SDOCourtController@refreshCaptcha');
         Route::post('capchavalidation', 'SDOCourtController@capchavalidation');
-
-
-
-
 
         //******************************Grivance List******************************//
         Route::post('/save_otp_for_grievance', 'GrievanceController@save_otp_for_grievance');
@@ -126,27 +102,19 @@ Route::group(
         Route::get('/close_grievance_list', 'GrievanceController@close_grievance_list');
         Route::post('closed_grievance_datatable', 'GrievanceController@closed_grievance_datatable');
 
-
-
-
-
-
         Route::get(
-            'session', function () {
+            'session',
+            function () {
                 return view('layout.session');
             }
         );
 
-
-
-
         Route::get(
-            '/log_details', function () {
+            '/log_details',
+            function () {
                 return view('log_details');
             }
         )->name('log_details');
-
-
 
         Route::get('/todays_hearing', 'SDOCourtController@todays_hearing');
 
@@ -161,7 +129,6 @@ Route::group(
         Route::post('/save_otp_for_grievancestatus', 'GrievanceStatusController@save_otp_for_grievancestatus')->name('save_otp_for_grievancestatus');
         Route::post('/check_otp_for_grievancestatus', 'GrievanceStatusController@check_otp_for_grievancestatus')->name('check_otp_for_grievancestatus');
 
-
         ////////Resolve
 
         Route::get('/resolve_grievance_list', 'GrievanceStatusController@resolve_grievance_list');
@@ -172,8 +139,5 @@ Route::group(
         Route::get('/pending_report', 'ReportController@pending_report');
         Route::post('pending_grievance_datatable', 'ReportController@pending_grievance_datatable');
         Route::post('show_pending_grievance', 'ReportController@show_pending_grievance');
-
-
-
     }
 );

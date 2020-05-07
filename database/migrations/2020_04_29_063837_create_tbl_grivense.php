@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTblGrivense extends Migration
 {
@@ -14,7 +14,8 @@ class CreateTblGrivense extends Migration
     public function up()
     {
         Schema::create(
-            'tbl_grivense', function (Blueprint $table) {
+            'tbl_grivense',
+            function (Blueprint $table) {
                 $table->increments('code');
                 $table->string('name', '20')->collate('latin1_swedish_ci');
                 $table->string('mobile_no', '20')->collate('latin1_swedish_ci');
