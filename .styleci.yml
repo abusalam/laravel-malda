@@ -12,3 +12,9 @@ php:
   not-name:
     - "*.blade.php"
     - "_ide_helper.php"
+php: true
+js: false
+ts: false
+css: false
+vue: false
+py: false
