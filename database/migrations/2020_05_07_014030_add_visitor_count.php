@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class AddBrowserColumnLogdetailsTable extends Migration
+class AddVisitorCount extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddBrowserColumnLogdetailsTable extends Migration
     public function up()
     {
         Schema::table('tbl_user_log_details', function (Blueprint $table) {
-             $table->string('browser',255)->after('description');
+            $table->integer('visitor_count')->after('browser')->default(0);
         });
     }
 
@@ -26,7 +26,7 @@ class AddBrowserColumnLogdetailsTable extends Migration
     public function down()
     {
         Schema::table('tbl_user_log_details', function (Blueprint $table) {
-            //
-        });
+    	    $table->dropColumn('visitor_count');
+	});
     }
 }

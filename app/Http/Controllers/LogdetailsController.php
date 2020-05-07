@@ -107,4 +107,10 @@ class LogdetailsController extends Controller
     
     
     }
+
+    public static function get_visitor_count(){
+
+        $v_count=tbl_user_log_details::where('visitor_count',1)->count();
+        return $v_count;
+    }
 }

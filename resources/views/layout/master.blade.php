@@ -15,6 +15,13 @@
 
 
     ?>
+    <?php
+
+    use App\Http\Controllers\LogdetailsController;
+    $data_visitor_count = LogdetailsController::get_visitor_count();
+
+      ?>
+
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -224,7 +231,7 @@
                         <span class="last_update">Last Updated: <strong>Sep 06, 2019</strong></span>
                     </div>
                     <div class="col-sm-4 text-sm-right text-center">
-                        <span class="visitor_count">Visitor Count <strong>1000</strong></span>
+                        <span class="visitor_count">Visitor Count: <strong><?php echo $data_visitor_count ?></strong></span>
                     </div>
                 </div>
 
