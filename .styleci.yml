@@ -3,11 +3,12 @@ php:
   disabled:
     - unused_use
   finder:
-    not-name:
-      - index.php
-      - server.php
-js:
-  finder:
-    not-name:
-      - webpack.mix.js
-css: true
+  exclude:
+    - "modules"
+    - "node_modules"
+    - "storage"
+    - "vendor"
+  name: "*.php"
+  not-name:
+    - "*.blade.php"
+    - "_ide_helper.php"
