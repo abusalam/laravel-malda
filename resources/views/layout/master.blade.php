@@ -1,3 +1,18 @@
+<?php
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LogdetailsController;
+$currentPath= Route::getFacadeRoot()->current()->uri();
+$user_typ= session()->get('user_type');
+ ?>
+ @if($user_typ == 1 && ($currentPath == "userRegisration" || $currentPath == "userList" || $currentPath == "user_edit" || $currentPath == "case_entry" || $currentPath == "case_list" || $currentPath == "case_edit" || $currentPath == "log_details" || $currentPath == "pending_report"))
+       <?php 
+        session()->flush();
+        Cache::flush();
+        ?>
+        <script type="text/javascript">
+         window.location = "./login";
+        </script> 
+    @else
 
 <?php
 
@@ -17,10 +32,10 @@
     ?>
     <?php
 
-    use App\Http\Controllers\LogdetailsController;
+    
     $data_visitor_count = LogdetailsController::get_visitor_count();
 
-        ?>
+    ?>
 
 <!DOCTYPE html>
 <html lang="en-US">
@@ -276,4 +291,6 @@
 </body>
 
 </html>
+@endif
+
 
