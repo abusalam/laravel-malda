@@ -120,6 +120,7 @@
 #cssmenu ul ul ul {
   margin-left: 100%;
   top: 0;
+  right: 170px;	
 }
 #cssmenu.align-right ul ul ul {
   margin-left: 0;
