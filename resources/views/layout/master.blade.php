@@ -151,7 +151,7 @@
                                     }else{echo " User ";
 }  ?>)</a>
                                 <ul>
-                                    <li><a href="/">{{__('text.dashboard')}}</a></li>
+                                    <li><a href="index">{{__('text.dashboard')}}</a></li>
                                     <?php if (session()->get('user_type') == 0) { ?>
                                     <li><a href="#">{{__('text.user')}}</a>
                                         <ul>
