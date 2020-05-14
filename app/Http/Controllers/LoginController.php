@@ -10,12 +10,11 @@ class LoginController extends Controller
 {
     public function login()
     {
-        if (session()->has('user_code') == false){
-           return view('login');
-         }
-        else{
+        if (session()->has('user_code') == false) {
+            return view('login');
+        } else {
             return redirect('index');
-         }
+        }
     }
 
     public function userRegisration()
