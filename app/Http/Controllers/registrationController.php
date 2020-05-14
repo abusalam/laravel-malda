@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\tbl_login_checking;
 use App\tbl_mobile_verify;
 use App\tbl_user;
 use DB;
@@ -339,6 +340,8 @@ class registrationController extends Controller
             $mobile_no = $request->mob;
             $maxValue = tbl_mobile_verify::select('otp')->where('code', DB::raw("(select max(code) from tbl_mobile_verify where mobile_no=$mobile_no)"))->get();
             if ($request->otp == $maxValue[0]->otp) {
+                $res = tbl_login_checking::where('mobile_no', $mobile_no)->delete();
+
                 $response = [
                     'status' => 1,
                 ];
@@ -353,7 +356,7 @@ class registrationController extends Controller
             //session(['expire' => $now + (60 * 1)]);
             } else {
                 $response = [
-                    'status' => 2,
+                    'status' => 2, 'mob'=> $mobile_no,
                 ];
             }
         } catch (\Exception $e) {

@@ -163,7 +163,15 @@ $(document).ready(function() {
               //$("#save_app").attr('disabled',false);
             }
           });
-        } else {
+        }
+        else if(data.status == 3){
+
+          $('#error').html('');
+          $('#error').append("You are Blocked for some time");
+          $('#error').show();
+
+        }
+         else {
           //                        $.alert({
           //                            title: 'Error!!',
           //                            type: 'red',
@@ -298,7 +306,29 @@ function otp_call(msg, username,enter_otp_to_continue,otp_integer,mobile_number_
                 content: otp_incorrect_msg,
                 buttons: {
                   Ok: function() {
-                    jc.open(true);
+                    $.ajax({
+                            type: 'POST',
+                            url: "checkSaveOtp",
+                            data: { 'mob': response.mob, '_token': $("input[name='_token']").val() },
+                            dataType: "json",
+                            success: function(data) {
+                                if(data.tot_otp_count == 3){
+                                  $.alert({
+                                        title: 'Error!!',
+                                        type: 'red',
+                                        icon: 'fa fa-warning',
+                                        content: "You are Blocked for some time",
+                                        buttons: {
+                                            Ok: function(){
+                                                window.location.href = "login";
+                                            }
+                                        }
+                                    });
+                                }else if(data.tot_otp_count < 3){
+                                    jc.open(true);
+                                }
+                            }
+                        });
                   },
                 }
               });

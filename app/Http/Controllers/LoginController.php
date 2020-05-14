@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\tbl_login_checking;
 use App\tbl_user;
 use Cache;
+use DB;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -11,6 +13,10 @@ class LoginController extends Controller
     public function login()
     {
         if (session()->has('user_code') == false) {
+            $datetime = date('Y-m-d H:i:s');
+            $addedTime = date('Y-m-d H:i:s', strtotime('-15 minute', strtotime($datetime)));
+            $res = tbl_login_checking::where('updated_at', '<', $addedTime)->delete();
+
             return view('login');
         } else {
             return redirect('index');
@@ -64,9 +70,26 @@ class LoginController extends Controller
         $check1 = tbl_user::where('mobile_no', $username)->first();
 
         if ($check1 != null) {
-            $response = [
-                'status' => 1,
-            ];
+            $datetime = date('Y-m-d H:i:s');
+            $addedTime = date('Y-m-d H:i:s', strtotime('-15 minute', strtotime($datetime)));
+            $result = tbl_login_checking::where('mobile_no', $username)->count();
+            if ($result > 0) {
+                $result11 = tbl_login_checking::where('mobile_no', $username)->where('updated_at', '<', $addedTime)->count();
+                if ($result11 > 0) {
+                    $resultt = tbl_login_checking::where('mobile_no', $username)->delete();
+                    $response = [
+                        'status' => 1,
+                    ];
+                } else {
+                    $response = [
+                        'status' => 3,
+                    ];
+                }
+            } else {
+                $response = [
+                    'status' => 1,
+                ];
+            }
         } else {
             $response = ['login_error' => "Mobile No Does't Exist", 'status' => 2];
         }
@@ -170,6 +193,29 @@ class LoginController extends Controller
         }
 
         return $res;
+    }
+
+    public function checkSaveOtp(Request $request)
+    {
+        $mobile_no = $request->mob;
+        $mob_count = tbl_login_checking::where('mobile_no', $mobile_no)->select('otp_count')->get();
+        if ($mob_count->count() > 0) {
+            $update_data = tbl_login_checking::where('mobile_no', $mobile_no)->update(['otp_count'=> DB::raw('otp_count+1')]);
+            $tot_otp_count = tbl_login_checking::where('mobile_no', $mobile_no)->select('otp_count')->first();
+
+            return $response = [
+                'tot_otp_count' => $tot_otp_count->otp_count,
+            ];
+        } else {
+            $insert_data = new tbl_login_checking();
+            $insert_data->mobile_no = $mobile_no;
+            $insert_data->otp_count = 1;
+            $insert_data->save();
+
+            return $response = [
+                'tot_otp_count' => 1,
+            ];
+        }
     }
 
     public function logout(Request $request)
