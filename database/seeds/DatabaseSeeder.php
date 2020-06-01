@@ -1,5 +1,6 @@
 <?php
 
+use App\tbl_user;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        tbl_user::create([
+            'mobile_no'   => '1111111111',
+            'name'        => 'Supr User',
+            'designation' => 'Super User',
+            'user_type'   => 0,
+        ]);
     }
 }
