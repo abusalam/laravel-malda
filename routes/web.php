@@ -96,6 +96,6 @@ Route::group(['middleware' => 'userlogdetails'], function () {
     Route::post('/checkSaveOtp', 'LoginController@checkSaveOtp');
 
     Route::get('/search_case', 'SDOCourtController@search_case');
-
+    Route::post('/grivanceSave', 'GrievanceController@grivanceSave');
     Route::post('grievance_statuss', 'GrievanceStatusController@grievance_statuss');
 });
