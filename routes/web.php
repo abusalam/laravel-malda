@@ -70,8 +70,15 @@ Route::group(['middleware' => ['sessioncheking', 'disablepreventback']], functio
   Route::post('show_pending_grievance', 'ReportController@show_pending_grievance');
   Route::post('forwored_grievance_datatable', 'GrievanceController@forwored_grievance_datatable');
 
+  Route::get('/', 'UserController@home');
+  Route::post('/saveOtpForLogin', 'registrationController@saveOtpForLogin');
+  Route::post('/checkOtpForLogin', 'registrationController@checkOtpForLogin');
+  Route::post('/saveOtpForLogin', 'registrationController@saveOtpForLogin');
+  Route::post('/checkOtpForLogin', 'registrationController@checkOtpForLogin');
+  Route::post('/checkSaveOtp', 'LoginController@checkSaveOtp');
+  Route::get('/search_case', 'SDOCourtController@search_case');
+
 Route::group(['middleware' => 'userlogdetails'], function () {
-    Route::get('/', 'UserController@home');
     Route::post('/login-action', 'LoginController@loginAction');
     Route::post('/userRegistrationAction', 'LoginController@userRegistrationAction');
     Route::post('/user_edit', 'registrationController@user_edit');
@@ -84,18 +91,6 @@ Route::group(['middleware' => 'userlogdetails'], function () {
     Route::post('/case_edit', 'SDOCourtController@case_edit');
     Route::post('/case_delete', 'SDOCourtController@case_delete');
 
-    /****************************Change Password*******************/
-
-    Route::post('/saveOtpForLogin', 'registrationController@saveOtpForLogin');
-    Route::post('/checkOtpForLogin', 'registrationController@checkOtpForLogin');
-
-    Route::get('/search_case', 'SDOCourtController@search_case');
-
-    Route::post('/saveOtpForLogin', 'registrationController@saveOtpForLogin');
-    Route::post('/checkOtpForLogin', 'registrationController@checkOtpForLogin');
-    Route::post('/checkSaveOtp', 'LoginController@checkSaveOtp');
-
-    Route::get('/search_case', 'SDOCourtController@search_case');
     Route::post('/grivanceSave', 'GrievanceController@grivanceSave');
     Route::post('grievance_statuss', 'GrievanceStatusController@grievance_statuss');
 });
