@@ -91,6 +91,7 @@ Route::group(['middleware' => 'userlogdetails'], function () {
     Route::post('/case_edit', 'SDOCourtController@case_edit');
     Route::post('/case_delete', 'SDOCourtController@case_delete');
 
+    Route::post('/save_forword', 'GrievanceController@save_forword');
     Route::post('/grivanceSave', 'GrievanceController@grivanceSave');
     Route::post('grievance_statuss', 'GrievanceStatusController@grievance_statuss');
 });

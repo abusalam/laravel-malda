@@ -75,15 +75,15 @@ class GrievanceController extends Controller
                 // 'attatchment.max' => 'Upload Document Maximum file Size should be 1 MB.',
 
             ]);
-            if ($request->attatchment != 'undefined') {
-                $this->validate($request, [
-                    'attatchment' => 'nullable|mimes:pdf|max:1024',
+        }
+        if ($request->attatchment != 'undefined') {
+            $this->validate($request, [
+                'attatchment' => 'nullable|mimes:pdf|max:1024',
 
-                ], [
-                    'attatchment.mimes' => 'Attachment file Should be pdf format',
-                    'attatchment.max'   => 'Upload Document Maximum file Size should be 1 MB.',
-                ]);
-            }
+            ], [
+                'attatchment.mimes' => 'Attachment file Should be pdf format',
+                'attatchment.max'   => 'Upload Document Maximum file Size should be 1 MB.',
+            ]);
         }
 
         try {
