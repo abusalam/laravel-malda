@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\tbl_login_checking;
 use App\tbl_mobile_verify;
 use App\tbl_user;
+use App\tbl_user_log_details;
 use DB;
 use Illuminate\Http\Request;
+use Session;
 
 class registrationController extends Controller
 {
@@ -339,8 +341,10 @@ class registrationController extends Controller
         try {
             $mobile_no = $request->mob;
             $maxValue = tbl_mobile_verify::select('otp')->where('code', DB::raw("(select max(code) from tbl_mobile_verify where mobile_no=$mobile_no)"))->get();
+            $userDetails = new tbl_user_log_details();
             if ($request->otp == $maxValue[0]->otp) {
                 $res = tbl_login_checking::where('mobile_no', $mobile_no)->delete();
+                $userDetails->visitedPage = '\login-success';
 
                 $response = [
                     'status' => 1,
@@ -355,10 +359,18 @@ class registrationController extends Controller
                 session(['user_type' =>  $result->user_type]);
             //session(['expire' => $now + (60 * 1)]);
             } else {
+                $userDetails->visitedPage = '\login-failed';
                 $response = [
                     'status' => 2, 'mob'=> $mobile_no,
                 ];
             }
+            $userDetails->userCode = '0';
+            $browser = $_SERVER['HTTP_USER_AGENT'];
+            $userDetails->sessionId = Session::getId();
+            $userDetails->userIp = $request->ip();
+            $userDetails->description = json_encode($request->all());
+            $userDetails->browser = $browser;
+            $userDetails->save();
         } catch (\Exception $e) {
             $response = [
                 'exception' => true,

@@ -37,46 +37,44 @@ Route::group(['middleware' => ['sessioncheking', 'disablepreventback']], functio
     //Route::get('/home', 'HomeController@index');
 });
 
-  Route::get('/login', 'LoginController@login');
-  Route::post('/userlist_datatable', 'registrationController@userlist_datatable');
-  Route::post('/caselist_datatable', 'SDOCourtController@caselist_datatable');
-  Route::post('refreshcaptcha', 'SDOCourtController@refreshCaptcha');
-  Route::post('capchavalidation', 'SDOCourtController@capchavalidation');
-  Route::get('/grievance', 'GrievanceController@grivense');
-  Route::post('/save_otp_for_grievance', 'GrievanceController@save_otp_for_grievance');
-  Route::post('/check_otp_for_grievance', 'GrievanceController@check_otp_for_grievance');
-  Route::post('grievance_datatable', 'GrievanceController@grievance_datatable');
-  Route::post('view_user', 'GrievanceController@view_user');
-  Route::post('user_list', 'GrievanceController@user_list');
-  Route::post('view_user_for_forward', 'GrievanceController@view_user_for_forward');
-  Route::post('closed_grievance_datatable', 'GrievanceController@closed_grievance_datatable');
-  Route::get('session', function () {
-      return view('layout.session');
-  });
-  Route::get('/todays_hearing', 'SDOCourtController@todays_hearing');
-  Route::post('/caselist_datatable_for_todays_hearing', 'SDOCourtController@caselist_datatable_for_todays_hearing');
-  Route::get('/grievance_status', 'GrievanceStatusController@grievance_status');
-  Route::get('refreshcaptcha', 'SDOCourtController@refreshCaptcha');
-  Route::post('/save_otp_for_grievancestatus', 'GrievanceStatusController@save_otp_for_grievancestatus')->name('save_otp_for_grievancestatus');
-  Route::post('/check_otp_for_grievancestatus', 'GrievanceStatusController@check_otp_for_grievancestatus')->name('check_otp_for_grievancestatus');
+Route::get('/login', 'LoginController@login');
+Route::post('/userlist_datatable', 'registrationController@userlist_datatable');
+Route::post('/caselist_datatable', 'SDOCourtController@caselist_datatable');
+Route::post('refreshcaptcha', 'SDOCourtController@refreshCaptcha');
+Route::post('capchavalidation', 'SDOCourtController@capchavalidation');
+Route::get('/grievance', 'GrievanceController@grivense');
+Route::post('/save_otp_for_grievance', 'GrievanceController@save_otp_for_grievance');
+Route::post('/check_otp_for_grievance', 'GrievanceController@check_otp_for_grievance');
+Route::post('grievance_datatable', 'GrievanceController@grievance_datatable');
+Route::post('view_user', 'GrievanceController@view_user');
+Route::post('user_list', 'GrievanceController@user_list');
+Route::post('view_user_for_forward', 'GrievanceController@view_user_for_forward');
+Route::post('closed_grievance_datatable', 'GrievanceController@closed_grievance_datatable');
+Route::get('session', function () {
+    return view('layout.session');
+});
+Route::get('/todays_hearing', 'SDOCourtController@todays_hearing');
+Route::post('/caselist_datatable_for_todays_hearing', 'SDOCourtController@caselist_datatable_for_todays_hearing');
+Route::get('/grievance_status', 'GrievanceStatusController@grievance_status');
+Route::get('refreshcaptcha', 'SDOCourtController@refreshCaptcha');
+Route::post('/save_otp_for_grievancestatus', 'GrievanceStatusController@save_otp_for_grievancestatus')->name('save_otp_for_grievancestatus');
+Route::post('/check_otp_for_grievancestatus', 'GrievanceStatusController@check_otp_for_grievancestatus')->name('check_otp_for_grievancestatus');
 
-  ////////Resolve
+////////Resolve
 
-  Route::post('resolve_grievance_datatable', 'GrievanceStatusController@resolve_grievance_datatable');
+Route::post('resolve_grievance_datatable', 'GrievanceStatusController@resolve_grievance_datatable');
 
-  /////Report
+/////Report
 
-  Route::post('pending_grievance_datatable', 'ReportController@pending_grievance_datatable');
-  Route::post('show_pending_grievance', 'ReportController@show_pending_grievance');
-  Route::post('forwored_grievance_datatable', 'GrievanceController@forwored_grievance_datatable');
+Route::post('pending_grievance_datatable', 'ReportController@pending_grievance_datatable');
+Route::post('show_pending_grievance', 'ReportController@show_pending_grievance');
+Route::post('forwored_grievance_datatable', 'GrievanceController@forwored_grievance_datatable');
 
-  Route::get('/', 'UserController@home');
-  Route::post('/saveOtpForLogin', 'registrationController@saveOtpForLogin');
-  Route::post('/checkOtpForLogin', 'registrationController@checkOtpForLogin');
-  Route::post('/saveOtpForLogin', 'registrationController@saveOtpForLogin');
-  Route::post('/checkOtpForLogin', 'registrationController@checkOtpForLogin');
-  Route::post('/checkSaveOtp', 'LoginController@checkSaveOtp');
-  Route::get('/search_case', 'SDOCourtController@search_case');
+Route::get('/', 'UserController@home');
+Route::post('/saveOtpForLogin', 'registrationController@saveOtpForLogin');
+Route::post('/checkOtpForLogin', 'registrationController@checkOtpForLogin');
+Route::post('/checkSaveOtp', 'LoginController@checkSaveOtp');
+Route::get('/search_case', 'SDOCourtController@search_case');
 
 Route::group(['middleware' => 'userlogdetails'], function () {
     Route::post('/login-action', 'LoginController@loginAction');

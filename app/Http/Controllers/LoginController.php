@@ -72,7 +72,7 @@ class LoginController extends Controller
         if ($check1 != null) {
             $datetime = date('Y-m-d H:i:s');
             $addedTime = date('Y-m-d H:i:s', strtotime('-15 minute', strtotime($datetime)));
-            $result = tbl_login_checking::where('mobile_no', $username)->count();
+            $result = tbl_login_checking::where('mobile_no', $username)->where('otp_count', '>=', 3)->count();
             if ($result > 0) {
                 $result11 = tbl_login_checking::where('mobile_no', $username)->where('updated_at', '<', $addedTime)->count();
                 if ($result11 > 0) {
