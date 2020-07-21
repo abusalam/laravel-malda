@@ -76,15 +76,6 @@ class GrievanceController extends Controller
 
             ]);
         }
-        if ($request->attatchment != 'undefined') {
-            $this->validate($request, [
-                'attatchment' => 'nullable|mimes:pdf|max:1024',
-
-            ], [
-                'attatchment.mimes' => 'Attachment file Should be pdf format',
-                'attatchment.max'   => 'Upload Document Maximum file Size should be 1 MB.',
-            ]);
-        }
 
         try {
             $n = random_int(1111111111, 9999999999);
@@ -93,13 +84,13 @@ class GrievanceController extends Controller
 
             //echo $griv_idd; die;
 
-            if (!empty($request->file('attatchment'))) {
-                $file_attatchment = $request->file('attatchment');
-                $file_ext = $file_attatchment->getClientOriginalExtension();
-                $filename_upload = date('dmYhms').random_int(101, 99999).'.'.$file_ext;
-                $destination_path_attatchment = 'upload/grievance_attatchment';
-                $file_attatchment->move($destination_path_attatchment, $filename_upload);
-            }
+            // if (!empty($request->file('attatchment'))) {
+            //     $file_attatchment = $request->file('attatchment');
+            //     $file_ext = $file_attatchment->getClientOriginalExtension();
+            //     $filename_upload = date('dmYhms').random_int(101, 99999).'.'.$file_ext;
+            //     $destination_path_attatchment = 'upload/grievance_attatchment';
+            //     $file_attatchment->move($destination_path_attatchment, $filename_upload);
+            // }
 
             $tbl_grivense = new tbl_grievance();
             $tbl_grivense->name = $request->grivense_name;
@@ -107,7 +98,7 @@ class GrievanceController extends Controller
             $tbl_grivense->email = $request->grivense_email;
             $tbl_grivense->complain = $request->grivense_complain;
             $tbl_grivense->griev_auto_id = $griv_idd;
-            $tbl_grivense->attatchment = $filename_upload;
+            //$tbl_grivense->attatchment = $filename_upload;
             $tbl_grivense->save();
             //$inserted_id = $tbl_grivense->code;
             $maxValue = tbl_grievance::select('code')->where('code', DB::raw("(select max(code) from tbl_grivense where mobile_no=$request->mobile_no)"))->first();

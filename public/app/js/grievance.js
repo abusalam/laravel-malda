@@ -133,16 +133,16 @@
            }
          }
        },
-       attatchment: {
-         validators: {
-           file: {
-             extension: 'pdf',
-             type: 'application/pdf',
-             maxSize: 1024 * 1024, // 5 MB
-             message: attachment_validation
-           }
-         }
-       },
+       // attatchment: {
+       //   validators: {
+       //     file: {
+       //       extension: 'pdf',
+       //       type: 'application/pdf',
+       //       maxSize: 1024 * 1024, // 5 MB
+       //       message: attachment_validation
+       //     }
+       //   }
+       // },
 
        captcha: {
          validators: {
@@ -164,8 +164,7 @@
      var grivense_complain = $('#grivense_complain').val();
      var grivense_email = $('#grivense_email').val();
      var mobile_no = $('#mobile_no').val();
-     var captcha = $('#captcha').val();
-     var attatchment = $('#attatchment')[0].files;
+     var captcha = $('#captcha').val();   
 
      var fd = new FormData();
      fd.append('grivense_name', grivense_name);
@@ -173,7 +172,6 @@
      fd.append('grivense_email', grivense_email);
      fd.append('grivense_complain', grivense_complain);
      fd.append('captcha', captcha);
-     fd.append('attatchment', attatchment[0]);
      fd.append('_token', $("input[name='_token']").val());
 
      $.ajax({
@@ -307,7 +305,6 @@
              data: { 'mob': $("#mob_no_new").val(), 'otp': $("#otp").val(), '_token': $("input[name='_token']").val() },
              method: 'POST'
            }).done(function(response) {
-             //alert('hi');
              jc.hideLoading(true);
              if (response.status == 1) {
                jc.close(true);

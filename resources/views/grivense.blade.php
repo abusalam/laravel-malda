@@ -53,7 +53,7 @@
                     <div class="col-sm-1">&nbsp;</div>
                 </div>
 
-                <div class="form-group row">
+               {{--  <div class="form-group row">
                     <div class="col-sm-2">&nbsp;</div>
                     <div class="col-sm-2 mg-t-10">
                         {!! Form::label('attatchment', __('text.attachment'), ['class'=>'form-label mg-b-0 required']) !!}
@@ -62,7 +62,7 @@
                         {!! Form::file('attatchment',['id'=>'attatchment','class'=>'form-control form-control-file','autocomplete'=>'off']) !!}
                     </div>
                     <div class="col-sm-1">&nbsp;</div>
-                </div>
+                </div> --}}
 
 
                 <?php if(config('app.captcha')==0) {  ?>
